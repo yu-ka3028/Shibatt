@@ -1,9 +1,7 @@
 <nav>
   <% if current_user %>
     <%= current_user.username %>
-    <%= form_with url: logout_path, method: :delete do %>
-      <%= submit_tag 'Logout' %>
-    <% end %>
+    <%= link_to 'Logout', logout_path, data: { turbo_method: :delete } %>
   <% else %>
     ゲスト
     <%= link_to 'Login', login_path %>
