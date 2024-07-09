@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :require_login, only: [:new, :create]
   def index
   end
   
@@ -14,11 +15,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
-      redirect_to root_path @user, notice: 'User was successfully created.'
+      redirect_to root_path, notice: 'User was successfully created.'
     else
-      render :new
+      render "new"
     end
   end
 

@@ -1,4 +1,14 @@
 <nav>
-    <%= link_to 'Home', root_path %>
-    <%= link_to 'Logout', root_path %>
+  <% if current_user %>
+    <%= current_user.username %>
+    <%= form_with url: logout_path, method: :delete do %>
+      <%= submit_tag 'Logout' %>
+    <% end %>
+  <% else %>
+    ゲスト
+    <%= link_to 'Login', login_path %>
+    <%= link_to "Sign_up", sign_up_path %>
+  <% end %>
+  
+  <%= link_to 'Home', root_path %>
 </nav>
