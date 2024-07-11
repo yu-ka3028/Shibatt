@@ -1,1 +1,23 @@
 <a href="https://gyazo.com/f56c05afb2a1a0f6e346a1b76861af36"><img src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" alt="Image from Gyazo" width="1024"/></a>
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn" onclick="my_modal_5.showModal()">メモ作成</button>
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">メモ作成</h3>
+    <%= form_with model: @memo, url: user_memos_path(@user), local: true do |form| %>
+      <div class="form-group">
+        <%= form.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
+      </div>
+      <div class="form-group">
+        <%= form.submit "作成", class: "btn" %>
+      </div>
+      <% end %>
+    <p class="py-4">ここなんか書きますかねえ</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
