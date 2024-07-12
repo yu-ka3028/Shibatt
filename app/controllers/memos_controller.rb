@@ -6,8 +6,12 @@ class MemosController < ApplicationController
 
   def create
     @memo = current_user.memos.build(memo_params)
-    @memo.save
-    redirect_to user_memos_path(current_user)
+    @memo.progress = false
+    if @memo.save
+      redirect_to user_memos_path(current_user)
+    else
+      render :new
+    end
   end
 
   def index

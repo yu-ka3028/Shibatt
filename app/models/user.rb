@@ -8,4 +8,10 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :memos
+
+  def progress_rate
+    total_memo_count = memos.count
+    completed_memo_count = memos.where(progress: true).count
+    (completed_memo_count.to_f / total_memo_count * 100).round(2)
+  end
 end
