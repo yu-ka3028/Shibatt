@@ -1,3 +1,4 @@
 class Memo < ApplicationRecord
-belongs_to :user
+  paginates_per 5
+  belongs_to :user
 end

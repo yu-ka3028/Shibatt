@@ -15,7 +15,7 @@ class MemosController < ApplicationController
   end
 
   def index
-    @memos = current_user.memos.order(created_at: :desc)
+    @memos = current_user.memos.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   private
