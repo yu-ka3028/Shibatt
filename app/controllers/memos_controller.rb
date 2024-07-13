@@ -15,11 +15,8 @@ class MemosController < ApplicationController
   end
 
   def index
-    if params[:content].present?
-      @memos = current_user.memos.where('content LIKE ?', "%#{params[:content]}%").order(created_at: :desc).page(params[:page]).per(5)
-    else
-      @memos = current_user.memos.order(created_at: :desc).page(params[:page]).per(5)
-    end
+    @q = current_user.memos.ransack(params[:q])
+    @memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   private
