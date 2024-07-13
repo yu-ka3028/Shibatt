@@ -3,6 +3,6 @@ class Memo < ApplicationRecord
   belongs_to :user
 
   def self.ransackable_attributes(auth_object = nil)
-    ["content", "created_at", "progress", "user_id"]
+    ["content", "created_at", "progress"]
   end
 end
