@@ -72,3 +72,5 @@ end
 gem 'sorcery'
 
 gem 'kaminari'
+
+gem 'ransack'

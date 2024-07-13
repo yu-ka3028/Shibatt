@@ -6,4 +6,8 @@
     <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
   </div>
 <% end %>
-<%= paginate @memos %>
+<%= form_with(url: user_memos_path, method: :get) do |f| %>
+  <%= f.search_field :content, placeholder: 'Search by content' %>
+  <%= f.submit 'Search' %>
+<% end %>
+<%= paginate @memos, params: { content: params[:content] } %>
