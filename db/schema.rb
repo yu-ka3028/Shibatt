@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_025219) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_063427) do
   create_table "memos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.text "content"
@@ -18,6 +18,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_025219) do
     t.datetime "updated_at", null: false
     t.boolean "progress", default: false
     t.index ["user_id"], name: "index_memos_on_user_id"
+  end
+
+  create_table "reflection_memo_memos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "reflection_memo_id"
+    t.bigint "memo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["memo_id"], name: "index_reflection_memo_memos_on_memo_id"
+    t.index ["reflection_memo_id"], name: "index_reflection_memo_memos_on_reflection_memo_id"
+  end
+
+  create_table "reflection_memos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "content"
+    t.boolean "progress", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -32,4 +49,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_025219) do
   end
 
   add_foreign_key "memos", "users"
+  add_foreign_key "reflection_memo_memos", "memos"
+  add_foreign_key "reflection_memo_memos", "reflection_memos"
 end
