@@ -1,0 +1,12 @@
+<h3>振り返りメモ一覧</h3>
+<% @reflection_memos.each do |ref_memo|%>
+  <div class="flex flex-row">
+    <%= ref_memo.content %>
+    <h6>▼選択したメモ</h6>
+  </div>
+  <% ref_memo.memos.each do |each_memo|%>
+    <%= each_memo.content %>
+    <br/>
+  <% end %>
+  <br/>
+<% end %>

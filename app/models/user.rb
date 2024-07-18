@@ -8,6 +8,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :memos
+  has_many :reflection_memos
 
   def progress_rate
     total_memo_count = memos.count

@@ -17,8 +17,9 @@ class MemosController < ApplicationController
   def index
     @q = current_user.memos.ransack(params[:q])
     @memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
+    @memo = @memos.first
   end
-
+  
   private
 
   def memo_params

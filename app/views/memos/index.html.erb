@@ -5,12 +5,19 @@
   <%= f.submit 'Search' %>
 <% end %>
 
-<% @memos.each do |memo| %>
-  <div class="memo">
-    <p><%= memo.content %></p>
-    <p><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></p>
-    <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
-  </div>
+<%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
+  <% @memos.each do |memo| %>
+    <div class="memo">
+      <p><%= memo.content %></p>
+      <p><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></p>
+      <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
+      <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
+      <%= label_tag "memo_#{memo.id}", memo.content %>
+    </div>
+  <% end %>
+
+  <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
 <% end %>
 
 <%= paginate @memos %>
+
