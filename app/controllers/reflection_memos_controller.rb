@@ -31,6 +31,8 @@ class ReflectionMemosController < ApplicationController
 
   def index
     @reflection_memos = current_user.reflection_memos
+    @q = current_user.reflection_memos.ransack(params[:q])
+    @reflection_memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   private
