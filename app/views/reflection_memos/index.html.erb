@@ -1,9 +1,12 @@
 <h3>振り返りメモ一覧</h3>
 <% @reflection_memos.each do |ref_memo|%>
   <div class="flex flex-row">
-    <%= ref_memo.content %>
-    <h6>▼選択したメモ</h6>
+    <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+    <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
   </div>
+  <%= ref_memo.content %>
+  <br/>
+  <h6>-----------------------------▼紐付けメモ----</h6>
   <% ref_memo.memos.each do |each_memo|%>
     <%= each_memo.content %>
     <br/>

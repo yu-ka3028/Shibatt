@@ -10,6 +10,7 @@ class ReflectionMemosController < ApplicationController
     @reflection_memo = current_user.reflection_memos.build(reflection_memo_params)
     # @reflection_memo = current_user.reflection_memos.new(reflection_memo_params)
     # pp @reflection_memo.memos
+    @reflection_memo.progress = true
 =begin    
     memo_ids = reflection_memo_params[:memo_ids]
     if memo_ids
