@@ -1,4 +1,10 @@
 <h3>振り返りメモ一覧</h3>
+<%= search_form_for @q, url: reflection_memos_path do |f| %>
+  <%= f.label :content_cont, 'Search by content' %>
+  <%= f.search_field :content_cont %>
+  <%= f.submit 'Search' %>
+<% end %>
+
 <% @reflection_memos.each do |ref_memo|%>
   <div class="flex flex-row">
     <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %></p>
@@ -13,3 +19,6 @@
   <% end %>
   <br/>
 <% end %>
+
+
+<%= paginate @reflection_memos %>
