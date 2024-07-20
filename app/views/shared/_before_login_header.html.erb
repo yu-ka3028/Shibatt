@@ -1,8 +1,8 @@
-<nav style="background-color: #D0B8A8; color: white; height: 60px;">
+<nav style="background-color: #D1D5DB; color: white; height: 60px;">
   <% if current_user %>
     <%= current_user.username %>
   <% else %>
-  ゲスト
+    TOP
   <%= link_to '【Login】', login_path %>
   <%= link_to "【Sign_up】", sign_up_path %>
   <% end %>
