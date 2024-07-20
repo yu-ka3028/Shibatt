@@ -1,0 +1,20 @@
+<h1>Edit Reflection Memo</h1>
+
+<%= form_with(model: @reflection_memo, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="field">
+    <%= form.label :progress %>
+    <%= form.hidden_field :progress, value: false %>
+    <%= form.check_box :progress %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to '【Back】', reflection_memos_path %>

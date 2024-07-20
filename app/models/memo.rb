@@ -7,4 +7,5 @@ class Memo < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     ["content", "created_at", "progress"]
   end
+  
 end

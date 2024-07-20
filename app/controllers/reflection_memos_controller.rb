@@ -35,9 +35,25 @@ class ReflectionMemosController < ApplicationController
     @reflection_memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
   end
 
+  def edit
+    @reflection_memo = current_user.reflection_memos.find(params[:id])
+    @memos = current_user.memos
+  end
+
+  def update
+    @reflection_memo = current_user.reflection_memos.find(params[:id])
+    if @reflection_memo.update(reflection_memo_params)
+      pp reflection_memo_params
+      redirect_to reflection_memos_path, notice: 'Reflection memo was successfully updated.'
+    else
+      @memos = current_user.memos
+      render :edit
+    end
+  end
+
   private
 
   def reflection_memo_params
-    params.require(:reflection_memo).permit(:content, memo_ids: [])
+    params.require(:reflection_memo).permit(:content, :progress, memo_ids: [])
   end
 end

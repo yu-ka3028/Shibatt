@@ -1,0 +1,42 @@
+<h1>Edit Memo</h1>
+
+<%= form_with(model: @memo, url: user_memo_path(@user, @memo), local: true) do |form| %>
+  <% if @memo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@memo.errors.count, "error") %> prohibited this memo from being saved:</h2>
+      <ul>
+      <% @memo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="field">
+    <%= form.label :progress %>
+    <%= form.hidden_field :progress, value: false %>
+    <%= form.check_box :progress %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<h6>-----------------------------▼振り返りメモ----</h6>
+<% if @memo.reflection_memo_memos.exists? %>
+  <% @memo.reflection_memo_memos.each do |reflection_memo_memo| %>
+    <% reflection_memo = reflection_memo_memo.reflection_memo %>
+    <p>Content: <%= reflection_memo.content %></p>
+    <p>Created at: <%= reflection_memo.created_at %></p>
+  <% end %>
+<% else %>
+  <p>関連する振り返りメモがありません。</p>
+<% end %>
+
+<%= link_to 'Back', user_memos_path(@user) %>

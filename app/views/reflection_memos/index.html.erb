@@ -9,6 +9,7 @@
   <div class="flex flex-row">
     <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %></p>
     <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
+    <%= link_to '編集', edit_reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
   </div>
   <%= ref_memo.content %>
   <br/>
@@ -19,6 +20,5 @@
   <% end %>
   <br/>
 <% end %>
-
 
 <%= paginate @reflection_memos %>

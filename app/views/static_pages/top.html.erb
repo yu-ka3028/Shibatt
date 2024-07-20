@@ -1,7 +1,36 @@
-<a href="https://gyazo.com/f56c05afb2a1a0f6e346a1b76861af36"><img src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" alt="Image from Gyazo" width="800"/></a>
+<a href="https://gyazo.com/f56c05afb2a1a0f6e346a1b76861af36"><img src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" alt="Image from Gyazo" width="500"/></a>
+<br>
 <% if @user %>
-  <!-- Open the modal using ID.showModal() method -->
-  <button class="btn" onclick="my_modal_5.showModal()">メモ作成</button>
+<button class="btn text-teal-800 bg-white hover:bg-teal-200" onclick="my_modal_6.showModal()">使い方</button>
+  <dialog id="my_modal_6" class="modal modal-bottom sm:modal-middle font-handwriting">
+    <div class="modal-box">
+      <h3 class="font-handwriting text-lg">サービスについて</h3>
+      <p class="py-4">
+      <h3>仕事や生活を良くするアイデア、気づき、感情...書き留めた貴重なメモを活用できていますか？</h3>
+      <br>
+      <h1><strong><u>1. コアな機能</u><strong></h1>
+      <h3>・思いつきを忘れず残すために、素早くメモを作成できます</h3>
+      <h3>・メモにはステータスをつけられます</h3>
+      <br>
+      <h1><strong><u>2. イチオシ機能</u><strong></h1>
+      <h3>・メモを書きっぱなしにしない、振り返り機能<h3>
+      <h3>・書き留めたメモを選択し紐付けした振り返りメモを作成できます</h3>
+      <br>
+      <h1><strong><u>3. 作成者の想い</u><strong></h1>
+      <h3>なんとなく、あの場所で、感情が揺れた時...</h3>
+      <h3>ぽっと湧いてくる自身の言葉を大切にしたい。</h3>
+      <h3>情報社会、興味や必要に迫られ1日のほとんどをインプットに使っています。</h3>
+      <h3>蓄積された情報を、シュバッと気ままにアウトプットしたい</h3>
+      <h3>そんな思いから、このサービスを作成しました。</h3>
+      </p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
       <h3 class="text-lg font-bold">メモ作成</h3>
@@ -22,5 +51,9 @@
       </div>
     </div>
   </dialog>
-<%= link_to "メモ一覧", user_memos_path(current_user) %>
+
+  <%= link_to "【メモ一覧】", user_memos_path(current_user) %>
+  <%= link_to "【振り返りメモ一覧】", reflection_memos_path %>
+  <button class="btn bg-teal-800 text-white hover:bg-teal-900" onclick="my_modal_5.showModal()">【メモ作成】</button>
+  
 <% end %>
