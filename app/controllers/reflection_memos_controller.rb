@@ -43,6 +43,7 @@ class ReflectionMemosController < ApplicationController
   def update
     @reflection_memo = current_user.reflection_memos.find(params[:id])
     if @reflection_memo.update(reflection_memo_params)
+      pp reflection_memo_params
       redirect_to reflection_memos_path, notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
@@ -53,6 +54,6 @@ class ReflectionMemosController < ApplicationController
   private
 
   def reflection_memo_params
-    params.require(:reflection_memo).permit(:content, memo_ids: [])
+    params.require(:reflection_memo).permit(:content, :progress, memo_ids: [])
   end
 end

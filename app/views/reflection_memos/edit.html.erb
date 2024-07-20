@@ -8,6 +8,7 @@
 
   <div class="field">
     <%= form.label :progress %>
+    <%= form.hidden_field :progress, value: false %>
     <%= form.check_box :progress %>
   </div>
 
@@ -16,4 +17,4 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', reflection_memos_path %>
+<%= link_to '【Back】', reflection_memos_path %>

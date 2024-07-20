@@ -1,7 +1,7 @@
 <a href="https://gyazo.com/f56c05afb2a1a0f6e346a1b76861af36"><img src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" alt="Image from Gyazo" width="800"/></a>
 <% if @user %>
   <!-- Open the modal using ID.showModal() method -->
-  <button class="btn" onclick="my_modal_5.showModal()">メモ作成</button>
+  <button class="btn" onclick="my_modal_5.showModal()">【メモ作成】</button>
   <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
       <h3 class="text-lg font-bold">メモ作成</h3>
@@ -22,5 +22,5 @@
       </div>
     </div>
   </dialog>
-<%= link_to "メモ一覧", user_memos_path(current_user) %>
+<%= link_to "【メモ一覧】", user_memos_path(current_user) %>
 <% end %>

@@ -1,12 +1,12 @@
-<nav>
+<nav style="background-color: #D0B8A8; color: white; height: 60px;">
   <% if current_user %>
     <%= current_user.username %>
-    <%= link_to 'Logout', logout_path, data: { turbo_method: :delete } %>
+    <%= link_to '【Logout】', logout_path, data: { turbo_method: :delete } %>
   <% else %>
     ゲスト
-    <%= link_to 'Login', login_path %>
-    <%= link_to "Sign_up", sign_up_path %>
+    <%= link_to '【Login】', login_path %>
+    <%= link_to "【Sign_up】", sign_up_path %>
   <% end %>
   
-  <%= link_to 'Home', root_path %>
+  <%= link_to '【Home】', root_path %>
 </nav>
