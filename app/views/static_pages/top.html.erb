@@ -34,15 +34,15 @@
   <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box">
       <h3 class="text-lg font-bold">メモ作成</h3>
-      <%= form_with model: @memo, url: user_memos_path(@user), local: true do |form| %>
+      <%= form_with model: @memo, url: user_memos_path(@user), local: true do |f| %>
         <div class="form-group">
-          <%= form.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
+          <%= f.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
         </div>
         <div class="form-group">
-          <%= form.submit "作成", class: "btn" %>
+          <%= f.submit "作成", class: "btn" %>
         </div>
       <% end %>
-      <p class="py-4">ここなんか書きますかねえ</p>
+      <p class="py-4">メモ作成がモーダルでできる</p>
       <div class="modal-action">
         <form method="dialog">
           <!-- if there is a button in form, it will close the modal -->
@@ -52,8 +52,8 @@
     </div>
   </dialog>
 
-  <%= link_to "【メモ一覧】", user_memos_path(current_user) %>
-  <%= link_to "【振り返りメモ一覧】", reflection_memos_path %>
+  <%= link_to "【memo】", user_memos_path(current_user) %>
+  <%= link_to "【ref_memo】", reflection_memos_path %>
   <button class="btn bg-teal-800 text-white hover:bg-teal-900" onclick="my_modal_5.showModal()">【メモ作成】</button>
   
 <% end %>

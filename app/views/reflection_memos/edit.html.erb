@@ -1,19 +1,19 @@
-<h1>Edit Reflection Memo</h1>
+<h1>振り返りメモ編集</h1>
 
-<%= form_with(model: @reflection_memo, local: true) do |form| %>
+<%= form_with(model: @reflection_memo, local: true) do |f| %>
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
   </div>
 
   <div class="field">
-    <%= form.label :progress %>
-    <%= form.hidden_field :progress, value: false %>
-    <%= form.check_box :progress %>
+    <%= f.label :progress %>
+    <%= f.hidden_field :progress, value: false %>
+    <%= f.check_box :progress %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>
 

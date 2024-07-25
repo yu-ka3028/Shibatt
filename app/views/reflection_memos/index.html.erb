@@ -3,6 +3,7 @@
   <%= f.label :content_cont, 'Search by content' %>
   <%= f.search_field :content_cont %>
   <%= f.submit 'Search' %>
+  <h6>*******************************</h6>
 <% end %>
 
 <% @reflection_memos.each do |ref_memo|%>
@@ -13,12 +14,13 @@
   </div>
   <%= ref_memo.content %>
   <br/>
-  <h6>-----------------------------▼紐付けメモ----</h6>
+  <h6>............................▼紐付けメモ............</h6>
   <% ref_memo.memos.each do |each_memo|%>
     <%= each_memo.content %>
     <br/>
   <% end %>
   <br/>
+  <h6>------------------------------------------</h6>
 <% end %>
 
 <%= paginate @reflection_memos %>

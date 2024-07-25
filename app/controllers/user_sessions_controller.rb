@@ -1,16 +1,5 @@
 class UserSessionsController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
-  def index
-  end
-
-  def show
-  end
-
-  def new
-  end
-
-  def edit
-  end
 
   def create
     @user = login(params[:email], params[:password])
@@ -21,9 +10,6 @@ class UserSessionsController < ApplicationController
       flash.now[:alert] = 'Login failed'
       render :new
     end
-  end
-
-  def update
   end
 
   def destroy

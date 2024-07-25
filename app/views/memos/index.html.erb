@@ -3,6 +3,7 @@
   <%= f.label :content_cont, 'Search by content' %>
   <%= f.search_field :content_cont %>
   <%= f.submit 'Search' %>
+  <h6>************************************</h6>
 <% end %>
 
 <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
@@ -14,6 +15,7 @@
       <%= label_tag "memo_#{memo.id}", memo.content %>
       <%= link_to '編集', edit_user_memo_path(@user, memo), class: 'btn btn-primary' %>
       <%#= link_to '削除', user_memo_path(@user, memo), method: :delete, class: 'btn btn-danger' %>
+      <h6>---------------------------------</h6>
     </div>
   <% end %>
 

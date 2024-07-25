@@ -10,7 +10,7 @@ class MemosController < ApplicationController
     if @memo.save
       redirect_to user_memos_path(current_user)
     else
-      render :new
+      redirect_to root_path
     end
   end
 
@@ -18,7 +18,6 @@ class MemosController < ApplicationController
     @user = User.find(params[:user_id])
     @q = current_user.memos.ransack(params[:q])
     @memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
-    @memo = @memos.first
   end
 
   def show
@@ -32,6 +31,7 @@ class MemosController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:user_id])
     @memo = Memo.find(params[:id])
     if @memo.update(memo_params)
       redirect_to user_memos_path(current_user)
