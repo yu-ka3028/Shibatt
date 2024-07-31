@@ -10,7 +10,9 @@ class MemosController < ApplicationController
     if @memo.save
       redirect_to user_memos_path(current_user)
     else
-      redirect_to root_path
+      # redirect_to root_path
+      render "static_pages/top"
+      # render :top
     end
   end
 
