@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   def top 
     @user = current_user
     @memo = @user.memos.build if @user
-    @progress_rate = @user.progress_rate if @user
+    @progress_rate = @user&.progress_rate || { in_progress: 0, completed: 0 }
     pp @progress_rate
   end
 end
