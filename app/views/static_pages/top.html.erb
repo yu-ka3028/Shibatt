@@ -41,6 +41,9 @@
           <%= f.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
         </div>
         <div class="form-group">
+          <%= f.text_field :memo_tags, value: (@memo_tags.map(&:name).join(',') || ""), class: "form-control", placeholder: "タグ" %>
+        <div class="form-group">
+        pp @memo_tags
           <%= f.submit "作成", class: "btn" %>
         </div>
       <% end %>
