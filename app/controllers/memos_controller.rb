@@ -5,14 +5,17 @@ class MemosController < ApplicationController
   end
 
   def create
-    @memo = current_user.memos.build(memo_params)
+    # @memo = current_user.memos.build(memo_params)
+    @memo = current_user.memos.build(memo_params.except(:memo_tags))
     @memo.progress = false
+    if params[:memo][:memo_tags]
+      # @memo.memo_tags = params[:memo][:memo_tags].split(',')
+      @memo.memo_tags(params[:memo][:memo_tags].split(','))
+    end
     if @memo.save
       redirect_to user_memos_path(current_user)
     else
-      # redirect_to root_path
       render "static_pages/top"
-      # render :top
     end
   end
 
@@ -20,22 +23,28 @@ class MemosController < ApplicationController
     @user = User.find(params[:user_id])
     @q = current_user.memos.ransack(params[:q])
     @memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
+    @memo_tags = Tag.all
   end
 
   def show
     @user = User.find(params[:user_id])
     @memo = Memo.find(params[:id])
+    @memo_tags = @memo.memo_tags
   end
 
   def edit
     @user = User.find(params[:user_id])
     @memo = @user.memos.find(params[:id])
+    @memo_tags = @memo.tags.pluck(:name).join(',')
   end
 
   def update
     @user = User.find(params[:user_id])
     @memo = Memo.find(params[:id])
-    if @memo.update(memo_params)
+    memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
+    if @memo.update(memo_params.except(:memo_tags))
+      @memo.memo_tags.destroy_all
+      @memo.save_memo_tags(memo_tags)
       redirect_to user_memos_path(current_user)
     else
       render :edit

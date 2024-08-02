@@ -11,6 +11,13 @@
     <div class="memo">
       <p><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></p>
       <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
+      <p>Tags: 
+        <% memo.tag_names.split(', ').each do |tag_name| %>
+          <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <%= tag_name %>
+          </span>
+        <% end %>
+      </p>
       <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
       <%= label_tag "memo_#{memo.id}", memo.content %>
       <%= link_to '編集', edit_user_memo_path(@user, memo), class: 'btn btn-primary' %>
