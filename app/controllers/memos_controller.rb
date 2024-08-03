@@ -5,13 +5,10 @@ class MemosController < ApplicationController
   end
 
   def create
-    # @memo = current_user.memos.build(memo_params)
     @memo = current_user.memos.build(memo_params.except(:memo_tags))
     @memo.progress = false
-    if params[:memo][:memo_tags]
-      # @memo.memo_tags = params[:memo][:memo_tags].split(',')
-      @memo.memo_tags(params[:memo][:memo_tags].split(','))
-    end
+    memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
+    @memo.memo_tags(memo_tags) if memo_tags
     if @memo.save
       redirect_to user_memos_path(current_user)
     else
@@ -39,13 +36,14 @@ class MemosController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:user_id])
-    @memo = Memo.find(params[:id])
-    memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
-    if @memo.update(memo_params.except(:memo_tags))
-      @memo.memo_tags.destroy_all
-      @memo.save_memo_tags(memo_tags)
-      redirect_to user_memos_path(current_user)
+    @memo = current_user.memos.find(params[:id])
+    @memo.assign_attributes(memo_params.except(:memo_tags))
+    @memo.progress = false if params[:memo][:progress] == "0"
+    if params[:memo][:memo_tags]
+      @memo.memo_tags = params[:memo][:memo_tags].split(',')
+    end
+    if @memo.save
+      redirect_to user_memos_path(current_user), notice: 'メモを更新しました'
     else
       render :edit
     end
