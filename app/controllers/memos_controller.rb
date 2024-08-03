@@ -61,6 +61,18 @@ class MemosController < ApplicationController
     end
   end
 
+  def tag_search
+    if params[:tag].present?
+      @memos = Memo.tag_search(params[:tag]).distinct.page(params[:page]).per(5)
+    else
+      @memos = Memo.all.page(params[:page]).per(5)
+    end
+    @memo_tags = Tag.all
+    @user = current_user
+    @q = Memo.ransack(params[:q])  # Ransack::Searchオブジェクトを作成
+    render :index
+  end
+
   private
 
   def memo_params

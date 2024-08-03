@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       # resources :reflection_memos
     end
   end
+
+  
   
   get "sign_up", to: "users#new"
   get 'login', to: 'user_sessions#new'
@@ -18,4 +20,5 @@ Rails.application.routes.draw do
   get 'reflection_memos/:id/edit', to: 'reflection_memos#edit', as: 'edit_reflection_memo'
   patch 'reflection_memos/:id', to: 'reflection_memos#update', as: 'reflection_memo'
 
+  get "memos/tag_search", to: "memos#tag_search", as: "tag_search"
 end
