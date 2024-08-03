@@ -1,5 +1,8 @@
 <h3>メモ一覧</h3>
-<%= search_form_for @q, url: user_memos_path do |f| %>
+<% @memo_tags.each do |tag| %>
+  <%= link_to tag.name, tag_search_path(tag: tag.name) %>
+<% end %>
+<%= search_form_for @q, url: user_memos_path(user_id: @user.id) do |f| %>
   <%= f.label :content_cont, 'Search by content' %>
   <%= f.search_field :content_cont %>
   <%= f.submit 'Search' %>

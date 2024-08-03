@@ -39,4 +39,8 @@ class Memo < ApplicationRecord
   def tag_names
     self.tags.map(&:name).join(', ')
   end
+
+  def self.tag_search(tag_name)
+    joins(:tags).where(tags: { name: tag_name })
+  end
 end
