@@ -26,7 +26,6 @@ class MemosController < ApplicationController
   def show
     @user = User.find(params[:user_id])
     @memo = Memo.find(params[:id])
-    @memo_tags = @memo.memo_tags
   end
 
   def edit
@@ -51,12 +50,9 @@ class MemosController < ApplicationController
   
   def destroy
     @memo = Memo.find(params[:id])
-    if @memo.reflections.any?
-      redirect_to edit_user_memo_path(@user, @memo)
-    else
-      @memo.destroy
-      redirect_to user_memos_path(@user), notice: 'Memo was successfully deleted.'
-    end
+    @memo.reflection_memo_memos.destroy_all
+    @memo.destroy
+    redirect_to user_memos_path(current_user), notice: 'Memo was successfully destroyed.'
   end
 
   def tag_search
@@ -67,7 +63,7 @@ class MemosController < ApplicationController
     end
     @memo_tags = Tag.all
     @user = current_user
-    @q = Memo.ransack(params[:q])  # Ransack::Searchオブジェクトを作成
+    @q = Memo.ransack(params[:q]) 
     render :index
   end
 

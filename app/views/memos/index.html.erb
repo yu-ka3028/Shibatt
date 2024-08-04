@@ -24,7 +24,9 @@
       <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
       <%= label_tag "memo_#{memo.id}", memo.content %>
       <%= link_to '編集', edit_user_memo_path(@user, memo), class: 'btn btn-primary' %>
-      <%#= link_to '削除', user_memo_path(@user, memo), method: :delete, class: 'btn btn-danger' %>
+      <% unless memo.progress %>
+        <%= link_to '削除', user_memo_path(@user, memo), method: :delete, data: { turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
       <h6>---------------------------------</h6>
     </div>
   <% end %>

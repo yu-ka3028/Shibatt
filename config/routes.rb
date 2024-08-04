@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
   root "static_pages#top"
 
-  resources :users, only: %i[new create] do
+  resources :users do
     resources :memos do
       # resources :reflection_memos
     end
   end
-
-  
   
   get "sign_up", to: "users#new"
   get 'login', to: 'user_sessions#new'
