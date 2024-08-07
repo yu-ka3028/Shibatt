@@ -25,6 +25,6 @@ Rails.application.config.sorcery.configure do |config|
   config.line.callback_url = 'https://shibatt-dcf5dffc0d02.herokuapp.com/oauth/callback?provider=line'
 
   # テスト環境
-  config.line.callback_url = 'http://localhost:3000/oauth/callback?provider=line'
+  # config.line.callback_url = 'http://localhost:3000/oauth/callback?provider=line'
   
 end
