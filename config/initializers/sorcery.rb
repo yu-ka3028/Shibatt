@@ -9,7 +9,7 @@ Rails.application.config.sorcery.configure do |config|
   # -- external --
   config.external_providers = %i[line]
 
-  config.line.key = Rails.application.credentials.dig(:line, :channel_id)
+  config.line.key = ENV['LINE_CHANNEL_ID'].to_s
   config.line.secret = Rails.application.credentials.dig(:line, :channel_secret)
   config.line.callback_url = 'http://localhost:3000/oauth/callback?provider=line'
   config.line.scope = 'profile'
