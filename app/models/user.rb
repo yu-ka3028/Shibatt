@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :memos
   has_many :reflection_memos
 
+  has_many :authentications, :dependent => :destroy
+  accepts_nested_attributes_for :authentications
+
   def progress_rate
     total_memo_count = memos.count
     completed_memo_count = memos.where(progress: true).count
