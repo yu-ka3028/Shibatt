@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   patch 'reflection_memos/:id', to: 'reflection_memos#update', as: 'reflection_memo'
 
   get "memos/tag_search", to: "memos#tag_search", as: "tag_search"
+
+  get 'oauths/:provider', to: 'oauths#oauth', as: :oauths_oauth
+  
 end
