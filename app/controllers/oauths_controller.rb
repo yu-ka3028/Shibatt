@@ -31,10 +31,4 @@ class OauthsController < ApplicationController
   def auth_params
     params.permit(:code, :provider, :state)
   end
-
-<<<<<<< Updated upstream
-
 end
-=======
-end
->>>>>>> Stashed changes
