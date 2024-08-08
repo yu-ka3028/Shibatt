@@ -34,4 +34,4 @@ class OauthsController < ApplicationController
   #   params.permit(:code, :provider)
   # end
 
-end
+  # end
