@@ -4,7 +4,7 @@ class OauthsController < ApplicationController
   # sends the user on a trip to the provider,
   # and after authorizing there back to the callback url.
   def oauth
-    login_at(params[:provider], redirect_uri: callback_url)
+    login_at(params[:provider], redirect_uri: oauth_callback_url(params[:provider]))
   end
 
   def callback
