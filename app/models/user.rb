@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
 
-  validates :email, uniqueness: true, unless: :using_oauth?
+  validates :email, uniqueness: true, allow_blank: true, unless: :using_oauth?
 
   has_many :memos
   has_many :reflection_memos
