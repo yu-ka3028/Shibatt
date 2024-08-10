@@ -20,8 +20,10 @@ Rails.application.routes.draw do
 
   get "memos/tag_search", to: "memos#tag_search", as: "tag_search"
 
+  get 'oauths/oauth', to: 'oauths#oauth'
+  get 'oauth/callback', to: 'oauths#callback'
   get 'oauth/:provider', to: 'oauths#oauth', as: 'oauth'
-  # get 'oauth/callback', to: 'oauths#callback', as: 'oauth_callback'
-  get 'oauth/:provider/callback', to: 'oauths#callback', as: 'oauth_callback'
+  post "oauth/callback", to: "oauths#callback"
+  # get 'oauth/:provider/callback', to: 'oauths#callback', as: 'oauth_callback'
   
 end
