@@ -1,17 +1,21 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
-  validates :username, presence: true, length: { minimum: 1 }
-  validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:crypted_password] }
-  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
-  validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
+  validates :username, presence: true, length: { minimum: 1 }, unless: :using_oauth?
+  validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
+  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
+  validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, unless: :using_oauth?
 
   has_many :memos
   has_many :reflection_memos
 
-  has_many :authentications, :dependent => :destroy
+  has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
+
+  def using_oauth?
+    authentications.present?
+  end
 
   def progress_rate
     total_memo_count = memos.count
