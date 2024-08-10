@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
 
-  validates :email, uniqueness: true, allow_blank: true, unless: :using_oauth?
+  # validates :email, uniqueness: true, allow_blank: true, unless: :using_oauth?
 
   has_many :memos
   has_many :reflection_memos
@@ -26,4 +26,32 @@ class User < ApplicationRecord
   
     { completed: completed_percentage, in_progress: in_progress_percentage }
   end
+
+  def self.create_from(user_hash, provider)
+    Rails.logger.debug("User hash: #{user_hash.inspect}")
+    return nil if user_hash.nil?
+  
+    username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
+    
+    user = User.new(
+      username: username,
+      password: SecureRandom.hex(16)
+    )
+  
+    if user.save
+      user.authentications.create(provider: provider, uid: user_hash[:userId])
+    else
+      
+    end
+  
+    user
+  end
+
+  def self.create_from(provider)
+    user_hash = sorcery_fetch_user_hash(provider)
+    Rails.logger.debug("User hash: #{user_hash.inspect}")
+    @user = User.create_from(user_hash, provider)
+    @user || raise("Failed to create user from #{provider}")
+  end
+
 end
