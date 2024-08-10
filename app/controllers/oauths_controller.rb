@@ -9,29 +9,27 @@ class OauthsController < ApplicationController
 
   def callback
     provider = params[:provider]
+    Rails.logger.debug("Provider: #{provider}")
+    
     if @user = login_from(provider)
-      
-      redirect_to root_path, :notice => "Logged in from #{provider.titleize}!"
+      Rails.logger.debug("Existing user logged in: #{@user.inspect}")
+      redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
-        @user = login_from(provider) 
-        reset_session # protect from session fixation attack
+        @user = create_from(provider)
+        Rails.logger.debug("New user created: #{@user.inspect}")
+        reset_session
         auto_login(@user)
-        redirect_to root_path, :notice => "Logged in from #{provider.titleize}!"
-      rescue
-        redirect_to root_path, :alert => "Failed to login from #{provider.titleize}!"
+        Rails.logger.debug("Auto login successful: #{logged_in?}")
+        redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
+      rescue => e
+        Rails.logger.error("ユーザー作成に失敗: #{e.message}")
+        Rails.logger.error(e.backtrace.join("\n"))
+        redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
       end
     end
   end
-
-  def create_from!(provider)
-    auth = request.env['omniauth.auth']
-    User.create! do |user|
-      user.username = auth['info']['name']
-      user.authentications.build(provider: provider, uid: auth['uid'])
-    end
-  end
-
+  
   private
 
   def auth_params

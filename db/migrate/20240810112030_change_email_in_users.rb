@@ -3,3 +3,4 @@ class ChangeEmailInUsers < ActiveRecord::Migration[7.1]
     change_column :users, :email, :string, null: true
   end
 end
+

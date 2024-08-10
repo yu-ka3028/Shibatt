@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.build(user_params)
+    @user = User.new(user_params)
     if @user.save
       auto_login(@user)
       redirect_to root_path, notice: 'User was successfully created.'
@@ -18,6 +18,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation)
+      params.require(:user).permit(:username, :password, :password_confirmation)
     end
 end

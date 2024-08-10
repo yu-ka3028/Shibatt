@@ -14,6 +14,8 @@ Rails.application.config.sorcery.configure do |config|
 
   config.user_config do |user|
     user.authentications_class = Authentication
-    config.line.user_info_mapping = { username: 'name' }
+    user.username_attribute_names = [:username]
   end
+  
+  config.line.user_info_mapping = { username: 'displayName' }
 end
