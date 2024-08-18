@@ -11,8 +11,7 @@ class UsersController < ApplicationController
       auto_login(@user)
       redirect_to root_path, notice: 'User was successfully created.'
     else
-      Rails.logger.debug(@user.errors.full_messages.join("\n"))
-      render "new"
+      redirect_to new_user_path, alert: 'User could not be created.'
     end
   end
 

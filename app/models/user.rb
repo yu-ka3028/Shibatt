@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
-  validates :username, presence: true, length: { minimum: 1 }, unless: :using_oauth?
+  validates :username, presence: true, length: { minimum: 4 }, unless: :using_oauth?
   validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }, unless: :using_oauth?
