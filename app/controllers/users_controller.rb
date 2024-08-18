@@ -11,8 +11,13 @@ class UsersController < ApplicationController
       auto_login(@user)
       redirect_to root_path, notice: 'User was successfully created.'
     else
+<<<<<<< Updated upstream
       Rails.logger.debug(@user.errors.full_messages.join("\n"))
       render "new"
+=======
+      flash.now[:alert] = 'User could not be created.'
+      render :new, status: :unprocessable_entity
+>>>>>>> Stashed changes
     end
   end
 
