@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   # get 'oauth/:provider/callback', to: 'oauths#callback', as: 'oauth_callback'
   
   post '/' => 'linebot#callback'
+  post '/webhook', to: 'linebot#callback'
+
 end
