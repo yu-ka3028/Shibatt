@@ -14,12 +14,20 @@ class LinebotController < ApplicationController
           user = User.find_by(line_user_id: line_user_id)
 
           if user
-            # ユーザーが登録されている場合、メモを保存
-            user.memos.create(content: event.message['text'])
-            message = {
-              type: 'text',
-              text: "メモを保存しました: #{event.message['text']}"
-            }
+            memo = user.memos.build(content: event.message['text'])
+            tag = Tag.find_or_create_by(name: 'from_LINE')
+            memo.tags << tag
+            if memo.save
+              message = {
+                type: 'text',
+                text: "メモを保存しました: #{event.message['text']}"
+              }
+            else
+              message = {
+                type: 'text',
+                text: "メモの保存に失敗しました: #{memo.errors.full_messages.join(', ')}"
+              }
+            end
           else
             # ユーザーが未登録の場合、新規登録を促すメッセージを送信
             message = {
@@ -27,6 +35,8 @@ class LinebotController < ApplicationController
               text: "あなたはまだ登録されていません。以下のURLから新規登録してください。\n#{new_user_url}"
             }
           end
+          
+          client.reply_message(event['replyToken'], message)
 
           # message = {
           #   type: 'text',
