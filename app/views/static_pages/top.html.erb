@@ -24,11 +24,7 @@
   </div>
 </div>
 
-<div style="display: flex; justify-content: center;">
-  <a href="https://gyazo.com/f56c05afb2a1a0f6e346a1b76861af36">
-    <img src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" alt="Image from Gyazo" width="200"/></a>
-</div>
-  <br>
+<br>
 
 <div class="flex w-full items-center justify-center flex-col lg:flex-row">
   <div class="card bg-base-300 rounded-box grid h-auto flex-grow place-items-center">
@@ -97,35 +93,33 @@
     
   <div class="divider lg:divider-horizontal"></div>
   <div class="card bg-base-300 rounded-box grid h-auto flex-grow place-items-center">
-
-  <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box">
-      <h3 class="text-lg font-bold">メモ作成</h3>
-      <%= form_with model: @memo, url: user_memos_path(@user), local: true do |f| %>
-        <div class="form-group">
-          <%= f.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
+  <% if @user %>
+    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold">メモ作成</h3>
+        <%= form_with model: @memo, url: user_memos_path(@user), local: true do |f| %>
+          <div class="form-group">
+            <%= f.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
+          </div>
+          <div class="form-group">
+            <%= f.text_field :memo_tags, value: (@memo_tags.map(&:name).join(',') || ""), class: "form-control", placeholder: "タグ" %>
+          <div class="form-group">
+            <%= f.submit "作成", class: "btn" %>
+          </div>
+        <% end %>
+        <p class="py-4">メモ作成がモーダルでできる</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </form>
         </div>
-        <div class="form-group">
-          <%= f.text_field :memo_tags, value: (@memo_tags.map(&:name).join(',') || ""), class: "form-control", placeholder: "タグ" %>
-        <div class="form-group">
-          <%= f.submit "作成", class: "btn" %>
-        </div>
-      <% end %>
-      <p class="py-4">メモ作成がモーダルでできる</p>
-      <div class="modal-action">
-        <form method="dialog">
-          <!-- if there is a button in form, it will close the modal -->
-          <button class="btn">Close</button>
-        </form>
       </div>
-    </div>
-  </dialog>
-  
-  
-  # <% if @user %>
+    </dialog>
+  <% end %>
   <div class="flex">
-    <%= link_to "【memo】", user_memos_path(current_user) %>
-    <%= link_to "【ref_memo】", reflection_memos_path %>
+    <%= link_to "【memo】", user_memos_path(current_user) if current_user %>
+    <%= link_to "【ref_memo】", reflection_memos_path if current_user %>
     <button class="btn bg-teal-800 text-white hover:bg-teal-900" onclick="my_modal_5.showModal()">【メモ作成】</button>
   </div>
-<% end %>
+</div>
