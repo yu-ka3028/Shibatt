@@ -30,7 +30,6 @@
 </div>
   <br>
 
-<% if @user %>
 <div class="flex w-full items-center justify-center flex-col lg:flex-row">
   <div class="card bg-base-300 rounded-box grid h-auto flex-grow place-items-center">
     <h6>In Progress</h6>
@@ -123,7 +122,7 @@
   </dialog>
   
   
-
+  # <% if @user %>
   <div class="flex">
     <%= link_to "【memo】", user_memos_path(current_user) %>
     <%= link_to "【ref_memo】", reflection_memos_path %>
