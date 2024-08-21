@@ -35,6 +35,7 @@ class OauthsController < ApplicationController
             text: "ようこそ！このbotを友達登録することで、素早くアプリへメモを作成する機能などを利用できます。"
           }
           response = client.push_message(@user.line_user_id, message)
+          Rails.logger.debug("Response from LINE: #{response.inspect}")
         end
   
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
