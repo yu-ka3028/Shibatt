@@ -34,7 +34,8 @@ class ReflectionMemosController < ApplicationController
       redirect_to reflection_memos_path, notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
-      render :edit
+      flash[:alert] = @reflection_memo.errors.full_messages
+      render :edit, status: :unprocessable_entity
     end
   end
 

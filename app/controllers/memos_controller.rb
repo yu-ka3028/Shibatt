@@ -12,7 +12,7 @@ class MemosController < ApplicationController
     if @memo.save
       redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
     else
-      redirect_to root_path , alert: 'メモの作成に失敗しました'
+      redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
     end
   end
 
