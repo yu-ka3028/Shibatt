@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
       redirect_back_or_to root_path, notice: 'Login successful'
     else
       flash.now[:alert] = 'Login failed'
-      render :login_path, status: :unauthorized
+      render :new, status: :unauthorized
     end
   end
 
