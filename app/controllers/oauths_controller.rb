@@ -18,6 +18,8 @@ class OauthsController < ApplicationController
       begin
         @user = create_from(provider)
         Rails.logger.debug("New user created: #{@user.inspect}")
+        # LINEから取得したuserIdをline_user_idに保存
+        @user.update(line_user_id: @user.authentications.find_by(provider: provider).uid)
         reset_session
         auto_login(@user)
         Rails.logger.debug("Auto login successful: #{logged_in?}")

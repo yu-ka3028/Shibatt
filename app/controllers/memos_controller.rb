@@ -10,9 +10,9 @@ class MemosController < ApplicationController
     memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
     @memo.memo_tags(memo_tags) if memo_tags
     if @memo.save
-      redirect_to user_memos_path(current_user)
+      redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
     else
-      render "static_pages/top"
+      redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
     end
   end
 

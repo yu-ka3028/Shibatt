@@ -12,6 +12,7 @@ class UsersController < ApplicationController
       redirect_to root_path, notice: 'User was successfully created.'
     else
       flash.now[:alert] = 'User could not be created.'
+
       render :new, status: :unprocessable_entity
     end
   end
