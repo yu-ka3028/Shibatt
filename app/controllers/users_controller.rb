@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       auto_login(@user)
       redirect_to root_path, notice: 'User was successfully created.'
     else
-      flash.now[:alert] = 'User creation failed.'
+      flash.now[:alert] = @user.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
