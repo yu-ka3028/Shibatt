@@ -48,25 +48,6 @@ class OauthsController < ApplicationController
     end
   end
 
-  def oauth
-    provider = auth_params[:provider]
-    if provider == 'line'
-      client_id = Rails.application.credentials.dig(:line, :client_id)
-      redirect_uri = callback_url(provider)
-      state = SecureRandom.hex(10)
-      scope = 'profile openid'
-      bot_prompt = 'normal'
-      auth_url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=#{scope}&bot_prompt=#{bot_prompt}"
-      redirect_to auth_url
-    else
-      login_at(provider)
-    end
-  end
-
-  def callback_url(provider)
-    url_for(controller: 'oauths', action: 'callback', provider: provider, only_path: false)
-  end
-  
   private
 
   def auth_params
