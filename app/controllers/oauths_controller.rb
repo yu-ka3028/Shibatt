@@ -23,18 +23,20 @@ class OauthsController < ApplicationController
         reset_session
         auto_login(@user)
         Rails.logger.debug("Auto login successful: #{logged_in?}")
-
+  
         # 新規ユーザーが作成されたときに友達登録を促すメッセージを送信
-        client = Line::Bot::Client.new { |config|
-          config.channel_secret = Rails.application.credentials.dig(:linebot, :channel_secret)
-          config.channel_token = Rails.application.credentials.dig(:linebot, :channel_token)
-        }
-        message = {
-          type: 'text',
-          text: "ようこそ！このbotを友達登録することで、素早くアプリへメモを作成する機能などを利用できます。"
-        }
-        response = client.push_message(@user.line_user_id, message)
-
+        if provider == 'line'
+          client = Line::Bot::Client.new { |config|
+            config.channel_secret = Rails.application.credentials.dig(:linebot, :channel_secret)
+            config.channel_token = Rails.application.credentials.dig(:linebot, :channel_token)
+          }
+          message = {
+            type: 'text',
+            text: "ようこそ！このbotを友達登録することで、素早くアプリへメモを作成する機能などを利用できます。"
+          }
+          response = client.push_message(@user.line_user_id, message)
+        end
+  
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         Rails.logger.error("ユーザー作成に失敗: #{e.message}")
