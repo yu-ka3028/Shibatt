@@ -8,22 +8,29 @@
   </svg>
 <% end %>
 
-
 <% @reflection_memos.each do |ref_memo|%>
-  <div class="flex flex-row">
-    <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %></p>
-    <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
-    <%= link_to '編集', edit_reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
-  </div>
-  <%= ref_memo.content %>
-  <br/>
-  <h6>............................▼紐付けメモ............</h6>
-  <% ref_memo.memos.each do |each_memo|%>
-    <%= each_memo.content %>
-    <br/>
-  <% end %>
-  <br/>
-  <h6>------------------------------------------</h6>
+  <details class="collapse bg-base-200" style="justify-content: flex-end; width: 50%; margin: auto;">
+    <summary class="collapse-title text-xl font-medium">
+    <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
+      <div class="collapse-title bg-primary text-primary-content ">
+        <div class="flex flex-row ">
+          <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+          <%= link_to '編集', edit_reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+      <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+        <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
+        <%= ref_memo.content %>
+      </div>
+    </summary>
+    <div class="collapse-content">
+      <h6>《紐付けメモ》</h6>
+      <% ref_memo.memos.each do |each_memo|%>
+        <p><%= each_memo.content %></p>
+      <% end %>
+    </div>
+  </details>
 <% end %>
 
 <%= paginate @reflection_memos %>
