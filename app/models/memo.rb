@@ -5,9 +5,8 @@ class Memo < ApplicationRecord
   has_many :tags, through: :memo_tags
   has_many :reflection_memo_memos
   has_many :reflection_memos, through: :reflection_memo_memos
-
+  
   validates :content, presence: true, length: { maximum: 255 }
-
   def self.ransackable_attributes(auth_object = nil)
     ["content", "created_at", "progress"]
   end
