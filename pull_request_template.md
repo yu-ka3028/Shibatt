@@ -1,5 +1,5 @@
 ## 関連issue
-Closes yu-ka3028/GraduationProject_RUNTEQ#11
+Closes yu-ka3028/Shibatt#
 
 ## 概要
 <!--このPull Requestの目的を簡潔に説明してください。-->
