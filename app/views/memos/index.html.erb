@@ -13,26 +13,30 @@
 
 <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
   <% @memos.each do |memo| %>
-    <div class="memo">
-      <p><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></p>
-      <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
-      <p>Tags: 
-        <% memo.tag_names.split(', ').each do |tag_name| %>
-          <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            <%= tag_name %>
-          </span>
-        <% end %>
-      </p>
-      <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
-      <%= label_tag "memo_#{memo.id}", memo.content %>
-      <%= link_to '編集', edit_user_memo_path(@user, memo), class: 'btn btn-primary' %>
-      <% unless memo.progress %>
-        <%= link_to '削除', user_memo_path(@user, memo), method: :delete, data: { turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-      <% end %>
-      <h6>---------------------------------</h6>
+    <div class="card bg-orange-200 text-black w-96 m-2">
+      <div class="card-body">
+        <h2 class="card-title"><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></h2>
+        <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
+        <p>Tags: 
+          <% memo.tag_names.split(', ').each do |tag_name| %>
+            <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded inline-block">
+              <%= tag_name %>
+            </span>
+          <% end %>
+        </p>
+        <div class="flex items-center">
+          <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
+          <%= label_tag "memo_#{memo.id}", memo.content %>
+        </div>
+        <div class="card-actions justify-end">
+          <%= link_to '編集', edit_user_memo_path(@user, memo), class: 'btn btn-primary' %>
+          <% unless memo.progress %>
+            <%= link_to '削除', user_memo_path(@user, memo), method: :delete, data: { turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <% end %>
+        </div>
+      </div>
     </div>
   <% end %>
-
   <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
 <% end %>
 

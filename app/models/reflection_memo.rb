@@ -3,7 +3,8 @@ class ReflectionMemo < ApplicationRecord
   has_many :reflection_memo_memos
   has_many :memos, through: :reflection_memo_memos
 
-  validates :content, presence: true, length: { maximum: 5 }
+  validates :content, presence: true, length: { maximum: 255 }
+  
   after_save :update_memo_progress
 
   def self.ransackable_attributes(auth_object = nil)
