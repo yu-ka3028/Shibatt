@@ -22,7 +22,7 @@ class Memo < ApplicationRecord
     { in_progress: in_progress_rate, completed: completed_rate }
   end
   
-  def memo_tags(tags)
+  def memo_tags(tags = "")
     current_tags = self.tags.pluck(:name)
     tags = tags.split(',') if tags.is_a?(String)
   
