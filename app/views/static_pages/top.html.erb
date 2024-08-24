@@ -134,13 +134,16 @@
                 <%= f.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
               </div>
               <div class="form-group">
-                <%= f.text_field :memo_tags, value: (@memo_tags.map(&:name).join(',') || ""), class: "form-control", placeholder: "タグ" %>
+                <%= f.text_field :memo_tags, class: "form-control", placeholder: ",で複数タグを作成可能" %>
               </div>
               <div class="form-group">
                 <%= f.submit "作成", class: "btn" %>
               </div>
             <% end %>
-            <p class="py-4">メモ作成がモーダルでできる</p>
+            <p class="form-control-static">
+                  既存タグ一覧：<br>
+                  <%= @memo_tags.map(&:name).join(',') || "" %>
+                </p>メモ作成がモーダルでできる</p>
             <div class="modal-action">
               <form method="dialog">
                 <!-- if there is a button in form, it will close the modal -->
