@@ -12,7 +12,8 @@ class ReflectionMemosController < ApplicationController
       redirect_to reflection_memos_path, notice: 'Reflection memo was successfully created.'
     else
       @memos = current_user.memos.where(id: reflection_memo_params[:memo_ids])
-      redirect_to new_reflection_memo_path, alert: 'Failed to create reflection memo.'
+      flash.now[:alert] = 'Failed to create reflection memo.'
+      render :new, status: :unprocessable_entity
     end
   end
 
