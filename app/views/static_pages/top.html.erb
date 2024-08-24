@@ -141,9 +141,8 @@
               </div>
             <% end %>
             <p class="form-control-static">
-                  既存タグ一覧：<br>
-                  <%= @memo_tags.map(&:name).join(',') || "" %>
-                </p>メモ作成がモーダルでできる</p>
+              既存タグ一覧：<br>
+              <%= @memo_tags.map(&:name).join(',') || "" %>
             <div class="modal-action">
               <form method="dialog">
                 <!-- if there is a button in form, it will close the modal -->
