@@ -18,7 +18,8 @@ class User < ApplicationRecord
   end
 
   # OAuth認証で取得したユーザ情報をもとにローカルへユーザを作成
-  def self.create_from(user_hash, provider)
+  def self.create_from(provider)
+    user_hash = sorcery_fetch_user_hash(provider)
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
     user = User.new(
@@ -31,14 +32,7 @@ class User < ApplicationRecord
     else
       Rails.logger.error("Failed to save user: #{user.errors.full_messages.join(", ")}")
     end
-    #結果を保持
-    user
-  end
-
-  def self.create_from(provider)
-    user_hash = sorcery_fetch_user_hash(provider)
-    @user = User.create_from(user_hash, provider)
-    @user || raise("Failed to create user from #{provider}")
+    user || raise("Failed to create user from #{provider}")
   end
 
   def progress_rate
