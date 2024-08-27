@@ -80,3 +80,11 @@ gem 'omniauth-line'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'line-bot-api'
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+end
+
+gem 'httparty'
+
