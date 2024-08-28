@@ -1,4 +1,5 @@
 <h3>振り返りメモ一覧</h3>
+
 <%= search_form_for @q, url: reflection_memos_path, html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
   <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
   <%= f.search_field :content_cont, class: "grow", placeholder: "Search" %>
@@ -14,14 +15,13 @@
     <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
       <div class="collapse-title bg-primary text-primary-content ">
         <div class="flex flex-row ">
-          <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+          <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
           <%= link_to '編集', edit_reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
         </div>
       </div>
     </div>
       <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
         <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
-        <%= ref_memo.content %>
       </div>
     </summary>
     <div class="collapse-content">
