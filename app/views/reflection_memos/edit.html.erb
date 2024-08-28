@@ -6,6 +6,12 @@
     <%= f.text_area :content %>
   </div>
 
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-text">
+      <%= @chatgpt %>
+    </span>
+  </nav>
+
   <div class="field">
     <%= f.label :progress %>
     <%= f.hidden_field :progress, value: false %>
