@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :users do
+    post 'refresh_username', on: :member
     resources :memos do
       # resources :reflection_memos
     end
