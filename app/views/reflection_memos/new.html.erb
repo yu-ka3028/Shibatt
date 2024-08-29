@@ -4,7 +4,7 @@
     <%= form.text_area :content, class: "form-control", placeholder: "振り返りメモ内容", rows: 5 %>
   </div>
 
-  <% if @memos.any? %>
+  <% if @memos&.any? %>
     <% @memos.each do |memo| %>
       <%= form.hidden_field :memo_id, value: memo.id, name: "reflection_memo[memo_ids][]" %>
       <div>
