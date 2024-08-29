@@ -1,5 +1,4 @@
 class ReflectionMemo < ApplicationRecord
-  after_create :FB_to_line
 
   belongs_to :user
   has_many :reflection_memo_memos
