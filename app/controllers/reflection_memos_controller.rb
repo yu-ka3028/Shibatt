@@ -37,6 +37,7 @@ class ReflectionMemosController < ApplicationController
   def edit
     @reflection_memo = current_user.reflection_memos.find(params[:id])
     @memos = current_user.memos
+    @ref_memo = ReflectionMemo.find(params[:id])
   end
 
   def update
