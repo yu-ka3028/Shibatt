@@ -51,8 +51,6 @@ class LinebotController < ApplicationController
     end
   end
 
-  private
-
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = Rails.application.credentials.dig(:linebot, :channel_secret)
