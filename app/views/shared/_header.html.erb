@@ -43,12 +43,12 @@
       </div>
     </div>
     <div class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" />
-        </div>
+      <div class="w-10 rounded-full">
+        <% if current_user && current_user.profile_image_url.present? %>
+          <img alt="User profile image" src="<%= current_user.profile_image_url %>" />
+        <% else %>
+          <img alt="Default profile image" src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" />
+        <% end %>
       </div>
       <ul
         tabindex="0"
