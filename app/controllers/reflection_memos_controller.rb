@@ -30,12 +30,13 @@ class ReflectionMemosController < ApplicationController
     @reflection_memos = current_user.reflection_memos
     @q = current_user.reflection_memos.ransack(params[:q])
     @reflection_memos = @q.result.order(created_at: :desc).page(params[:page]).per(3)
+    @reflection_memo = @reflection_memos.first # 最新のメモを取得
+    @chatgpt = @reflection_memo.feedback_given if @reflection_memo # メモが存在する場合のみ@chatgptを設定
   end
 
   def edit
     @reflection_memo = current_user.reflection_memos.find(params[:id])
     @memos = current_user.memos
-    @chatgpt = @reflection_memo.feedback_given
   end
 
   def update
