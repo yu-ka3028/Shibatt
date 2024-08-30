@@ -38,10 +38,10 @@ class MemosController < ApplicationController
     @memo.assign_attributes(memo_params.except(:memo_tags))
     @memo.progress = false if params[:memo][:progress] == "0"
     
-    #一度、すべての紐付けを解除
-    @memo.reflection_memos.clear
-    # 再度、選択されたメモのみを再度紐付ける
     if params[:reflection_memo_ids]
+      #一度、すべての紐付けを解除
+      @memo.reflection_memos.clear
+      # 再度、選択されたメモのみを再度紐付ける
       params[:reflection_memo_ids].each do |reflection_memo_id|
         @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
       end
