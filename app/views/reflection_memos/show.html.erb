@@ -32,6 +32,23 @@
   </div>
 <% end %>
 
+<button class="btn" onclick="my_modal_5.showModal()">《削除》</button>
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">削除確認</h3>
+    <p class="py-4">本当に削除しますか？</p>
+    <div class="modal-action">
+      <%= form_with url: reflection_memo_path(@ref_memo), method: :delete do %>
+        <button type="submit" class="btn">削除する</button>
+      <% end %>
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">キャンセル</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
 <%#= link_to '削除', reflection_memo_path(@reflection_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
-<%= button_to '削除', reflection_memo_path(@reflection_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%#= button_to '削除', reflection_memo_path(@reflection_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to '【Back】', reflection_memos_path %>
