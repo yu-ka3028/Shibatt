@@ -9,13 +9,14 @@ class ReflectionMemosController < ApplicationController
     @reflection_memo = current_user.reflection_memos.build(reflection_memo_params)
     @reflection_memo.progress = true
     if @reflection_memo.save
-      ref_memo_FB = @reflection_memo.content
       begin
-        @chatgpt = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックをあげてください。")
-        @reflection_memo.update(feedback_given: @chatgpt)
-        @reflection_memo.FB_to_line(@chatgpt)
+        ref_memo_FB = @reflection_memo.content
+        chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
+        @reflection_memo.update(feedback_given: chatgpt_message)
+        @reflection_memo.FB_to_line(chatgpt_message)
       rescue Net::ReadTimeout
-        @chatgpt = "振り返りメモの記載お疲れ様です！"
+        chatgpt_message = "振り返りメモの記載お疲れ様です！"
+        @reflection_memo.update(feedback_given: chatgpt_message)
       end
       redirect_to reflection_memos_path, notice: 'Reflection memo was successfully created.'
     else

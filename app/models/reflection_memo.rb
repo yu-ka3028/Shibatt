@@ -18,6 +18,7 @@ class ReflectionMemo < ApplicationRecord
       type: 'text',
       text: "振り返りメモにShibaからフィードバックが届いています:\n 📝#{self.content}\n****************************\n《Shibaからのフィードバック💌》: \n#{chatgpt_message}"
     }
+    self.update(feedback_given: chatgpt_message)
 
     # LINEにメッセージを送信
     LinebotController.new.client.push_message(self.user.line_user_id, message)
