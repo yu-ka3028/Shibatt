@@ -30,8 +30,8 @@
   <div class="actions">
     <%= f.submit "【更新】"%>
   </div>
-  <div class="actions">
-    <%= link_to '【削除】', reflection_memo_path(@ref_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
-  </div>
 <% end %>
+
+<%= link_to '削除', reflection_memo_path(@reflection_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%#= button_to '削除', reflection_memo_path(@reflection_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to '【Back】', reflection_memos_path %>

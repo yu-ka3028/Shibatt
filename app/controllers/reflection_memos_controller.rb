@@ -65,8 +65,8 @@ class ReflectionMemosController < ApplicationController
   def destroy
     @reflection_memo = current_user.reflection_memos.find(params[:id])
     @reflection_memo.memos.clear
-    @reflection_memo.destroy
-    redirect_to reflection_memos_path, notice: 'Reflection memo was successfully destroyed.'
+    @reflection_memo.destroy!
+    redirect_to reflection_memos_path, notice: 'Reflection memo was successfully'
   end
 
   private
