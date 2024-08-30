@@ -29,7 +29,7 @@
           <%= label_tag "memo_#{memo.id}", memo.content %>
         </div>
         <div class="card-actions justify-end">
-          <%= link_to '編集', edit_user_memo_path(@user, memo), class: 'btn btn-primary' %>
+          <%= link_to '編集', user_memo_path(@user, memo), class: 'btn btn-primary' %>
           <% unless memo.progress %>
             <%= link_to '削除', user_memo_path(@user, memo), method: :delete, data: { turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
           <% end %>

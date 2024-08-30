@@ -5,6 +5,7 @@ class ReflectionMemo < ApplicationRecord
   has_many :memos, through: :reflection_memo_memos
   
   validates :content, presence: true, length: { maximum: 255 }
+  validates :feedback_given, length: { maximum: 125 } 
   
   after_save :update_memo_progress
 

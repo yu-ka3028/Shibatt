@@ -1,0 +1,37 @@
+<h1>メモ編集</h1>
+
+<%= form_with(model: @memo, url: user_memo_path(@user, @memo), local: true) do |f| %>
+
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="field">
+    <%= f.label :progress %>
+    <%= f.hidden_field :progress, value: false %>
+    <%= f.check_box :progress %>
+  </div>
+
+  <h6>-----------------------------▼振り返りメモ----</h6>
+  <%= hidden_field_tag 'reflection_memo_ids[]', nil %>
+  <% if @memo.reflection_memo_memos.exists? %>
+    <% @memo.reflection_memo_memos.each do |reflection_memo_memo| %>
+      <% reflection_memo = reflection_memo_memo.reflection_memo %>
+        <div class="flex items-center">
+          <%= check_box_tag 'reflection_memo_ids[]', reflection_memo.id, true, id: "reflection_memo_#{reflection_memo.id}" %>
+          <%= label_tag "reflection_memo_#{reflection_memo.id}", reflection_memo.content %>
+        </div>
+      <p>Content: <%= reflection_memo.content %></p>
+      <p>Created at: <%= reflection_memo.created_at %></p>
+    <% end %>
+  <% else %>
+    <p>関連する振り返りメモがありません。</p>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "【更新】"%>
+  </div>
+<% end %>
+
+<%= link_to 'Back', user_memos_path(@user) %>
