@@ -88,3 +88,4 @@ end
 
 gem 'httparty'
 
+gem 'rails-ujs'
