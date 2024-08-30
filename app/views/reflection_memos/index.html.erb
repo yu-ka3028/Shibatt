@@ -16,7 +16,7 @@
       <div class="collapse-title bg-primary text-primary-content ">
         <div class="flex flex-row ">
           <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
-          <%= link_to '編集', edit_reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
+          <%= link_to '編集', reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
         </div>
         <!-- Open the modal using ID.showModal() method -->
         <button class="btn" onclick="my_modal_<%= index %>.showModal()">💌</button>

@@ -1,0 +1,37 @@
+<h1>振り返りメモ編集</h1>
+
+<%= form_with(model: @reflection_memo, local: true) do |f| %>
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="field">
+    <%= f.label :progress %>
+    <%= f.hidden_field :progress, value: false %>
+    <%= f.check_box :progress %>
+  </div>
+
+  <h6>-----------------------------▼メモ----</h6>
+  <% if @ref_memo.reflection_memo_memos.exists? %>
+    <% @ref_memo.reflection_memo_memos.each do |reflection_memo_memo| %>
+      <% memo = reflection_memo_memo.memo %>
+      <div class="flex items-center">
+        <%= check_box_tag 'memo_ids[]', memo.id, true, id: "memo_#{memo.id}" %>
+        <%= label_tag "memo_#{memo.id}", memo.content %>
+      </div>
+      <p>Content: <%= memo.content %></p>
+      <p>Created at: <%= memo.created_at %></p>
+    <% end %>
+  <% else %>
+    <p>関連するメモがありません。</p>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "【更新】"%>
+  </div>
+  <div class="actions">
+    <%= link_to '【削除】', reflection_memo_path(@ref_memo), method: :delete, data: { confirm: 'Are you sure?' } %>
+  </div>
+<% end %>
+<%= link_to '【Back】', reflection_memos_path %>
