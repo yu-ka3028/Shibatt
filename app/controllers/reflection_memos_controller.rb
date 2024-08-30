@@ -10,13 +10,13 @@ class ReflectionMemosController < ApplicationController
     @reflection_memo.progress = true
     if @reflection_memo.save
       ref_memo_FB = @reflection_memo.content
-      begin
-        @chatgpt = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックをあげてください。")
-        @reflection_memo.update(feedback_given: @chatgpt)
-        @reflection_memo.FB_to_line(@chatgpt)
-      rescue Net::ReadTimeout
-        @chatgpt = "振り返りメモの記載お疲れ様です！"
-      end
+      # begin
+      #   @chatgpt = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックをあげてください。")
+      #   @reflection_memo.update(feedback_given: @chatgpt)
+      #   @reflection_memo.FB_to_line(@chatgpt)
+      # rescue Net::ReadTimeout
+      #   @chatgpt = "振り返りメモの記載お疲れ様です！"
+      # end
       redirect_to reflection_memos_path, notice: 'Reflection memo was successfully created.'
     else
       @memos = current_user.memos.where(id: reflection_memo_params[:memo_ids])
@@ -54,7 +54,7 @@ class ReflectionMemosController < ApplicationController
     end
   
     if @reflection_memo.update(reflection_memo_params)
-      redirect_to reflection_memos_path, notice: 'Reflection memo was successfully updated.'
+      redirect_to reflection_memo_path(@reflection_memo), notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
       flash[:alert] = @reflection_memo.errors.full_messages

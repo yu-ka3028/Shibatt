@@ -26,25 +26,37 @@ class MemosController < ApplicationController
   def show
     @user = User.find(params[:user_id])
     @memo = Memo.find(params[:id])
+    @memo = @user.memos.find(params[:id])
+    @memo_tags = @memo.tags.pluck(:name).join(',')
   end
 
   def edit
-    @user = User.find(params[:user_id])
-    @memo = @user.memos.find(params[:id])
-    @memo_tags = @memo.tags.pluck(:name).join(',')
   end
 
   def update
     @memo = current_user.memos.find(params[:id])
     @memo.assign_attributes(memo_params.except(:memo_tags))
     @memo.progress = false if params[:memo][:progress] == "0"
+    
+    #一度、すべての紐付けを解除
+    @memo.reflection_memos.clear
+    # 再度、選択されたメモのみを再度紐付ける
+    if params[:reflection_memo_ids]
+      params[:reflection_memo_ids].each do |reflection_memo_id|
+        @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
+      end
+    end
+
     if params[:memo][:memo_tags]
       @memo.memo_tags = params[:memo][:memo_tags].split(',')
     end
+
     if @memo.save
       redirect_to user_memos_path(current_user), notice: 'メモを更新しました'
     else
-      render :edit
+      @reflection_memos = current_user.reflection_memos
+      flash[:alert] = @memo.errors.full_messages
+      render :edit, status: :unprocessable_entity
     end
   end
   
@@ -70,6 +82,6 @@ class MemosController < ApplicationController
   private
 
   def memo_params
-    params.require(:memo).permit(:content, :progress)
+    params.require(:memo).permit(:content, :progress, reflection_memo_ids: [], memo_tags: [])
   end
 end
