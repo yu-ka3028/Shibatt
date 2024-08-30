@@ -61,10 +61,10 @@ class MemosController < ApplicationController
   end
   
   def destroy
-    @memo = Memo.find(params[:id])
-    @memo.reflection_memo_memos.destroy_all
-    @memo.destroy
-    redirect_to user_memos_path(current_user), notice: 'Memo was successfully destroyed.'
+    @memo = current_user.memos.find(params[:id])
+    @memo.reflection_memos.clear
+    @memo.destroy!
+    redirect_to user_memos_path(current_user), notice: 'Memo was successfully'
   end
 
   def tag_search
