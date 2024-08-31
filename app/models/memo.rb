@@ -35,7 +35,7 @@ class Memo < ApplicationRecord
     self.tags.where(name: tags_to_delete).destroy_all
   end
 
-  def tag_names
+  def tag_index
     self.tags.map(&:name).join(', ')
   end
 
