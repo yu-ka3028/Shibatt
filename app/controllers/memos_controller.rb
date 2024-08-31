@@ -19,8 +19,9 @@ class MemosController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @q = current_user.memos.ransack(params[:q])
-    @memos = @q.result.order(created_at: :desc).page(params[:page]).per(5)
+    @memos = @q.result.order(created_at: :desc) #.page(params[:page]).per(3)
     @memo_tags = Tag.all
+    @line_memos = Memo.joins(:tags).where(tags: { name: 'from_LINE' }) #.page(params[:page]).per(3)
   end
 
   def show
@@ -76,6 +77,7 @@ class MemosController < ApplicationController
     @memo_tags = Tag.all
     @user = current_user
     @q = Memo.ransack(params[:q]) 
+    @line_memos = Memo.joins(:tags).where(tags: { name: 'from_LINE' })
     render :index
   end
 
