@@ -11,6 +11,10 @@ class Memo < ApplicationRecord
     ["content", "created_at", "progress"]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    %w(tags)
+  end
+
   def progress_rate
     total = memos.count
     in_progress = memos.where(progress: 'in progress').count
