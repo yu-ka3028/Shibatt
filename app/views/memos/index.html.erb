@@ -1,255 +1,85 @@
 <h3>メモ一覧</h3>
 <div class="join">
-  <div>
-    <div>
-      <input class="input input-bordered join-item" placeholder="Search" />
-    </div>
-  </div>
-  <select class="select select-bordered join-item">
-    <option disabled selected>Filter</option>
-    <option>Sci-fi</option>
-    <option>Drama</option>
-    <option>Action</option>
-  </select>
-  <div class="indicator">
-    <span class="indicator-item badge badge-secondary">new</span>
-    <button class="btn join-item">Search</button>
-  </div>
+  <%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
+    <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
+    <%= f.search_field :content_cont, class: "grow", placeholder: "Search" %>
+    <%= f.select :tags_name_eq, options_for_select(['from_LINE', 'Life', 'Work'], selected: @q.tags_name_eq), { include_blank: 'All' }, class: "select select-bordered join-item" %>
+    <%= f.submit class: "btn-search" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+        <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75 .75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+      </svg>
+    <% end %>
+  <% end %>
 </div>
 
-
+<br>
 <% @memo_tags.each do |tag| %>
-  <%= link_to tag.name, tag_search_path(tag: tag.name) %>
+  <%= link_to tag_search_path(tag: tag.name), class: "btn btn-info gap-1 inline-flex items-center px-1 py-0 leading-none" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="15px" fill="#e8eaed">
+      <path d="M0 0h24v24H0V0z" fill="none"/>
+      <path d="m21.41 11.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM13 20.01 4 11V4h7v-.01l9 9-7 7.02z"/>
+      <circle cx="6.5" cy="6.5" r="1.5"/>
+    </svg>
+    <%= tag.name %>
+  <% end %>
 <% end %>
-<%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
-  <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
-  <%= f.search_field :content_cont, class: "grow", placeholder: "Search" %>
-  <%= f.submit 'Search', class: "sr-only" %>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
-    <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-  </svg>
-<% end %>
-
-<div class="overflow-x-auto">
-  <table class="table">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- row 1 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center gap-3">
-            <div class="avatar">
-              <div class="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Hart Hagerty</div>
-              <div class="text-sm opacity-50">United States</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Zemlak, Daniel and Leannon
-          <br />
-          <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
-        </td>
-        <td>Purple</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 2 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center gap-3">
-            <div class="avatar">
-              <div class="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/3@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Brice Swyre</div>
-              <div class="text-sm opacity-50">China</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Carroll Group
-          <br />
-          <span class="badge badge-ghost badge-sm">Tax Accountant</span>
-        </td>
-        <td>Red</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center gap-3">
-            <div class="avatar">
-              <div class="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Marjy Ferencz</div>
-              <div class="text-sm opacity-50">Russia</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Rowe-Schoen
-          <br />
-          <span class="badge badge-ghost badge-sm">Office Assistant I</span>
-        </td>
-        <td>Crimson</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-      <!-- row 4 -->
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center gap-3">
-            <div class="avatar">
-              <div class="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/5@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div class="font-bold">Yancy Tear</div>
-              <div class="text-sm opacity-50">Brazil</div>
-            </div>
-          </div>
-        </td>
-        <td>
-          Wyman-Ledner
-          <br />
-          <span class="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-        </td>
-        <td>Indigo</td>
-        <th>
-          <button class="btn btn-ghost btn-xs">details</button>
-        </th>
-      </tr>
-    </tbody>
-    <!-- foot -->
-    <tfoot>
-      <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Job</th>
-        <th>Favorite Color</th>
-        <th></th>
-      </tr>
-    </tfoot>
-  </table>
-</div>
 
 <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
-  <div role="tablist" class="tabs tabs-bordered">
-    <input type="radio" name="my_tabs" role="tab" class="tab" aria-label="LINE" checked="checked" />
-    <div role="tabpanel" class="tab-content p-10">
-      <% @line_memos.each do |memo| %>
-        <div class="card bg-orange-200 text-black w-96 m-2">
-          <div class="card-body">
-            <h2 class="card-title"><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></h2>
-            <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
-            <p>Tags: 
-              <% memo.tag_index.split(', ').each do |tag_name| %>
-                <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded inline-block">
-                  <%= tag_name %>
-                </span>
-              <% end %>
-            </p>
-            <div class="flex items-center">
-              <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
-              <%= label_tag "memo_#{memo.id}", memo.content %>
-            </div>
-            <div class="card-actions justify-end">
-              <%= link_to '編集', user_memo_path(@user, memo), class: 'btn btn-primary' %>
-              <% unless memo.progress %>
-                <%= link_to '削除', user_memo_path(@user, memo), method: :delete, data: { turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <%#= paginate @line_memos %>
-    </div>
-    
-    <input type="radio" name="my_tabs" role="tab" class="tab" aria-label="ALL" />
-    <div role="tabpanel" class="tab-content p-10">
-      <% @memos.each do |memo| %>
-        <div class="card bg-orange-200 text-black w-96 m-2">
-          <div class="card-body">
-            <h2 class="card-title"><%= memo.created_at.strftime('%Y/%m/%d %H:%M') %></h2>
-            <p>Status: <%= memo.progress ? 'Completed' : 'In progress' %></p>
-            <p>Tags: 
-              <% memo.tag_index.split(', ').each do |tag_name| %>
-                <span class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded inline-block">
-                  <%= tag_name %>
-                </span>
-              <% end %>
-            </p>
-            <div class="flex items-center">
-              <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
-              <%= label_tag "memo_#{memo.id}", memo.content %>
-            </div>
-            <div class="card-actions justify-end">
-              <%= link_to '編集', user_memo_path(@user, memo), class: 'btn btn-primary' %>
-              <% unless memo.progress %>
-                <%= link_to '削除', user_memo_path(@user, memo), method: :delete, data: { turbo_method: :delete, confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <%#= paginate @memos %>
-    </div>
+  <div class="overflow-x-auto">
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>
+          <th>Content</th>
+          <th>Tag</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+          <% @memos.each do |memo| %>
+            <tr>
+              <th>
+                <label>
+                  <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
+                </label>
+              </th>
+              <td>
+                <div class="flex items-center gap-3">
+                  <div class="content">
+                    <div class="mask mask-squircle h-12 w-12">
+                      <%= memo.content %>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="tag">
+                    <div class="mask mask-squircle h-12 w-12">
+                      <%= memo.tag_index %>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="date">
+                    <div class="mask mask-squircle h-12 w-12">
+                      <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+                    </div>
+                  </div>
+                </td>
+                <th>
+                  <button class="btn btn-ghost btn-xs">
+                    <%= link_to 'details', user_memo_path(@user, memo), class: 'btn btn-primary' %>
+                  </button>
+                </th>
+              </tr>
+            <% end %>
+      </tbody>
+    </table>
   </div>
-<%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
+  <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
 <% end %>
