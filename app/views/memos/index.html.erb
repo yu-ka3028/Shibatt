@@ -35,51 +35,50 @@
               <input type="checkbox" class="checkbox" />
             </label>
           </th>
-          <th>Content</th>
-          <th>Tag</th>
-          <th>Date</th>
+          <th class="sm:hidden">Content/Tag,Date</th> <!-- スマホサイズの時に表示 -->
+          <th class="hidden sm:table-cell">Content</th> <!-- スマホサイズ以上の時に表示 -->
+          <th class="hidden sm:table-cell">Tag</th> <!-- スマホサイズ以上の時に表示 -->
+          <th class="hidden sm:table-cell">Date</th> <!-- スマホサイズ以上の時に表示 -->
         </tr>
       </thead>
       <tbody>
         <!-- row 1 -->
-          <% @memos.each do |memo| %>
-            <tr>
-              <th>
-                <label>
-                  <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
-                </label>
-              </th>
-              <td>
-                <div class="flex items-center gap-3">
-                  <div class="content">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <%= memo.content %>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="tag">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <%= memo.tag_index %>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="date">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
-                    </div>
-                  </div>
-                </td>
-                <th>
-                  <button class="btn btn-ghost btn-xs">
-                    <%= link_to 'details', user_memo_path(@user, memo), class: 'btn btn-primary' %>
-                  </button>
-                </th>
-              </tr>
-            <% end %>
+        <% @memos.each do |memo| %>
+          <tr>
+            <th class="table-cell">
+              <%= link_to 'details', user_memo_path(@user, memo), class: 'btn btn-primary' %>
+            </th>
+            <td class="table-cell sm:w-2/3 sm:table-cell">
+              <div class="content overflow-auto">
+                <div class="mask w-full h-auto">
+                  <%= memo.content %>
+                </div>
+              </div>
+              <div class="flex mt-2 sm:hidden text-xs">
+                <div class="tag w-1/2 text-left">
+                  <%= memo.tag_index %>
+                </div>
+                <div class="date w-1/2 text-right">
+                  <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+                </div>
+              </div>
+            </td>
+            <td class="hidden sm:table-cell">
+              <%= memo.tag_index %>
+            </td>
+            <td class="hidden sm:table-cell">
+              <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+            </td>
+            <th class="table-cell flex justify-end">
+              <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
+            </th>
+          </tr>
+        <% end %>
+        
       </tbody>
     </table>
   </div>
-  <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
+  <div style="text-align: right;">
+    <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
+  </div>
 <% end %>
