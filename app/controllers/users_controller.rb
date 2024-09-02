@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def create
     if params[:idToken] # LIFFからのログインの場合
       id_token = params[:idToken]
+      logger.info("Received ID token: #{id_token}")
       channel_id = "保存したチャネルIDを入れる"
       res = Net::HTTP.post_form(URI.parse('https://api.line.me/oauth2/v2.1/verify'), { 'id_token' => id_token, 'client_id' => channel_id })
       line_user_id = JSON.parse(res.body)['sub']
