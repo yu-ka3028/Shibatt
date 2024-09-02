@@ -8,6 +8,12 @@ Rails.application.routes.draw do
     end
   end
   resources :reflection_memos
+
+  resources :user_sessions do
+    collection do
+      post :create_from_liff
+    end
+  end
   
   get "sign_up", to: "users#new"
   get 'login', to: 'user_sessions#new'
