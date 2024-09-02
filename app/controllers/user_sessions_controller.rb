@@ -17,10 +17,10 @@ class UserSessionsController < ApplicationController
     line_user_id = params[:user_session][:line_user_id]
     profile_image_url = params[:user_session][:profileImageUrl]
   
-    # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(username: username) || User.new(username: username, line_user_id: line_user_id)
+    # line_user_idが存在するか確認し、存在しない場合は新しいユーザーを作成
+    @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id)
   
-    if @user.save
+    if @user.persisted?
       auto_login(@user)
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
