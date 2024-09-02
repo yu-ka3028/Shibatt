@@ -4,7 +4,7 @@ liff.init({ liffId: "2006024454-QgjEWevp" })
 })
 .then(profile => {
   // サーバーに POST リクエストを送信
-  fetch('/login', {
+  fetch('/user_sessions/create_from_liff', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

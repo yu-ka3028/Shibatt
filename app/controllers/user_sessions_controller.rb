@@ -13,9 +13,9 @@ class UserSessionsController < ApplicationController
   end
 
   def create_from_liff
-    username = params[:username]
-    line_user_id = params[:line_user_id]
-    profile_image_url = params[:profile_image_url]
+    username = params[:user_session][:username]
+    line_user_id = params[:user_session][:line_user_id]
+    profile_image_url = params[:user_session][:profileImageUrl]
   
     # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
     @user = User.find_by(username: username) || User.new(username: username, line_user_id: line_user_id)
