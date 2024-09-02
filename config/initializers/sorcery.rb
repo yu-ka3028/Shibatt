@@ -16,5 +16,4 @@ Rails.application.config.sorcery.configure do |config|
   config.line.scope = 'profile'
   #LINEから取得したdisplayNameをローカルでusernameとして使用
   config.line.user_info_mapping = { username: 'displayName' }
-  config.line.user_info_mapping = { username: 'displayName' }
 end
