@@ -3,8 +3,18 @@ liff.init({ liffId: "2006024454-QgjEWevp" })
   return liff.getProfile();
 })
 .then(profile => {
-  sessionStorage.setItem('username', profile.displayName);
-  sessionStorage.setItem('profileImageUrl', profile.pictureUrl);
+  // サーバーに POST リクエストを送信
+  fetch('/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+    },
+    body: JSON.stringify({
+      username: profile.displayName,
+      profileImageUrl: profile.pictureUrl
+    })
+  });
 })
 .catch((err) => {
   console.error('LIFF Initialization failed ', err);
