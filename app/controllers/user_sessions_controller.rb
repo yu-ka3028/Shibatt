@@ -12,22 +12,22 @@ class UserSessionsController < ApplicationController
     end
   end
 
-  def create_from_liff
-    username = params[:user_session][:username]
-    line_user_id = params[:user_session][:line_user_id]
-    profile_image_url = params[:user_session][:profileImageUrl]
+  def create_from_line
+    username = params[:username]
+    profile_image_url = params[:profile_image_url]
   
-    # line_user_idが存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id)
-  
-    if @user.persisted?
+    @user = User.find_by(username: username)
+    if @user
       auto_login(@user)
-      session[:username] = username
-      session[:profileImageUrl] = profile_image_url
-      redirect_back_or_to root_path, notice: 'Login successful'
+      render json: { status: 'ok' }
     else
-      flash.now[:alert] = 'Login failed'
-      render :new, status: :unauthorized
+      @user = User.new(username: username, profile_image_url: profile_image_url)
+      if @user.save
+        auto_login(@user)
+        render json: { status: 'ok' }
+      else
+        render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+      end
     end
   end
 
