@@ -6,14 +6,30 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      auto_login(@user)
-      redirect_to root_path, notice: 'User was successfully created.'
-    else
-      flash.now[:alert] = 'User could not be created.'
-
-      render :new, status: :unprocessable_entity
+    if params[:idToken] # LIFFからのログインの場合
+      id_token = params[:idToken]
+      channel_id = "保存したチャネルIDを入れる"
+      res = Net::HTTP.post_form(URI.parse('https://api.line.me/oauth2/v2.1/verify'), { 'id_token' => id_token, 'client_id' => channel_id })
+      line_user_id = JSON.parse(res.body)['sub']
+      user = User.find_by(line_user_id: line_user_id)
+      if user.nil?
+        user = User.create(line_id: line_user_id)
+      end
+      if session[:user_id] = user.id
+        render json: user
+      else
+        flash.now[:alert] = 'User could not be created.'
+        render :new, status: :unprocessable_entity
+      end
+    else # アプリ全体でのログインの場合
+      @user = User.new(user_params)
+      if @user.save
+        auto_login(@user)
+        redirect_to root_path, notice: 'User was successfully created.'
+      else
+        flash.now[:alert] = 'User could not be created.'
+        render :new, status: :unprocessable_entity
+      end
     end
   end
   
