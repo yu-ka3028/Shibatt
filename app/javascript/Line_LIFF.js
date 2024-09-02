@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // LIFF_IDを使ってLIFFの初期化
   liff
   .init({
-    liffId: LIFF_ID,
+    liffId: "2006024454-QgjEWevp",
     // 他のブラウザで開いたときは初期化と一緒にログインもさせるオプション
     withLoginOnExternalBrowser: true
   })

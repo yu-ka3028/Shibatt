@@ -22,15 +22,8 @@ class UsersController < ApplicationController
         flash.now[:alert] = 'User could not be created.'
         render :new, status: :unprocessable_entity
       end
-    else # アプリ全体でのログインの場合
-      @user = User.new(user_params)
-      if @user.save
-        auto_login(@user)
-        redirect_to root_path, notice: 'User was successfully created.'
-      else
-        flash.now[:alert] = 'User could not be created.'
-        render :new, status: :unprocessable_entity
-      end
+    else # LIFFからのログインでない場合
+      render json: { error: 'Invalid request' }, status: :bad_request
     end
   end
   
