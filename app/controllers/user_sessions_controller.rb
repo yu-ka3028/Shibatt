@@ -5,6 +5,8 @@ class UserSessionsController < ApplicationController
     @user = login(params[:username], params[:password])
 
     if @user
+      session[:username] = params[:username]
+      session[:profileImageUrl] = params[:profileImageUrl]
       redirect_back_or_to root_path, notice: 'Login successful'
     else
       flash.now[:alert] = 'Login failed'
