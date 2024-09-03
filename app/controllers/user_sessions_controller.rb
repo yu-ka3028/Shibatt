@@ -21,9 +21,9 @@ class UserSessionsController < ApplicationController
     @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id)
   
     if @user.persisted?
-      auto_login(@user)
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
+      auto_login(@user)
       redirect_back_or_to root_path, notice: 'Login successful'
     else
       flash.now[:alert] = 'Login failed'
