@@ -17,21 +17,40 @@ class UsersController < ApplicationController
     end
   end
 
+  # def create_from_line
+  #   username = params[:username]
+  #   profile_image_url = params[:profile_image_url]
+  
+  #   # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
+  #   @user = User.find_by(username: username) || User.new(username: username, profile_image_url: profile_image_url)
+  
+  #   if @user.save
+  #     auto_login(@user)
+  #     render json: { status: 'ok' }
+  #   else
+  #     render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+  #   end
+  # end
+  
   def create_from_line
     username = params[:username]
     profile_image_url = params[:profile_image_url]
   
-    # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(username: username) || User.new(username: username, profile_image_url: profile_image_url)
-  
-    if @user.save
+    @user = User.find_by(username: username)
+    if @user
       auto_login(@user)
       render json: { status: 'ok' }
     else
-      render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+      @user = User.new(username: username, profile_image_url: profile_image_url)
+      if @user.save
+        auto_login(@user)
+        render json: { status: 'ok' }
+      else
+        render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+      end
     end
   end
-  
+
   def refresh_username
     @user = User.find(params[:id])
     update_username, update_profile_image_url = get_update_username_and_profile_image_url_from_line_api(@user.line_user_id)
