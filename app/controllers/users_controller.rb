@@ -17,40 +17,37 @@ class UsersController < ApplicationController
     end
   end
 
-  # def create_from_line
-  #   username = params[:username]
-  #   profile_image_url = params[:profile_image_url]
+  def create_from_line
+    username = params[:username]
+    profile_image_url = params[:profile_image_url]
   
-  #   # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
-  #   @user = User.find_by(username: username) || User.new(username: username, profile_image_url: profile_image_url)
+    # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
+    @user = User.find_by(username: username) || User.new(username: username, profile_image_url: profile_image_url)
   
-  #   if @user.save
-  #     auto_login(@user)
-  #     render json: { status: 'ok' }
-  #   else
-  #     render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
-  #   end
-  # end
+    if @user.save
+      auto_login(@user)
+      render json: { status: 'ok' }
+    else
+      render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+    end
+  end
   
   def create_from_liff
     username = params[:username]
     profile_image_url = params[:profile_image_url]
+    line_user_id = params[:line_user_id] # LINEのuser_idをパラメータから取得
   
-    @user = User.find_by(username: username)
-    if @user
+    # LINEのuser_idが存在するか確認し、存在しない場合は新しいユーザーを作成
+    @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)
+  
+    if @user.save
       auto_login(@user)
       render json: { status: 'ok' }
     else
-      @user = User.new(username: username, profile_image_url: profile_image_url)
-      if @user.save
-        auto_login(@user)
-        render json: { status: 'ok' }
-      else
-        render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
-      end
+      render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
     end
   end
-
+  
   def refresh_username
     @user = User.find(params[:id])
     update_username, update_profile_image_url = get_update_username_and_profile_image_url_from_line_api(@user.line_user_id)

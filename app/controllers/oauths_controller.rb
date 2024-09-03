@@ -13,15 +13,15 @@ class OauthsController < ApplicationController
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
-        @user = create_from(provider)
+        @user = User.find_by(line_user_id: @user.authentications.find_by(provider: provider).uid) || create_from(provider)
         puts "Created user from #{provider}: #{@user.inspect}"
         # LINEから取得したuserIdをローカルでline_user_idに保存
         @user.update(line_user_id: @user.authentications.find_by(provider: provider).uid)
         puts @user.line_user_id
-
+  
         reset_session
         auto_login(@user)
-  
+    
         # 新規ユーザーが作成されたときに友達登録を促すメッセージを送信
         if provider == 'line'
           client = Line::Bot::Client.new { |config|
@@ -34,7 +34,7 @@ class OauthsController < ApplicationController
           }
           response = client.push_message(@user.line_user_id, message)
         end
-  
+    
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         puts "Failed to login from #{provider}: #{e.message}"
