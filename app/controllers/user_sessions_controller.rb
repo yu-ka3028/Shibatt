@@ -12,7 +12,7 @@ class UserSessionsController < ApplicationController
     end
   end
 
-  def create_from_lff
+  def create_from_liff
     username = params[:username]
     profile_image_url = params[:profile_image_url]
   
