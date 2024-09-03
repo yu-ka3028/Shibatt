@@ -39,6 +39,7 @@ class UserSessionsController < ApplicationController
   def create_from_liff
     username = params[:user_session][:username]
     line_user_id = params[:user_session][:line_user_id]
+    Rails.logger.info "Creating user with username: #{username}, line_user_id: #{line_user_id}"
     profile_image_url = params[:user_session][:profileImageUrl]
   
     # line_user_idが存在するか確認し、存在しない場合は新しいユーザーを作成
