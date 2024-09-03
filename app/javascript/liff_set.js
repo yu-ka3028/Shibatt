@@ -13,7 +13,8 @@ liff.init({ liffId: "2006024454-QgjEWevp" })
     body: JSON.stringify({
       user_session: {
         username: profile.displayName,
-        profileImageUrl: profile.pictureUrl
+        profileImageUrl: profile.pictureUrl,
+        line_user_id: profile.userId
       }
     })
   })
