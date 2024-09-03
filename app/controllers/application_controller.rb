@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(username: session[:username])
+    # @current_user ||= User.find_by(username: session[:username])
+    @current_user ||= User.find_by(id: session[:user_id])
     @current_user.profile_image_url = session[:profileImageUrl] if @current_user
     @current_user
   end
