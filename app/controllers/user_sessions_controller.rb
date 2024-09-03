@@ -22,6 +22,7 @@ class UserSessionsController < ApplicationController
       render json: { status: 'ok' }
     else
       @user = User.new(username: username, profile_image_url: profile_image_url)
+      @user.password = SecureRandom.hex(16) # パスワードを設定
       if @user.save
         auto_login(@user)
         render json: { status: 'ok' }
