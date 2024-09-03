@@ -30,7 +30,11 @@
       </label>
       <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>
       <h6>******************** OR ********************</h6><br>
-      <h1 class="text-center text-2xl mb-6"><%= link_to 'Login with Line', oauth_path(provider: :line) %></h1>
+      <div class="flex justify-end">
+        <%= link_to oauth_path(provider: :line) do %>
+          <%= image_tag "line_login.png", class: "h-15 w-32 opacity-70" %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 </div>
