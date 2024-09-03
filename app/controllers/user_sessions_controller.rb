@@ -12,7 +12,7 @@ class UserSessionsController < ApplicationController
     end
   end
 
-  def create_from_line
+  def create_from_lff
     username = params[:username]
     profile_image_url = params[:profile_image_url]
   
