@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   #   end
   # end
   
-  def create_from_line
+  def create_from_liff
     username = params[:username]
     profile_image_url = params[:profile_image_url]
   
