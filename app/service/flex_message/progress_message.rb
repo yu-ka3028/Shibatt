@@ -164,7 +164,7 @@ module FlexMessage
               }
             }
           },
-          
+
           {
             "type": "bubble",
             "size": "nano",
@@ -237,6 +237,11 @@ module FlexMessage
               ],
               "spacing": "md",
               "paddingAll": "12px"
+            },
+            "action": {
+              "type": "uri",
+              "label": "Week",
+              "uri": "line://app/{liffId}?week=last"
             },
             "styles": {
               "footer": {
