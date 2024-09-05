@@ -240,7 +240,7 @@ module FlexMessage
             },
             "action": {
               "type": "uri",
-              "label": "Week",
+              "label": "Action",
               "uri": "https://your-app-name.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
             "styles": {
