@@ -241,7 +241,7 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Week",
-              "uri": "line://app/{liffId}?week=last"
+              "uri": "https://your-app-name.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
             "styles": {
               "footer": {
