@@ -13,7 +13,13 @@ class LinebotController < ApplicationController
           line_user_id = event['source']['userId']
           user = User.find_by(line_user_id: line_user_id)
 
-          if user
+          if event.message['text'] == '達成率'
+            message = {
+              type: 'flex',
+              altText: '達成率',
+              contents: FlexMessage::ProgressMessage.contents
+            }
+          elsif user
             memo = user.memos.build(content: event.message['text'])
             tag = Tag.find_or_create_by(name: 'from_LINE')
             memo.tags << tag
@@ -37,15 +43,6 @@ class LinebotController < ApplicationController
           end
           
           client.reply_message(event['replyToken'], message)
-
-          # message = {
-          #   type: 'text',
-          #   text: event.message['text']
-          # }
-          client.reply_message(event['replyToken'], message)
-          # if user
-          #   user.memos.create(content: event.message['text'])
-          # end
         end
       end
     end
