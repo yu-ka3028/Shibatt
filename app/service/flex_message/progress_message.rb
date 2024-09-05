@@ -241,7 +241,7 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Action",
-              "uri": "https://your-app-name.herokuapp.com/reflection_memos/new?user_id=${userId}"
+              "uri": "https://shibatt-dcf5dffc0d02.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
             "styles": {
               "footer": {
