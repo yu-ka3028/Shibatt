@@ -2,14 +2,7 @@ class ReflectionMemosController < ApplicationController
 
   def new
     @reflection_memo = ReflectionMemo.new
-    # if params[:week] == 'last'
-    #   last_monday = Date.today.beginning_of_week - 1.week
-    #   next_sunday = Date.today.beginning_of_week - 1.day
-    #   @memos = current_user.memos.where(status: 'In progress').where(created_at: last_monday..next_sunday)
-    #   @memos = [] if @memos.empty?
-    # else
-    @memos = current_user.memos.where(status: 'In progress')
-    # end
+    @memos = current_user.memos.where(id: params[:memo_ids])
   end
 
   def create
