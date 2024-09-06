@@ -36,22 +36,22 @@ class MemosController < ApplicationController
   def update
     @memo = current_user.memos.find(params[:id])
     @memo.assign_attributes(memo_params.except(:memo_tags))
-    @memo.progress = false if params[:memo][:progress] == "0"
-    
+    @memo.progress = params[:memo][:progress].blank? || params[:memo][:progress] == "0" ? false : true
+  
     if params[:reflection_memo_ids]
       #一度、すべての紐付けを解除
       @memo.reflection_memos.clear
       # 再度、選択されたメモのみを再度紐付ける
-      params[:reflection_memo_ids].each do |reflection_memo_id|
+      params[:reflection_memo_ids].reject(&:blank?).each do |reflection_memo_id|
         @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
       end
     end
-
-    if params[:memo][:memo_tags]
+  
+    if params[:memo][:memo_tags].is_a?(String)
       @memo.memo_tags = params[:memo][:memo_tags].split(',')
     end
-
-    if @memo.save
+  
+    if @memo.update(memo_params)
       redirect_to user_memos_path(current_user), notice: 'メモを更新しました'
     else
       @reflection_memos = current_user.reflection_memos

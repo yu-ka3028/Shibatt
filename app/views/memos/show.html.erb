@@ -11,16 +11,6 @@
         <%= f.text_area :content, class: "mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", placeholder: "content" %>
       </div>
     
-      <div class="w-full max-w-xs tooltip" data-tip="カンマ(,)で区切って追加できます">
-        <%= f.label :memo_tags, class: "label" do %>
-          <div class="label">
-            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#e8eaed"><path d="M0 0h24v24H0V0z" fill="none"/><path d="m21.41 11.58-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM13 20.01 4 11V4h7v-.01l9 9-7 7.02z"/><circle cx="6.5" cy="6.5" r="1.5"/></svg>
-            <span class="label-text">Edit Tag</span>
-          </div>
-        <% end %>
-      </div>
-      <br>
-      <%= f.text_field :memo_tags, value: @memo_tags, class: "input input-bordered w-full max-w-xs", placeholder: ",で複数タグを作成可能" %>
       <div class="label">
         <span class="label-text-alt font-sans">
           既存タグ一覧<br>
@@ -42,7 +32,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="40px" viewBox="0 0 24 24" width="40px" fill="#e8eaed"><rect fill="none" height="24" width="24"/><path d="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z"/></svg>
         <%= f.label :progress %>
         <%= f.hidden_field :progress, value: false %>
-        <%= f.check_box :progress, {checked: true, class: "toggle toggle-warning"} %>
+        <%= f.check_box :progress, {checked: @memo.progress, class: "toggle toggle-warning"} %>
       </div>
     
       <div style="display: flex; align-items: center;">
