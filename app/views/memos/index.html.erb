@@ -3,7 +3,8 @@
   <%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
     <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
     <%= f.search_field :content_cont, class: "grow", placeholder: "Search" %>
-    <%= f.select :tags_name_eq, options_for_select(['from_LINE', 'Life', 'Work'], selected: @q.tags_name_eq), { include_blank: 'All' }, class: "select select-bordered join-item" %>
+    <%= f.select :tags_name_eq, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: @q.tags_name_eq), {}, class: "select select-bordered join-item bg-transparent" %>
+    <%= f.select :progress_eq, options_for_select([['in progress', false], ['completed', true], ['ALL', nil]], selected: @q.progress_eq.nil? ? nil : @q.progress_eq), {}, class: "select select-bordered join-item bg-transparent" %>
     <%= f.submit class: "btn-search" do %>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
         <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75 .75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
@@ -58,39 +59,23 @@
               <!-- スマホサイズの時に表示 -->
               <div class="flex mt-2 sm:hidden ">
                 <div class="tag w-full text-left">
-                  <select class="select select-ghost w-20 h-4 text-xs">
-                    <option disabled selected>Tag</option>
-                    <option>白</option>
-                    <option>黒</option>
-                    <option>赤</option>
-                    <option>橙</option>
-                    <option>黄</option>
-                    <option>黄緑</option>
-                    <option>緑</option>
-                    <option>水色</option>
-                    <option>青</option>
-                  </select>
+                  <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch do |f| %>
+                    <%= f.select :tag, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: memo.tags.first&.name), {}, class: "select select-ghost w-full max-w-md" %>
+                    <%= f.submit 'Update', class: 'btn btn-primary' %>
+                  <% end %>
                 </div>
-                <div class="date w-1/2 text-right">
-                  <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
-                </div>
+              </div>
+              <div class="date w-1/2 text-right">
+                <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
               </div>
             </td>
 
             <!-- スマホサイズ以上の時に表示 -->
             <td class="hidden sm:table-cell w-full sm:w-auto">
-              <select class="select select-ghost w-full max-w-md ">
-                    <option disabled selected>Tag</option>
-                    <option>白</option>
-                    <option>黒</option>
-                    <option>赤</option>
-                    <option>橙</option>
-                    <option>黄</option>
-                    <option>黄緑</option>
-                    <option>緑</option>
-                    <option>水色</option>
-                    <option>青</option>
-                  </select>
+              <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch do |f| %>
+                <%= f.select :tag, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: memo.tags.first&.name), {}, class: "select select-ghost w-full max-w-md" %>
+                <%= f.submit 'Update', class: 'btn btn-primary' %>
+              <% end %>
             </td>
             <td class="hidden sm:table-cell text-xs">
               <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
