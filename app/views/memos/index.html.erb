@@ -30,23 +30,24 @@
       <!-- head -->
       <thead>
         <tr>
+          <th class="table-cell">Details</th>
+          <th class="sm:hidden">Content/Tag,Date</th> <!-- スマホサイズの時に表示 -->
+          <th class="hidden sm:table-cell">Content</th> <!-- スマホサイズ以上の時に表示 -->
+          <th class="hidden sm:table-cell">Tag</th> <!-- スマホサイズ以上の時に表示 -->
+          <th class="hidden sm:table-cell">Date</th> <!-- スマホサイズ以上の時に表示 -->
           <th>
             <label>
               <input type="checkbox" class="checkbox" />
             </label>
           </th>
-          <th class="sm:hidden">Content/Tag,Date</th> <!-- スマホサイズの時に表示 -->
-          <th class="hidden sm:table-cell">Content</th> <!-- スマホサイズ以上の時に表示 -->
-          <th class="hidden sm:table-cell">Tag</th> <!-- スマホサイズ以上の時に表示 -->
-          <th class="hidden sm:table-cell">Date</th> <!-- スマホサイズ以上の時に表示 -->
         </tr>
       </thead>
       <tbody>
         <!-- row 1 -->
         <% @memos.each do |memo| %>
           <tr>
-            <th class="table-cell">
-              <%= link_to 'details', user_memo_path(@user, memo), class: 'btn btn-primary' %>
+            <th class="table-cell w-1/8">
+              <%= link_to '詳細', user_memo_path(@user, memo), class: 'btn btn-primary text-2xs' %>
             </th>
             <td class="table-cell sm:w-2/3 sm:table-cell">
               <div class="content overflow-auto">
@@ -54,19 +55,44 @@
                   <%= memo.content %>
                 </div>
               </div>
-              <div class="flex mt-2 sm:hidden text-xs">
-                <div class="tag w-1/2 text-left">
-                  <%= memo.tag_index %>
+              <!-- スマホサイズの時に表示 -->
+              <div class="flex mt-2 sm:hidden ">
+                <div class="tag w-full text-left">
+                  <select class="select select-ghost w-20 h-4 text-xs">
+                    <option disabled selected>Tag</option>
+                    <option>白</option>
+                    <option>黒</option>
+                    <option>赤</option>
+                    <option>橙</option>
+                    <option>黄</option>
+                    <option>黄緑</option>
+                    <option>緑</option>
+                    <option>水色</option>
+                    <option>青</option>
+                  </select>
                 </div>
                 <div class="date w-1/2 text-right">
                   <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
                 </div>
               </div>
             </td>
-            <td class="hidden sm:table-cell">
-              <%= memo.tag_index %>
+
+            <!-- スマホサイズ以上の時に表示 -->
+            <td class="hidden sm:table-cell w-full sm:w-auto">
+              <select class="select select-ghost w-full max-w-md ">
+                    <option disabled selected>Tag</option>
+                    <option>白</option>
+                    <option>黒</option>
+                    <option>赤</option>
+                    <option>橙</option>
+                    <option>黄</option>
+                    <option>黄緑</option>
+                    <option>緑</option>
+                    <option>水色</option>
+                    <option>青</option>
+                  </select>
             </td>
-            <td class="hidden sm:table-cell">
+            <td class="hidden sm:table-cell text-xs">
               <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
             </td>
             <th class="table-cell flex justify-end">
