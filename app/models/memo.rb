@@ -26,18 +26,23 @@ class Memo < ApplicationRecord
     { in_progress: in_progress_rate, completed: completed_rate }
   end
   
-  def memo_tags(tags = "")
-    current_tags = self.tags.pluck(:name)
-    tags = tags.split(',') if tags.is_a?(String)
-  
-    tags.each do |tag_name|
-      tag = Tag.find_or_create_by(name: tag_name.strip)
-      self.tags << tag unless self.tags.include?(tag)
+  def memo_tags=(names)
+    self.tags = names.split(',').map do |name|
+      Tag.where(name: name.strip).first_or_create!
     end
-  
-    tags_to_delete = current_tags - tags
-    self.tags.where(name: tags_to_delete).destroy_all
   end
+  # def memo_tags(tags = "")
+  #   current_tags = self.tags.pluck(:name)
+  #   tags = tags.split(',') if tags.is_a?(String)
+  
+  #   tags.each do |tag_name|
+  #     tag = Tag.find_or_create_by(name: tag_name.strip)
+  #     self.tags << tag unless self.tags.include?(tag)
+  #   end
+  
+  #   tags_to_delete = current_tags - tags
+  #   self.tags.where(name: tags_to_delete).destroy_all
+  # end
 
   def tag_index
     self.tags.map(&:name).join(', ')

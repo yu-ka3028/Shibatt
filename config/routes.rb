@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users do
     post 'refresh_username', on: :member
     resources :memos do
+      patch 'update_tag', on: :member
       # resources :reflection_memos
     end
   end
@@ -30,5 +31,4 @@ Rails.application.routes.draw do
   
   post '/' => 'linebot#callback'
   post '/webhook', to: 'linebot#callback'
-
 end

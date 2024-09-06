@@ -18,10 +18,9 @@ class MemosController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @q = current_user.memos.ransack(params[:q])
+    @q = current_user.memos.ransack(params[:q] || { progress_eq: false })
     @memos = @q.result.order(created_at: :desc) #.page(params[:page]).per(3)
     @memo_tags = Tag.all
-    @line_memos = Memo.joins(:tags).where(tags: { name: 'from_LINE' }) #.page(params[:page]).per(3)
   end
 
   def show
@@ -79,6 +78,22 @@ class MemosController < ApplicationController
     @q = Memo.ransack(params[:q]) 
     @line_memos = Memo.joins(:tags).where(tags: { name: 'from_LINE' })
     render :index
+  end
+
+  def update_tag
+    @memo = current_user.memos.find(params[:id])
+    tag = Tag.find_or_create_by(name: params[:tag])
+    
+    if @memo.tags.include?(tag)
+      flash[:notice] = 'タグは既に存在します'
+      redirect_to user_memo_path(current_user, @memo)
+    elsif @memo.tags << tag
+      flash[:notice] = 'タグを追加しました'
+      head :ok
+    else
+      flash[:alert] = @memo.errors.full_messages
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
