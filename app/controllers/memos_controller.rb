@@ -7,13 +7,13 @@ class MemosController < ApplicationController
   def create
     @memo = current_user.memos.build(memo_params.except(:memo_tags))
     @memo.progress = false
-    memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
-    @memo.memo_tags(memo_tags) if memo_tags
-    if @memo.save
-      redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
-    else
-      redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
-    end
+    # memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
+    # @memo.memo_tags(memo_tags) if memo_tags
+    # if @memo.save
+    #   redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
+    # else
+    #   redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
+    # end
   end
 
   def index
@@ -81,18 +81,22 @@ class MemosController < ApplicationController
   end
 
   def update_tag
-    @memo = current_user.memos.find(params[:id])
+    @user = User.find(params[:user_id])
+    @memo = @user.memos.find(params[:id])
     tag = Tag.find_or_create_by(name: params[:tag])
-    
-    if @memo.tags.include?(tag)
-      flash[:notice] = 'タグは既に存在します'
-      redirect_to user_memo_path(current_user, @memo)
-    elsif @memo.tags << tag
-      flash[:notice] = 'タグを追加しました'
-      head :ok
+  
+    # 既存のタグを削除
+    @memo.tags.clear
+  
+    if @memo.tags << tag
+      flash[:notice] = 'タグを更新しました'
+      @q = @user.memos.ransack(params[:q])
+      @memo_tags = Tag.all
+      @memos = @user.memos
+      render :index
     else
       flash[:alert] = @memo.errors.full_messages
-      render :edit, status: :unprocessable_entity
+      render :show
     end
   end
 

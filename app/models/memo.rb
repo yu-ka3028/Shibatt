@@ -26,10 +26,8 @@ class Memo < ApplicationRecord
     { in_progress: in_progress_rate, completed: completed_rate }
   end
   
-  def memo_tags=(names)
-    self.tags = names.split(',').map do |name|
-      Tag.where(name: name.strip).first_or_create!
-    end
+  def memo_tags=(name)
+    self.tags = [Tag.where(name: name.strip).first_or_create!]
   end
   # def memo_tags(tags = "")
   #   current_tags = self.tags.pluck(:name)
