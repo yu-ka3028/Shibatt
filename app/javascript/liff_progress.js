@@ -9,7 +9,7 @@ function redirectToReflectionMemosNew() {
         const userId = liff.getDecodedIDToken().sub;
 
         // ユーザーIDをURLのパラメータとしてRailsアプリケーションに送信
-        location.href = `https://your-app-name.herokuapp.com/reflection_memos/new?user_id=${userId}`;
+        location.href = `https://shibatt.herokuapp.com/reflection_memos/new?user_id=${userId}`;
       }
     })
     .catch((err) => {
