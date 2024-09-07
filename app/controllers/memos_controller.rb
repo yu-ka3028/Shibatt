@@ -90,10 +90,7 @@ class MemosController < ApplicationController
   
     if @memo.tags << tag
       flash[:notice] = 'タグを更新しました'
-      @q = @user.memos.ransack(params[:q])
-      @memo_tags = Tag.all
-      @memos = @user.memos
-      render :index
+      redirect_to user_memos_path(@user)
     else
       flash[:alert] = @memo.errors.full_messages
       render :show
