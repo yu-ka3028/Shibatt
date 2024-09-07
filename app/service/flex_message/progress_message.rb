@@ -15,7 +15,7 @@ module FlexMessage
       { in_progress: in_progress_rate, completed: completed_rate }
     end
 
-    def contents
+    def self.contents
       rates = progress_rate
       {
         "type": "carousel",
