@@ -4,7 +4,7 @@ module FlexMessage
       @memos = memos
     end
 
-    def self.progress_rate
+    def progress_rate
       total = @memos.count
       in_progress = @memos.where(progress: 'in progress').count
       completed = @memos.where(progress: 'completed').count
@@ -15,7 +15,7 @@ module FlexMessage
       { in_progress: in_progress_rate, completed: completed_rate }
     end
 
-    def self.contents
+    def contents
       rates = progress_rate
       {
         "type": "carousel",
@@ -38,7 +38,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "#{rates[:in_completed]}%", # ここで達成率を表示
+                  "text": "#{rates[:completed]}%", # 達成率を表示
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
