@@ -84,6 +84,18 @@ module FlexMessage
               "paddingBottom": "16px"
           
             },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "",
+                  "wrap": true
+                }
+              ],
+              "backgroundColor": "#27ACB2" # ここで背景色を設定します
+            },
             "styles": {
               "footer": {
                 "separator": false
@@ -142,6 +154,18 @@ module FlexMessage
               "paddingAll": "12px",
               "paddingBottom": "16px"
         
+            },
+            "body": {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "ここにテキストを追加します",
+                  "wrap": true
+                }
+              ],
+              "backgroundColor": "#FF6B6E"
             },
             "styles": {
               "footer": {
