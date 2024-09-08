@@ -12,7 +12,6 @@ class LinebotController < ApplicationController
         when Line::Bot::Event::MessageType::Text
           line_user_id = event['source']['userId']
           user = User.find_by(line_user_id: line_user_id)
-
           if event.message['text'] == '達成率'
             # ProgressMessageクラスのインスタンスを作成
             progress_message = FlexMessage::ProgressMessage.new(user.memos)
