@@ -66,7 +66,7 @@ module FlexMessage
                           "type": "filler"
                         }
                       ],
-                      "width": "70%",
+                      "width": "#{[rates[:completed], 100].min}%", # 達成率(全体)を最大100としてwidthに設定
                       "backgroundColor": "#0D8186",
                       "height": "6px"
                     }
@@ -148,7 +148,7 @@ module FlexMessage
                           "type": "filler"
                         }
                       ],
-                      "width": "30%",
+                      "width": "#{[month_rates[:completed], 100].min}%", # 達成率(当月)を最大100としてwidthに設定
                       "backgroundColor": "#DE5658",
                       "height": "6px"
                     }
@@ -230,8 +230,8 @@ module FlexMessage
                           "type": "filler"
                         }
                       ],
-                      "width": "100%",
-                      "backgroundColor": "#7D51E4",
+                      "width": "#{[week_rates[:completed], 100].min}%", # 達成率(先週)を最大100としてwidthに設定
+                      "backgroundColor": "#524C42",
                       "height": "6px"
                     }
                   ],
