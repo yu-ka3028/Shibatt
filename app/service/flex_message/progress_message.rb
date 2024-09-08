@@ -86,22 +86,7 @@ module FlexMessage
             "body": {
               "type": "box",
               "layout": "vertical",
-              "contents": [
-                {
-                  "type": "box",
-                  "layout": "horizontal",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "これまで作ったすべてのメモのほったらかし率",
-                      "color": "#8C8C8C",
-                      "size": "sm",
-                      "wrap": true
-                    }
-                  ],
-                  "flex": 1
-                }
-              ],
+              "contents": [],
               "spacing": "md",
               "paddingAll": "12px"
             },
@@ -121,7 +106,7 @@ module FlexMessage
               "contents": [
                 {
                   "type": "text",
-                  "text": "Month",
+                  "text": "#{Time.now.month}",
                   "color": "#ffffff",
                   "align": "start",
                   "size": "md",
@@ -166,22 +151,7 @@ module FlexMessage
             "body": {
               "type": "box",
               "layout": "vertical",
-              "contents": [
-                {
-                  "type": "box",
-                  "layout": "horizontal",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "今月のほったらかし率",
-                      "color": "#8C8C8C",
-                      "size": "sm",
-                      "wrap": true
-                    }
-                  ],
-                  "flex": 1
-                }
-              ],
+              "contents": [],
               "spacing": "md",
               "paddingAll": "12px"
             },
@@ -190,7 +160,7 @@ module FlexMessage
                 "separator": false
               }
             }
-          },
+          }
 
           {
             "type": "bubble",
