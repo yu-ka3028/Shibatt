@@ -20,6 +20,7 @@ class MemosController < ApplicationController
     @user = User.find(params[:user_id])
     @q = current_user.memos.ransack(params[:q] || { progress_eq: false })
     @memos = @q.result.order(created_at: :desc) #.page(params[:page]).per(3)
+    @memos = Memo.all
     @memo_tags = Tag.all
   end
 
