@@ -3,7 +3,6 @@ module FlexMessage
     def initialize(memos)
       @memos = memos
     end
-
     def progress_rate(period = :all)
       case period
       when :all
@@ -23,7 +22,6 @@ module FlexMessage
     
       { in_progress: in_progress_rate, completed: completed_rate }
     end
-
     def contents
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
@@ -82,20 +80,31 @@ module FlexMessage
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
-          
             },
             "body": {
               "type": "box",
               "layout": "vertical",
               "contents": [
                 {
-                  "type": "text",
-                  "text": "",
-                  "wrap": true
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "これまで作ったすべてのメモのほったらかし率",
+                      "color": "#8C8C8C",
+                      "size": "sm",
+                      "wrap": true
+                    }
+                  ],
+                  "flex": 1
                 }
               ],
-              "backgroundColor": "#27ACB2" # ここで背景色を設定します
+              "spacing": "md",
+              "paddingAll": "12px"
+              "backgroundColor": "#27ACB2",
             },
+
             "styles": {
               "footer": {
                 "separator": false
@@ -116,6 +125,7 @@ module FlexMessage
                   "color": "#ffffff",
                   "align": "start",
                   "size": "md",
+  
                   "gravity": "center"
                 },
                 {
@@ -153,20 +163,31 @@ module FlexMessage
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
-        
             },
             "body": {
               "type": "box",
               "layout": "vertical",
               "contents": [
                 {
-                  "type": "text",
-                  "text": "ここにテキストを追加します",
-                  "wrap": true
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "今月のほったらかし率",
+                      "color": "#8C8C8C",
+                      "size": "sm",
+                      "wrap": true
+                    }
+                  ],
+                  "flex": 1
                 }
               ],
-              "backgroundColor": "#FF6B6E"
+              "spacing": "md",
+              "paddingAll": "12px"
+              "backgroundColor": "#FF6B6E",
             },
+  
             "styles": {
               "footer": {
                 "separator": false
@@ -176,6 +197,7 @@ module FlexMessage
 
           {
             "type": "bubble",
+  
             "size": "nano",
             "header": {
               "type": "box",
