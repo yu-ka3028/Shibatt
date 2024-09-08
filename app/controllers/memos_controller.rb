@@ -5,8 +5,14 @@ class MemosController < ApplicationController
   end
 
   def create
-    @memo = current_user.memos.build(memo_params.except(:memo_tags))
+    @memo = current_user.memos.build(memo_params)
     @memo.progress = false
+    if @memo.save
+      redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
+    else
+      redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
+    end
+  end
     # memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
     # @memo.memo_tags(memo_tags) if memo_tags
     # if @memo.save
@@ -14,15 +20,13 @@ class MemosController < ApplicationController
     # else
     #   redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
     # end
-  end
 
-  def index
-    @user = User.find(params[:user_id])
-    @q = current_user.memos.ransack(params[:q] || { progress_eq: false })
-    @memos = @q.result.order(created_at: :desc) #.page(params[:page]).per(3)
-    @memos = current_user.memos
-    @memo_tags = current_user.memos.flat_map(&:tags).uniq
-  end
+    def index
+      @user = User.find(params[:user_id])
+      @q = current_user.memos.ransack(params[:q] || { progress_eq: false })
+      @memos = @q.result.order(created_at: :desc)
+      @memo_tags = current_user.memos.flat_map(&:tags).uniq
+    end
 
   def show
     @user = User.find(params[:user_id])
