@@ -49,7 +49,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "#{rates[:in_progress]}%", # 未達成率(全体)
+                  "text": "#{rates[:completed]}%", # 達成率(全体)
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
@@ -82,13 +82,7 @@ module FlexMessage
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
-            },
-            "body": {
-              "type": "box",
-              "layout": "vertical",
-              "contents": [],
-              "spacing": "md",
-              "paddingAll": "12px"
+          
             },
             "styles": {
               "footer": {
@@ -106,7 +100,7 @@ module FlexMessage
               "contents": [
                 {
                   "type": "text",
-                  "text": "#{Time.now.month}",
+                  "text": "#{Time.now.month}月",
                   "color": "#ffffff",
                   "align": "start",
                   "size": "md",
@@ -114,7 +108,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "#{month_rates[:in_progress]}%", # 未達成率(当月)
+                  "text": "#{month_rates[:completed]}%", # 達成率(当月)
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
@@ -147,13 +141,7 @@ module FlexMessage
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
-            },
-            "body": {
-              "type": "box",
-              "layout": "vertical",
-              "contents": [],
-              "spacing": "md",
-              "paddingAll": "12px"
+        
             },
             "styles": {
               "footer": {
@@ -179,7 +167,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "#{week_rates[:in_progress]}%", # 未達成率(先週)
+                  "text": "#{week_rates[:completed]}%", # 達成率(先週)
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
