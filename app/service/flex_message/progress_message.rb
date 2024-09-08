@@ -4,19 +4,30 @@ module FlexMessage
       @memos = memos
     end
 
-    def progress_rate
-      total = @memos.count
-      in_progress = @memos.where(progress: 'in progress').count
-      completed = @memos.where(progress: 'completed').count
-
+    def progress_rate(period = :all)
+      case period
+      when :all
+        memos = @memos
+      when :month
+        memos = @memos.where(created_at: Time.now.beginning_of_month..Time.now.end_of_month)
+      when :week
+        memos = @memos.where(created_at: 1.week.ago.beginning_of_day..Time.now.end_of_day)
+      end
+    
+      total = memos.count
+      in_progress = memos.where(progress: 'in progress').count
+      completed = memos.where(progress: 'completed').count
+    
       in_progress_rate = (in_progress.to_f / total * 100).round(2)
       completed_rate = (completed.to_f / total * 100).round(2)
-
+    
       { in_progress: in_progress_rate, completed: completed_rate }
     end
 
     def contents
-      rates = progress_rate
+      rates = progress_rate(:all) # 全体の進行状況
+      month_rates = progress_rate(:month) # 月間の進行状況
+      week_rates = progress_rate(:week) # 週間の進行状況
       {
         "type": "carousel",
         "contents": [
@@ -38,7 +49,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "#{rates[:in_progress]}%", # 未達成率
+                  "text": "#{rates[:in_progress]}%", # 未達成率(全体)
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
@@ -118,7 +129,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "30%",
+                  "text": "#{month_rates[:in_progress]}%", # 未達成率(当月)
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
@@ -198,7 +209,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "100%",
+                  "text": "#{week_rates[:in_progress]}%", # 未達成率(先週)
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
