@@ -101,7 +101,7 @@ module FlexMessage
                 }
               ],
               "spacing": "md",
-              "paddingAll": "12px"
+              "paddingAll": "12px",
               "backgroundColor": "#27ACB2",
             },
 
@@ -184,7 +184,7 @@ module FlexMessage
                 }
               ],
               "spacing": "md",
-              "paddingAll": "12px"
+              "paddingAll": "12px",
               "backgroundColor": "#FF6B6E",
             },
   
