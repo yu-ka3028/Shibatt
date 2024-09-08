@@ -91,7 +91,7 @@ module FlexMessage
                   "contents": [
                     {
                       "type": "text",
-                      "text": "これまで作ったすべてのメモのほったらかし率",
+                      "text": "",
                       "color": "#8C8C8C",
                       "size": "sm",
                       "wrap": true
@@ -174,7 +174,7 @@ module FlexMessage
                   "contents": [
                     {
                       "type": "text",
-                      "text": "今月のほったらかし率",
+                      "text": "",
                       "color": "#8C8C8C",
                       "size": "sm",
                       "wrap": true
