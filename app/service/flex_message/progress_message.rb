@@ -121,7 +121,7 @@ module FlexMessage
                 {
                   "type": "text",
                   "text": "#{Time.now.month}月",
-                  "color": "#ffffff",
+                  "color": "#0D8186",
                   "align": "start",
                   "size": "md",
   
@@ -130,7 +130,7 @@ module FlexMessage
                 {
                   "type": "text",
                   "text": "#{month_rates[:completed]}%", # 達成率(当月)
-                  "color": "#ffffff",
+                  "color": "#0D8186",
                   "align": "start",
                   "size": "xs",
                   "gravity": "center",
