@@ -104,7 +104,6 @@ module FlexMessage
               "paddingAll": "12px",
               "backgroundColor": "#524C42",
             },
-
             "styles": {
               "footer": {
                 "separator": false
@@ -194,7 +193,6 @@ module FlexMessage
               }
             }
           },
-
           {
             "type": "bubble",
   
@@ -233,7 +231,7 @@ module FlexMessage
                         }
                       ],
                       "width": "100%",
-                      "backgroundColor": "#Fffffff",
+                      "backgroundColor": "#7D51E4",
                       "height": "6px"
                     }
                   ],
