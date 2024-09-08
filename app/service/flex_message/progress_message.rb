@@ -76,7 +76,7 @@ module FlexMessage
                   "margin": "sm"
                 }
               ],
-              "backgroundColor": "#27ACB2",
+              "backgroundColor": "#524C42",
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
@@ -159,7 +159,7 @@ module FlexMessage
                   "margin": "sm"
                 }
               ],
-              "backgroundColor": "#FF6B6E",
+              "backgroundColor": "#E2DFD0",
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
@@ -233,7 +233,7 @@ module FlexMessage
                         }
                       ],
                       "width": "100%",
-                      "backgroundColor": "#F97300",
+                      "backgroundColor": "#Fffffff",
                       "height": "6px"
                     }
                   ],
@@ -242,7 +242,7 @@ module FlexMessage
                   "margin": "sm"
                 }
               ],
-              "backgroundColor": "#A17DF5",
+              "backgroundColor": "#F97300",
               "paddingTop": "19px",
               "paddingAll": "12px",
               "paddingBottom": "16px"
