@@ -89,12 +89,12 @@ module FlexMessage
                   "type": "box",
                   "layout": "horizontal",
                   "contents": [
-                    {
-                      "type": "text",
-                      "text": "",
-                      "color": "#8C8C8C",
-                      "size": "sm",
-                      "wrap": true
+                    # {
+                    #   "type": "text",
+                    #   "text": "",
+                    #   "color": "#8C8C8C",
+                    #   "size": "sm",
+                    #   "wrap": true
                     }
                   ],
                   "flex": 1
