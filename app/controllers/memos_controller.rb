@@ -21,23 +21,13 @@ class MemosController < ApplicationController
     #   redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
     # end
 
-<<<<<<< Updated upstream
     def index
       @user = User.find(params[:user_id])
       @q = current_user.memos.ransack(params[:q] || { progress_eq: false })
       @memos = @q.result.order(created_at: :desc)
       @memo_tags = current_user.memos.flat_map(&:tags).uniq
     end
-=======
-  def index
-    @user = User.find(params[:user_id])
-    @q = current_user.memos.ransack(params[:q])
-    @memos = @q.result.order(created_at: :desc) #.page(params[:page]).per(3)
-    @memos = Memo.all
-    @memo_tags = Tag.all
-    @line_memos = Memo.joins(:tags).where(tags: { name: 'from_LINE' }) #.page(params[:page]).per(3)
-  end
->>>>>>> Stashed changes
+
 
   def show
     @user = User.find(params[:user_id])
