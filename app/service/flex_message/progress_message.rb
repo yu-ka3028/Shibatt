@@ -160,7 +160,7 @@ module FlexMessage
                 "separator": false
               }
             }
-          }
+          },
 
           {
             "type": "bubble",
