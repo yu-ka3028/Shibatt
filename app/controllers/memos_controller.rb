@@ -26,9 +26,13 @@ class MemosController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    @memo = Memo.find(params[:id])
-    @memo = @user.memos.find(params[:id])
-    @memo_tags = @memo.tags.pluck(:name).join(',')
+    @memo = @user.memos.find_by(id: params[:id])
+    if @memo
+      @memo_tags = @memo.tags.pluck(:name).join(',')
+    else
+      flash[:alert] = "Memo not found"
+      redirect_to user_memos_path(@user)
+    end
   end
 
   def edit
