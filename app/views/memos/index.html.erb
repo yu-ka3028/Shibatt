@@ -56,6 +56,13 @@
             <th class="table-cell flex justify-end">
               <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
             </th>
+            <th>
+              <select class="select select-bordered w-full max-w-xs">
+                <option disabled selected>Who shot first?</option>
+                <option>Han Solo</option>
+                <option>Greedo</option>
+              </select>
+            </th>
           </tr>
         <% end %> 
       </tbody>
