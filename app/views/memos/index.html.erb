@@ -63,4 +63,81 @@
 <div style="text-align: right;">
   <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button" %>
 </div>
+=======
+<%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
+  <div class="overflow-x-auto">
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th class="table-cell">Details</th>
+          <th class="sm:hidden">Content/Tag,Date</th> <!-- スマホサイズの時に表示 -->
+          <th class="hidden sm:table-cell">Content</th> <!-- スマホサイズ以上の時に表示 -->
+          <th class="hidden sm:table-cell">Tag</th> <!-- スマホサイズ以上の時に表示 -->
+          <th class="hidden sm:table-cell">Date</th> <!-- スマホサイズ以上の時に表示 -->
+          <th>
+            <label>
+              <input type="checkbox" class="checkbox" />
+            </label>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <% @memos.each do |memo| %>
+          <tr>
+            <th class="table-cell w-1/8">
+              <%= link_to '詳細', user_memo_path(@user, memo), class: 'btn btn-primary text-2xs' %>
+            </th>
+            <td class="table-cell sm:w-2/3 sm:table-cell">
+              <div class="content overflow-auto">
+                <div class="mask w-full h-auto">
+                  <%= memo.content %>
+                </div>
+              </div>
+            </td>
+            <!-- スマホサイズの時に表示 -->
+            <td class="table-cell sm:hidden">
+              <div class="tag w-full text-left">
+                <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, remote: true do |f| %>
+                  <%= f.select :tag, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: memo.tags.first&.name), {}, class: "select select-ghost w-full max-w-md" %>
+                  <%= f.submit 'Update', class: 'btn btn-primary', style: 'position: relative; z-index: 0;' %>
+                <% end %>
+              </div>
+              <div class="date w-1/2 text-right">
+                <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+              </div>
+            </td>
+                
+            <!-- スマホサイズ以上の時に表示 -->
+            <td class="hidden sm:table-cell w-full sm:w-auto">
+              <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch do |f| %>
+                <%= f.select :tag, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: memo.tags.first&.name), {}, class: "select select-ghost w-full max-w-md" %>
+                <%= f.submit 'Update', class: 'btn btn-primary', style: 'position: relative; z-index: 1;' %>
+              <% end %>
+            </td>
+            <td class="hidden sm:table-cell text-xs">
+              <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+            </td>
+            <th class="table-cell flex justify-end">
+              <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}" %>
+            </th>
+            <th>
+              <select class="select select-bordered w-full max-w-xs">
+                <option disabled selected>Who shot first?</option>
+                <option>Han Solo</option>
+                <option>Greedo</option>
+              </select>
+            </th>
+          </tr>
+        <% end %> 
+      </tbody>
+    </table>
+  </div>
 <% end %>
+
+<div style="text-align: right;">
+  <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
+    <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2", id: "submit-button", style: 'position: relative; z-index: 1;' %>
+  <% end %>
+</div>
