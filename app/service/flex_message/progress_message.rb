@@ -38,7 +38,7 @@ module FlexMessage
                 },
                 {
                   "type": "text",
-                  "text": "#{rates[:completed]}%", # 達成率を表示
+                  "text": "#{rates[:in progress]}%", # 未達成率を表示
                   "color": "#ffffff",
                   "align": "start",
                   "size": "xs",
