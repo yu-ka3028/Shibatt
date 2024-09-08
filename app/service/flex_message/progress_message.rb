@@ -95,7 +95,7 @@ module FlexMessage
                     #   "color": "#8C8C8C",
                     #   "size": "sm",
                     #   "wrap": true
-                    }
+                    # }
                   ],
                   "flex": 1
                 }
@@ -174,7 +174,7 @@ module FlexMessage
                   "contents": [
                     {
                       "type": "text",
-                      "text": "",
+                      "text": "お",
                       "color": "#8C8C8C",
                       "size": "sm",
                       "wrap": true
