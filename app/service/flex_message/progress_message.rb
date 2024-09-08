@@ -4,7 +4,7 @@ module FlexMessage
       @memos = memos
     end
 
-    def progress_rate
+    def self.progress_rate
       total = @memos.count
       in_progress = @memos.where(progress: 'in progress').count
       completed = @memos.where(progress: 'completed').count
