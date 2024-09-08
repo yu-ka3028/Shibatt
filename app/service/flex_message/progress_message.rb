@@ -102,7 +102,7 @@ module FlexMessage
               ],
               "spacing": "md",
               "paddingAll": "12px",
-              "backgroundColor": "#27ACB2",
+              "backgroundColor": "#524C42",
             },
 
             "styles": {
@@ -172,20 +172,20 @@ module FlexMessage
                   "type": "box",
                   "layout": "horizontal",
                   "contents": [
-                    {
-                      "type": "text",
-                      "text": "お",
-                      "color": "#8C8C8C",
-                      "size": "sm",
-                      "wrap": true
-                    }
+                    # {
+                    #   "type": "text",
+                    #   "text": "",
+                    #   "color": "#8C8C8C",
+                    #   "size": "sm",
+                    #   "wrap": true
+                    # }
                   ],
                   "flex": 1
                 }
               ],
               "spacing": "md",
               "paddingAll": "12px",
-              "backgroundColor": "#FF6B6E",
+              "backgroundColor": "#E2DFD0",
             },
   
             "styles": {
@@ -233,7 +233,7 @@ module FlexMessage
                         }
                       ],
                       "width": "100%",
-                      "backgroundColor": "#7D51E4",
+                      "backgroundColor": "#F97300",
                       "height": "6px"
                     }
                   ],
