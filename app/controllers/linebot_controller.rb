@@ -14,10 +14,14 @@ class LinebotController < ApplicationController
           user = User.find_by(line_user_id: line_user_id)
 
           if event.message['text'] == '達成率'
+            # ProgressMessageクラスのインスタンスを作成
+            progress_message = FlexMessage::ProgressMessage.new(user.memos)
+
             message = {
               type: 'flex',
               altText: '達成率',
-              contents: FlexMessage::ProgressMessage.contents
+              # インスタンスからcontentsメソッドを呼び出す
+              contents: progress_message.contents
             }
           elsif user
             memo = user.memos.build(content: event.message['text'])
