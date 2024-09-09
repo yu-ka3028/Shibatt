@@ -7,4 +7,7 @@ class StaticPagesController < ApplicationController
     @memo_tags = @user.memos.flat_map(&:tags).uniq if @user
     @progress_rate = @user&.progress_rate || { in_progress: 0, completed: 0 }
   end
+
+  def privacy_policy
+  end
 end

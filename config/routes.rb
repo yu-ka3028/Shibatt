@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       post :create_from_liff
     end
   end
+
+  get 'privacy_policy', to: 'static_pages#privacy_policy', as: 'privacy_policy'
+  get 'terms_of_service', to: 'static_pages#terms_of_service'
   
   get "sign_up", to: "users#new"
   get 'login', to: 'user_sessions#new'
