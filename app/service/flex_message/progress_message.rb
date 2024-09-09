@@ -28,9 +28,8 @@ module FlexMessage
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
-      start_of_last_week = 1.week.ago.beginning_of_week
-      end_of_last_week = 1.week.ago.end_of_week
       week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: start_of_last_week..end_of_last_week).pluck(:id)
+      review_form_url = "https://your-app.com/review_form?uncompleted_memo_ids=#{week_uncompleted_memo_ids.join(',')}"
       {
         "type": "carousel",
         "contents": [
@@ -275,7 +274,8 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Action",
-              "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{week_uncompleted_memo_ids.join(',')}"
+              "uri": review_form_url
+              # "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{week_uncompleted_memo_ids.join(',')}"
               # "uri": "https://liff.line.me/2006024454-QgjEWevp"
               # "uri": "https://shibatt-dcf5dffc0d02.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
