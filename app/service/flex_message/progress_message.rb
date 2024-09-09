@@ -26,6 +26,8 @@ module FlexMessage
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
+      week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: 1.week.ago.beginning_of_day..Time.now.end_of_day).pluck(:id)
+      
       {
         "type": "carousel",
         "contents": [
