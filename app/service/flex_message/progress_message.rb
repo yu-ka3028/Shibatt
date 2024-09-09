@@ -25,11 +25,14 @@ module FlexMessage
       { in_progress: in_progress_rate, completed: completed_rate }
     end
     def contents
+      start_of_last_week = Date.today.beginning_of_week - 1.week # 先週の開始日を取得
+      end_of_last_week = start_of_last_week.end_of_week # 先週の終了日を取得
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
       week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: start_of_last_week..end_of_last_week).pluck(:id)
       review_form_url = "https://your-app.com/review_form?uncompleted_memo_ids=#{week_uncompleted_memo_ids.join(',')}"
+      
       {
         "type": "carousel",
         "contents": [
