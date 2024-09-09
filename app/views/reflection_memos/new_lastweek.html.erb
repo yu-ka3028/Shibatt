@@ -1,0 +1,26 @@
+<h3>先週の振り返りメモ作成</h3>
+<%= form_with model: @reflection_memo, url: reflection_memos_path do |form| %>  
+  <div class="form-group">
+    <%= form.text_area :content, class: "form-control", placeholder: "振り返りメモ内容", rows: 5 %>
+  </div>
+
+  <% if @memos&.any? %>
+    <% @memos.each do |memo| %>
+      <% if memo.progress %>
+        <%= form.hidden_field :memo_id, value: memo.id, name: "reflection_memo[memo_ids][]" %>
+        <div>
+          <p>メモ内容: <%= memo.content %></p>
+          <p>作成日時: <%= memo.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p>関連するメモがありません。</p>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.submit "作成", class: "btn" %>
+  </div>
+<% end %>
+
+<%= link_to "振り返り一覧", reflection_memos_path %>

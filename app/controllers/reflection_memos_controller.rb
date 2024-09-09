@@ -5,6 +5,13 @@ class ReflectionMemosController < ApplicationController
     @memos = current_user.memos.where(id: params[:memo_ids])
   end
 
+  def new_lastweek
+    @reflection_memo = ReflectionMemo.new
+    start_date = Date.today.beginning_of_week - 1.week
+    end_date = start_date.end_of_week
+    @memos = current_user.memos.where(created_at: start_date..end_date, progress: 'in progress')
+  end
+
   def create
     @reflection_memo = current_user.reflection_memos.build(reflection_memo_params)
     @reflection_memo.progress = true

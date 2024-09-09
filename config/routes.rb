@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       # resources :reflection_memos
     end
   end
-  resources :reflection_memos
+  resources :reflection_memos do
+    get 'new_lastweek', on: :collection
+  end
 
   resources :user_sessions do
     collection do
