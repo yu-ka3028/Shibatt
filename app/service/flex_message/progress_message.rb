@@ -31,7 +31,7 @@ module FlexMessage
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
       week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: start_of_last_week..end_of_last_week).pluck(:id)
-      review_form_url = "https://your-app.com/review_form?uncompleted_memo_ids=#{week_uncompleted_memo_ids.join(',')}"
+      review_form_url = "https://www.memo-shibatt.com/reflection_memos/new_with_last_week_unachieved_memos?memo_ids=#{week_uncompleted_memo_ids.join(',')}"
       
       {
         "type": "carousel",
