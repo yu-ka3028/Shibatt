@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     end
   end
   resources :reflection_memos
-  get 'reflection_memos/new_with_lastweek_inprogress_memos', to: 'reflection_memos#new_with_lastweek_inprogress_memos', as: 'new_with_last_week_unachieved_memos'
 
   resources :user_sessions do
     collection do

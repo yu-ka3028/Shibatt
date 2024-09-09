@@ -10,9 +10,7 @@ module FlexMessage
       when :month
         memos = @memos.where(created_at: Time.now.beginning_of_month..Time.now.end_of_month)
       when :week
-        start_of_last_week = 1.week.ago.beginning_of_week
-        end_of_last_week = 1.week.ago.end_of_week
-        memos = @memos.where(created_at: start_of_last_week..end_of_last_week)
+        memos = @memos.where(created_at: 1.week.ago.beginning_of_day..Time.now.end_of_day)
       end
     
       total = memos.count
@@ -25,14 +23,9 @@ module FlexMessage
       { in_progress: in_progress_rate, completed: completed_rate }
     end
     def contents
-      start_of_last_week = Date.today.beginning_of_week - 1.week # 先週の開始日を取得
-      end_of_last_week = start_of_last_week.end_of_week # 先週の終了日を取得
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
-      week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: start_of_last_week..end_of_last_week).pluck(:id)
-      review_form_url = "https://www.memo-shibatt.com/reflection_memos/new_with_last_week_unachieved_memos?memo_ids=#{week_uncompleted_memo_ids.join(',')}"
-      
       {
         "type": "carousel",
         "contents": [
@@ -277,9 +270,7 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Action",
-              "uri": review_form_url
-              # "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{week_uncompleted_memo_ids.join(',')}"
-              # "uri": "https://liff.line.me/2006024454-QgjEWevp"
+              "uri": "https://liff.line.me/2006024454-QgjEWevp"
               # "uri": "https://shibatt-dcf5dffc0d02.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
             "styles": {
