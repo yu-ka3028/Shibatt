@@ -10,7 +10,9 @@ module FlexMessage
       when :month
         memos = @memos.where(created_at: Time.now.beginning_of_month..Time.now.end_of_month)
       when :week
-        memos = @memos.where(created_at: 1.week.ago.beginning_of_day..Time.now.end_of_day)
+        start_of_last_week = 1.week.ago.beginning_of_week
+        end_of_last_week = 1.week.ago.end_of_week
+        memos = @memos.where(created_at: start_of_last_week..end_of_last_week)
       end
     
       total = memos.count
@@ -26,8 +28,9 @@ module FlexMessage
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
-      week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: 1.week.ago.beginning_of_day..Time.now.end_of_day).pluck(:id)
-      
+      start_of_last_week = 1.week.ago.beginning_of_week
+      end_of_last_week = 1.week.ago.end_of_week
+      week_uncompleted_memo_ids = @memos.where(progress: 'in progress', created_at: start_of_last_week..end_of_last_week).pluck(:id)
       {
         "type": "carousel",
         "contents": [
