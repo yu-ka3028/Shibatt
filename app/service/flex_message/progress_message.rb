@@ -270,7 +270,8 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Action",
-              "uri": "https://liff.line.me/2006024454-QgjEWevp"
+              "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{week_uncompleted_memo_ids.join(',')}"
+              # "uri": "https://liff.line.me/2006024454-QgjEWevp"
               # "uri": "https://shibatt-dcf5dffc0d02.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
             "styles": {
