@@ -9,14 +9,12 @@ class ReflectionMemosController < ApplicationController
     @reflection_memo = ReflectionMemo.new
     start_date = Date.today.beginning_of_week - 1.week
     end_date = start_date.end_of_week
-<<<<<<< Updated upstream
-    @memos = current_user.memos.where(created_at: start_date..end_date, progress: true)
-=======
+
     # 達成（completed）のメモを取得
     @completed_memos = current_user.memos.where(created_at: start_date..end_date, progress: true)
     # 未達成（in progress）のメモを取得
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
->>>>>>> Stashed changes
+
   end
 
   def create
