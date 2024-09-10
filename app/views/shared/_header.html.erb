@@ -45,9 +45,9 @@
     <div class="dropdown dropdown-end">
       <div class="w-10 rounded-full">
         <% if current_user && current_user.profile_image_url.present? %>
-          <img alt="User profile image" src="<%= current_user.profile_image_url %>" />
+          <%= image_tag current_user.profile_image_url, alt: 'User profile image', class: 'w-10 rounded-full' %>
         <% else %>
-          <img alt="Default profile image" src="https://i.gyazo.com/f56c05afb2a1a0f6e346a1b76861af36.png" />
+          <%= image_tag 'icon_shibatt.png', alt: 'Default profile image', class: 'w-10 rounded-full' %>
         <% end %>
       </div>
       <ul
