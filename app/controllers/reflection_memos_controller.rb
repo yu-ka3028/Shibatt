@@ -17,6 +17,7 @@ class ReflectionMemosController < ApplicationController
     @completed_memos = current_user.memos.where(created_at: start_date..end_date, progress: true)
     # 未達成（in progress）のメモを取得
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
+    pp @inprogress_memos
 
   end
 
