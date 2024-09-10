@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
-  has_many :memos
+  has_many :memos, counter_cache: true
   has_many :reflection_memos
 
   has_many :authentications, dependent: :destroy
@@ -36,8 +36,7 @@ class User < ApplicationRecord
   end
 
   def progress_rate
-    total_memo_count = memos.count
-    completed_memo_count = memos.where(progress: true).count
+    total_memo_count, completed_memo_count = memos.size, memos.where(progress: true).size
     in_progress_memo_count = total_memo_count - completed_memo_count
     completed_percentage = (completed_memo_count.to_f / total_memo_count * 100).round(2)
     in_progress_percentage = (in_progress_memo_count.to_f / total_memo_count * 100).round(2)
