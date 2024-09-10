@@ -25,7 +25,23 @@
   </head>
 
   <body>
-  <html data-theme="lemonade">
+    <script>
+      // ユーザーの設定に基づいてテーマを切り替える
+      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const bodyElement = document.querySelector('body');
+
+      function switchTheme(e) {
+        const theme = e.matches ? 'coffee' : 'lemonade';
+        bodyElement.setAttribute('data-theme', theme);
+      }
+
+      // 初期設定
+      switchTheme(darkModeMediaQuery);
+
+      // 設定が変更されたときにテーマを切り替える
+      darkModeMediaQuery.addListener(switchTheme);
+    </script>
+
     <% if logged_in? %>
       <%= render 'shared/header' %>
     <% else %>
@@ -38,5 +54,4 @@
     <%= render 'shared/footer' %>
     <%= javascript_include_tag 'liff_set' %>
   </body>
-  <html>
 </html>
