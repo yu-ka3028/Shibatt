@@ -36,11 +36,13 @@ class User < ApplicationRecord
   end
 
   def progress_rate
-    total_memo_count, completed_memo_count = memos.size, memos.where(progress: true).size
-    in_progress_memo_count = total_memo_count - completed_memo_count
-    completed_percentage = (completed_memo_count.to_f / total_memo_count * 100).round(2)
-    in_progress_percentage = (in_progress_memo_count.to_f / total_memo_count * 100).round(2)
+    total = memos.count
+    in_progress = memos.where(progress: 'in progress').count
+    completed = memos.where(progress: 'completed').count
   
-    { completed: completed_percentage, in_progress: in_progress_percentage }
+    in_progress_rate = (in_progress.to_f / total * 100).round(2)
+    completed_rate = (completed.to_f / total * 100).round(2)
+  
+    { in_progress: in_progress_rate, completed: completed_rate }
   end
 end
