@@ -27,6 +27,16 @@ class ReflectionMemosController < ApplicationController
     start_date = Date.today.beginning_of_week - 1.week
     end_date = start_date.end_of_week
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
+    # 一度、すべての紐付けを解除
+    @reflection_memo.memos.clear
+    Rails.logger.debug("params[:memo_ids]: #{params[:memo_ids]}")
+    # 再度、選択されたメモのみを再度紐付ける
+    if reflection_memo_params[:memo_ids]
+      reflection_memo_params[:memo_ids].each do |memo_id|
+        @reflection_memo.memos << Memo.find(memo_id)
+      end
+    end
+
     if @reflection_memo.save
       begin
         ref_memo_FB = @reflection_memo.content
@@ -92,6 +102,6 @@ class ReflectionMemosController < ApplicationController
   private
 
   def reflection_memo_params
-    params.require(:reflection_memo).permit(:content, :progress, memo_ids: [])
+    params.require(:reflection_memo).permit(:content, memo_ids: [])
   end
 end

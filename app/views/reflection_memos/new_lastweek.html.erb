@@ -1,4 +1,3 @@
-<h3>先週の振り返りメモ作成</h3>
 <%= form_with model: @reflection_memo, url: reflection_memos_path do |form| %>  
   <div class="form-group">
     <%= form.text_area :content, class: "form-control", placeholder: "振り返りメモ内容", rows: 5 %>
@@ -6,8 +5,8 @@
 
   <% if @inprogress_memos&.any? %>
     <% @inprogress_memos.each do |memo| %>
-        <%= form.hidden_field :memo_id, value: memo.id, name: "reflection_memo[memo_ids][]" %>
         <div>
+          <%= form.check_box :memo_ids, { multiple: true, checked: true }, memo.id, nil %>
           <p>メモ内容: <%= memo.content %></p>
           <p>作成日時: <%= memo.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
         </div>
