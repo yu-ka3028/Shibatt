@@ -14,18 +14,23 @@ module FlexMessage
       end
     
       total = memos.count
-      in_progress = memos.where(progress: 'in progress').count
+      in_progress = memos.where(progress: 'in_progress')
+      in_progress_count = in_progress.count
       completed = memos.where(progress: 'completed').count
     
-      in_progress_rate = (in_progress.to_f / total * 100).round(2)
+      in_progress_rate = (in_progress_count.to_f / total * 100).round(2)
       completed_rate = (completed.to_f / total * 100).round(2)
     
-      { in_progress: in_progress_rate, completed: completed_rate }
+      # 進行中のメモのIDを取得
+      inprogress_memo_ids = in_progress.pluck(:id)
+    
+      { in_progress: in_progress_rate, completed: completed_rate, inprogress_memo_ids: inprogress_memo_ids }
     end
     def contents
       rates = progress_rate(:all) # 全体の進行状況
       month_rates = progress_rate(:month) # 月間の進行状況
       week_rates = progress_rate(:week) # 週間の進行状況
+      inprogress_memo_ids = week_rates[:inprogress_memo_ids] # 週間の進行中のメモのID
       {
         "type": "carousel",
         "contents": [
@@ -270,7 +275,9 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Action",
-              "uri": "https://liff.line.me/2006024454-QgjEWevp"
+              "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{inprogress_memo_ids.join(',')}"
+              # "uri": "https://www.memo-shibatt.com/reflection_memos/new?user_id=#{@user_id}"
+              # "uri": "https://liff.line.me/2006024454-QgjEWevp"
               # "uri": "https://shibatt-dcf5dffc0d02.herokuapp.com/reflection_memos/new?user_id=${userId}"
             },
             "styles": {
