@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
     @user = current_user
     Rails.logger.info "Username: #{@user.username}" if @user
     @memo = @user.memos.build if @user
-    @memo_tags = @user.memos.flat_map(&:tags).uniq if @user
+    @memo_tags = @user.memos.eager_load(:tags).flat_map(&:tags).uniq if @user
     @progress_rate = @user&.progress_rate || { in_progress: 0, completed: 0 }
   end
 end

@@ -21,17 +21,16 @@ class MemosController < ApplicationController
     #   redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
     # end
 
-    def index
-      @user = User.find(params[:user_id])
-      @q = current_user.memos.ransack(params[:q] || { progress_eq: false })
-      @memos = @q.result.order(created_at: :desc)
-      @memo_tags = current_user.memos.flat_map(&:tags).uniq
-    end
-
-
+  def index
+    @user = User.find(params[:user_id])
+    @q = current_user.memos.includes(:tags).ransack(params[:q] || { progress_eq: false })
+    @memos = @q.result.order(created_at: :desc)
+    @memo_tags = current_user.memos.includes(:tags).flat_map(&:tags).uniq
+  end
+  
   def show
     @user = User.find(params[:user_id])
-    @memo = @user.memos.find_by(id: params[:id])
+    @memo = @user.memos.includes(:tags).find_by(id: params[:id])
     if @memo
       @memo_tags = @memo.tags.pluck(:name).join(',')
     else
