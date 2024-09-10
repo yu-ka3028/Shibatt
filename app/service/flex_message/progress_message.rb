@@ -275,7 +275,8 @@ module FlexMessage
             "action": {
               "type": "uri",
               "label": "Action",
-              "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{inprogress_memo_ids.join(',')}"
+              "uri": "line://app/2006024454-QgjEWevp?memo_ids=#{inprogress_memo_ids.join(',')}"
+              # "uri": "https://www.memo-shibatt.com/reflection_memos/new?memo_ids=#{inprogress_memo_ids.join(',')}"
               # "uri": "https://www.memo-shibatt.com/reflection_memos/new?user_id=#{@user_id}"
               # "uri": "https://liff.line.me/2006024454-QgjEWevp"
               # "uri": "https://shibatt-dcf5dffc0d02.herokuapp.com/reflection_memos/new?user_id=${userId}"
