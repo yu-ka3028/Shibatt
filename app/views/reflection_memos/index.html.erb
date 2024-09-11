@@ -10,16 +10,30 @@
 <% end %>
 
 <% @reflection_memos.each_with_index do |ref_memo, index| %>
-  <details class="collapse bg-base-200" style="justify-content: flex-end; width: 50%; margin: auto;">
-    <summary class="collapse-title text-xl font-medium">
+  <details class="collapse bg-base-200 mx-auto my-2">
+    <summary class="collapse-title text-xl font-medium w-full m-1">
     <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
-      <div class="collapse-title bg-primary text-primary-content ">
-        <div class="flex flex-row ">
-          <p><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
-          <%= link_to '編集', reflection_memo_path(ref_memo), class: 'btn btn-primary' %>
+      <div class="collapse-title bg-primary text-primary-content w-full h-full flex justify-center items-center max-w-screen-xl">
+        <div class="flex flex-row w-full justify-between">
+          <div class="w-4/5">
+            <p style="font-size: 50%;"><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
+          </div>
+          <div class="flex flex-col justify-end">
+            <%= link_to reflection_memo_path(ref_memo), class: 'btn btn-primary' do %>
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed">
+                <path d="M0 0h24v24H0V0z" fill="none"/>
+                <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+              </svg>
+            <% end %>
+            <button class="btn bg-transparent border-none transition-colors duration-200 hover:bg-[#CDC2A5] hover:border-[#CDC2A5]" onclick="my_modal_<%= index %>.showModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
+                <path d="M0 0h24v24H0V0z" fill="none"/>
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+              </svg>
+            </button>
+          </div>
         </div>
         <!-- Open the modal using ID.showModal() method -->
-        <button class="btn" onclick="my_modal_<%= index %>.showModal()">💌</button>
         <dialog id="my_modal_<%= index %>" class="modal modal-bottom sm:modal-middle">
           <div class="modal-box">
             <h3 class="text-lg font-bold">Hello!</h3>
