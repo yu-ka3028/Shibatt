@@ -59,7 +59,7 @@ class MemosController < ApplicationController
     end
   
     if @memo.update(memo_params)
-      redirect_to user_memos_path(current_user), notice: 'メモを更新しました'
+      redirect_to user_memo_path(current_user,@memo), notice: 'メモを更新しました'
     else
       @reflection_memos = current_user.reflection_memos
       flash[:alert] = @memo.errors.full_messages
