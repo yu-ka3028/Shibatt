@@ -1,23 +1,26 @@
-<%= form_with model: @reflection_memo, url: reflection_memos_path do |form| %>  
-  <div class="form-group">
-    <%= form.text_area :content, class: "form-control", placeholder: "振り返りメモ内容", rows: 5 %>
-  </div>
-
-  <% if @inprogress_memos&.any? %>
-    <% @inprogress_memos.each do |memo| %>
-        <div>
-          <%= form.check_box :memo_ids, { multiple: true, checked: true }, memo.id, nil %>
-          <p>メモ内容: <%= memo.content %></p>
-          <p>作成日時: <%= memo.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
-        </div>
+<div class="flex justify-center">
+  <div class="w-ful">
+    <%= form_with model: @reflection_memo, url: reflection_memos_path do |form| %>  
+      <div class="form-group">
+        <%= form.text_area :content, class: "form-control", placeholder: "振り返りメモ内容", rows: 5 %>
+      </div>
+    
+      <% if @inprogress_memos&.any? %>
+        <% @inprogress_memos.each do |memo| %>
+          <div>
+            <%= form.check_box :memo_ids, { multiple: true, checked: true }, memo.id, nil %>
+            <p>メモ内容: <%= memo.content %></p>
+            <p>作成日時: <%= memo.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <p>関連するメモがありません。</p>
+      <% end %>
+        
+      <div class="form-group", style="text-align: right;">
+        <%= form.submit "作成", class: "btn" %>
+      </div>
     <% end %>
-  <% else %>
-    <p>関連するメモがありません。</p>
-  <% end %>
-
-  <div class="form-group">
-    <%= form.submit "作成", class: "btn" %>
   </div>
-<% end %>
-
+</div>
 <%= link_to "振り返り一覧", reflection_memos_path %>
