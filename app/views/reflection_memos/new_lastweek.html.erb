@@ -5,11 +5,11 @@
 
   <% if @inprogress_memos&.any? %>
     <% @inprogress_memos.each do |memo| %>
-        <div>
-          <%= form.check_box :memo_ids, { multiple: true, checked: true }, memo.id, nil %>
-          <p>メモ内容: <%= memo.content %></p>
-          <p>作成日時: <%= memo.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
-        </div>
+      <div>
+        <%= form.check_box :memo_ids, { multiple: true, checked: true }, memo.id, nil %>
+        <p>メモ内容: <%= memo.content %></p>
+        <p>作成日時: <%= memo.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      </div>
     <% end %>
   <% else %>
     <p>関連するメモがありません。</p>

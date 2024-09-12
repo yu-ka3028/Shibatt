@@ -3,11 +3,16 @@ Rails.application.routes.draw do
 
   resources :users do
     post 'refresh_username', on: :member
-    resources :memos do
+    resources :memos, only: [:index, :create, :show, :update] do
       patch 'update_tag', on: :member
-      # resources :reflection_memos
     end
   end
+
+  resources :memos, only: [:update] do
+    patch 'update_tag', on: :member
+    get 'index_js', on: :collection
+  end
+
   resources :reflection_memos do
     get 'new_lastweek', on: :collection
   end

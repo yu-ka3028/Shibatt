@@ -13,19 +13,17 @@ class MemosController < ApplicationController
       redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
     end
   end
-    # memo_tags = params[:memo][:memo_tags].split(',') if params[:memo][:memo_tags]
-    # @memo.memo_tags(memo_tags) if memo_tags
-    # if @memo.save
-    #   redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
-    # else
-    #   redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
-    # end
 
   def index
     @user = User.find(params[:user_id])
     @q = current_user.memos.includes(:tags).ransack(params[:q] || { progress_eq: false })
     @memos = @q.result.order(created_at: :desc)
     @memo_tags = current_user.memos.includes(:tags).flat_map(&:tags).uniq
+  end
+  
+  def index_js
+    @memos = Memo.all
+    render json: @memos
   end
   
   def show
@@ -98,11 +96,13 @@ class MemosController < ApplicationController
     @memo.tags.clear
   
     if @memo.tags << tag
-      flash[:notice] = 'タグを更新しました'
-      redirect_to user_memos_path(@user)
+      if @memo.save
+        render json: { success: true }
+      else
+        render json: { success: false, errors: @memo.errors.full_messages }
+      end
     else
-      flash[:alert] = @memo.errors.full_messages
-      render :show
+      render json: { success: false, errors: @memo.errors.full_messages }
     end
   end
 

@@ -7,7 +7,8 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag 'liff_set' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2BLLMLSBJ"></script>
@@ -24,24 +25,7 @@
 
   </head>
 
-  <body>
-    <script>
-      // ユーザーの設定に基づいてテーマを切り替える
-      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const bodyElement = document.querySelector('body');
-
-      function switchTheme(e) {
-        const theme = e.matches ? 'coffee' : 'lemonade';
-        bodyElement.setAttribute('data-theme', theme);
-      }
-
-      // 初期設定
-      switchTheme(darkModeMediaQuery);
-
-      // 設定が変更されたときにテーマを切り替える
-      darkModeMediaQuery.addListener(switchTheme);
-    </script>
-
+  <body data-turbo-suppress-warning data-user-id="<%= current_user&.id %>">
     <% if logged_in? %>
       <%= render 'shared/header' %>
     <% else %>
@@ -52,7 +36,5 @@
     <%= yield %>
     
     <%= render 'shared/footer' %>
-    <%= javascript_include_tag 'liff_set' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>
