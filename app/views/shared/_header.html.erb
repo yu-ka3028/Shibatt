@@ -3,37 +3,43 @@
     
   </div>
   <div class="flex-none">
-    <div class="dropdown dropdown-end">
-      <div class="w-10 rounded-full">
-        <% if current_user && current_user.profile_image_url.present? %>
-          <%= image_tag current_user.profile_image_url, alt: 'User profile image', class: 'w-10 rounded-full' %>
-        <% else %>
-          <%= image_tag 'icon_shibatt.png', alt: 'Default profile image', class: 'w-10 rounded-full' %>
-        <% end %>
+    <div class="dropdown dropdown-bottom dropdown-end">
+      <div tabindex="0" role="button" class="btn m-1">
+        <div class="w-10 rounded-full">
+          <% if current_user && current_user.profile_image_url.present? %>
+            <%= image_tag current_user.profile_image_url, alt: 'User profile image', class: 'w-10 rounded-full' %>
+          <% else %>
+            <%= image_tag 'icon_shibatt.png', alt: 'Default profile image', class: 'w-10 rounded-full' %>
+          <% end %>
+        </div>
       </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+      <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+        <% if current_user %>
+          <li><%= "【#{current_user.username}】"%></li>
+          <li><%= button_to 'profile再取得', refresh_username_user_path(current_user), method: :post %></li>
+          <li><%= link_to 'Logout', logout_path, data: { turbo_method: :delete } %></li>
+          <li>
+            <a href="https://line.me/R/ti/p/%40023jcczr">
+              Shibatt公式LINE
+            </a>
+          </li>
+          <li>--------------------------</li>
+          <li>【メニュー】</li>
+          <li><%= link_to "memo", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
+          <li><%= link_to "ref_memo", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
+          <li><%= link_to 'Top', root_path, class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
+        <% else %>
+          <li>ゲスト</li>
+          <li><%= link_to 'Login', login_path %></li>
+          <li><%= link_to "Sign_up", sign_up_path %></li>
+        <% end %>
+        <h>--------------------------</h>
+        <h>【開発者Profile】</h>
         <li>
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
+          <a href="https://school.runteq.jp/v3/social_portfolio">
+            RUNTEQ SPF
           </a>
         </li>
-        <li>
-          <a class="btn btn-ghost text-xl"></a>
-          <% if current_user %>
-            <%= link_to "【#{current_user.username}】", root_path %>
-            <%= link_to '【Logout】', logout_path, data: { turbo_method: :delete } %>
-            <%= button_to 'ユーザー名再取得', refresh_username_user_path(current_user), method: :post %>
-          <% else %>
-            ゲスト
-            <%= link_to '【Login】', login_path %>
-            <%= link_to "【Sign_up】", sign_up_path %>
-          <% end %>
-        </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
       </ul>
     </div>
   </div>

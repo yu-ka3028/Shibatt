@@ -16,17 +16,31 @@
           <%= image_tag 'icon_shibatt.png', alt: 'Tailwind CSS Navbar component', class: 'w-10 rounded-full' %>
         </div>
       </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+      <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+        <% if current_user %>
+          <li><%= "【#{current_user.username}】"%></li>
+          <li><%= link_to '【Logout】', logout_path, data: { turbo_method: :delete } %></li>
+          <li><%= button_to 'ユーザー名再取得', refresh_username_user_path(current_user), method: :post %></li>
+        <% else %>
+          <li>【未ログイン】</li>
+          <li><%= link_to 'Login', login_path %></li>
+          <li><%= link_to "Sign_up", sign_up_path %></li>
+        <% end %>
+        <li>--------------------------</li>
+        <li>【メニュー】</li>
+        <li><%= link_to 'Top', root_path %></li>
         <li>
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
+          <a href="https://line.me/R/ti/p/%40023jcczr">
+            Shibatt公式LINE
           </a>
         </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <h>--------------------------</h>
+        <h>【開発者Profile】</h>
+        <li>
+          <a href="https://school.runteq.jp/v3/social_portfolio">
+            RUNTEQ SPF
+          </a>
+        </li>
       </ul>
     </div>
   </div>
