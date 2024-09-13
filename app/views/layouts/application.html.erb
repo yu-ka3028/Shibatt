@@ -7,7 +7,6 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag 'liff_set' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
   <!-- Google tag (gtag.js) -->
@@ -22,6 +21,9 @@
 
   <!-- LINE LIFF SDK -->
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <!-- liff_set script -->
+  <%= javascript_include_tag 'liff_set' %>
 
   </head>
 
