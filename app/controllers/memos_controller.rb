@@ -8,6 +8,11 @@ class MemosController < ApplicationController
     @memo = current_user.memos.build(memo_params)
     @memo.progress = false
     if @memo.save
+      if params[:reflection_memo_ids]
+        params[:reflection_memo_ids].reject(&:blank?).each do |reflection_memo_id|
+          @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
+        end
+      end
       redirect_to user_memos_path(current_user) , notice: 'メモを作成しました'
     else
       redirect_to root_path , alert: @memo.errors.full_messages.join(', ')
@@ -45,20 +50,15 @@ class MemosController < ApplicationController
     @memo.assign_attributes(memo_params.except(:memo_tags))
     @memo.progress = params[:memo][:progress].blank? || params[:memo][:progress] == "0" ? false : true
   
-    if params[:reflection_memo_ids]
-      #一度、すべての紐付けを解除
-      @memo.reflection_memos.clear
-      # 再度、選択されたメモのみを再度紐付ける
-      params[:reflection_memo_ids].reject(&:blank?).each do |reflection_memo_id|
-        @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
+    if @memo.save
+      if params[:reflection_memo_ids]
+        #一度、すべての紐付けを解除
+        @memo.reflection_memos.clear
+        # 再度、選択されたメモのみを再度紐付ける
+        params[:reflection_memo_ids].reject(&:blank?).each do |reflection_memo_id|
+          @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
+        end
       end
-    end
-  
-    if params[:memo][:memo_tags].is_a?(String)
-      @memo.memo_tags = params[:memo][:memo_tags].split(',')
-    end
-  
-    if @memo.update(memo_params)
       redirect_to user_memo_path(current_user,@memo), notice: 'メモを更新しました'
     else
       @reflection_memos = current_user.reflection_memos

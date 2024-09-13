@@ -31,10 +31,9 @@ class ReflectionMemosController < ApplicationController
     @reflection_memo.memos.clear
     Rails.logger.debug("params[:memo_ids]: #{params[:memo_ids]}")
     # 再度、選択されたメモのみを再度紐付ける
-    if reflection_memo_params[:memo_ids]
-      reflection_memo_params[:memo_ids].each do |memo_id|
-        @reflection_memo.memos << Memo.find(memo_id)
-      end
+    memo_ids = params[:'memo_ids[]'] || []
+    memo_ids.each do |memo_id|
+      @reflection_memo.memos << Memo.find(memo_id)
     end
 
     if @reflection_memo.save
@@ -84,7 +83,7 @@ class ReflectionMemosController < ApplicationController
     end
   
     if @reflection_memo.update(reflection_memo_params)
-      redirect_to reflection_memo_path(@reflection_memo), notice: 'Reflection memo was successfully updated.'
+      redirect_to reflection_memos_path, notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
       flash[:alert] = @reflection_memo.errors.full_messages

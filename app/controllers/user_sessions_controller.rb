@@ -49,10 +49,9 @@ class UserSessionsController < ApplicationController
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
       auto_login(@user)
-      redirect_back_or_to root_path, notice: 'Login successful'
+      render json: { status: 'success', message: 'Login successful' }
     else
-      flash.now[:alert] = 'Login failed'
-      render :new, status: :unauthorized
+      render json: { status: 'error', message: 'Login failed' }, status: :unauthorized
     end
   end
 
