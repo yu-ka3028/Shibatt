@@ -83,7 +83,7 @@ class ReflectionMemosController < ApplicationController
     end
   
     if @reflection_memo.update(reflection_memo_params)
-      redirect_to reflection_memos_path, notice: 'Reflection memo was successfully updated.'
+      redirect_to reflection_memo_path, notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
       flash[:alert] = @reflection_memo.errors.full_messages

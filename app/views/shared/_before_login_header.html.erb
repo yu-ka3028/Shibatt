@@ -1,16 +1,6 @@
-<div class="navbar bg-base-100">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl"></a>
-    <% if current_user %>
-      <%= session[:username] %>
-    <% else %>
-      <%= link_to "【Top】", root_path %>  
-      <%= link_to '【Login】', login_path %>
-      <%= link_to "【Sign_up】", sign_up_path %>
-    <% end %>
-  </div>
+<div class="navbar bg-base-100 flex justify-end">
   <div class="flex-none">
-    <div class="dropdown dropdown-end">
+    <div class="dropdown dropdown-end flex justify-end">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
           <%= image_tag 'icon_shibatt.png', alt: 'Tailwind CSS Navbar component', class: 'w-10 rounded-full' %>
