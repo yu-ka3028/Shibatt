@@ -60,7 +60,7 @@
             <%= check_box_tag 'memo_ids[]', memo.id, @reflection_memo.memo_ids.include?(memo.id), id: "memo_#{memo.id}" %>
             <%= label_tag "memo_#{memo.id}", memo.content %>
           </div>
-          <p>Created at: <%= memo.created_at %></p>
+            <%= label_tag "memo_#{memo.id}", memo.created_at %>
         <% end %>
       <% else %>
         <p>関連する振り返りメモがありません。</p>
