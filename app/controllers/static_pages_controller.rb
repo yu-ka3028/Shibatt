@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  skip_before_action :require_login, only: [:terms_of_service, :privacy_policy, :top]
+  skip_before_action :require_login, only: [:terms_of_service, :privacy_policy, :contact_form, :top]
   def top 
     @user = current_user
     Rails.logger.info "Username: #{@user.username}" if @user
@@ -12,5 +12,8 @@ class StaticPagesController < ApplicationController
   end
 
   def terms_of_service
+  end
+
+  def contact_form
   end
 end

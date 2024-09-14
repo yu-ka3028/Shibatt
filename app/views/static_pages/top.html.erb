@@ -41,68 +41,6 @@
   </dialog>
 </div>
 
-</div>
-  <div class="flex flex-col items-center justify-center">
-    <br>
-    <div class="skeleton h-60 w-180 flex flex-col items-center justify-center" style="background-color: #CCE0AC;">
-      <h3>まずはLINEお友達登録!!</h3>
-      <h3>ShibattへLINEでメッセージを送信→メモを作成</h3>
-      <img src="https://qr-official.line.me/sid/L/023jcczr.png" alt="LINE QRコード" width="80">
-      <a href="https://line.me/R/ti/p/%40023jcczr" class="btn btn-outline btn-accent">
-        Shibatt公式LINE 友達追加URL
-      </a>
-    </div>
-    <br>
-    <div class="divider divider"></div>
-    <h6 class="text-center text-xl mb-6">ログイン</h6>
-    <div class="flex items-center justify-center">
-      <%= link_to oauth_path(provider: :line) do %>
-        <%= image_tag "line_login.png", class: "h-15 w-40 opacity-70" %>
-      <% end %>
-    </div>
-    <div class="divider divider" style="border-left: none;">OR</div>
-    <div class="flex items-center justify-center ">
-      <div class="w-full max-w-xs">
-        
-        <%= form_with(url: login_path, local: true) do |f| %>
-          </label>
-          <label class="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              class="h-4 w-4 opacity-70">
-              <path
-                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-            </svg>
-            <%= f.text_field :username, class: "grow", placeholder: "username" %>
-          </label>
-              
-          <label class="input input-bordered flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              class="h-4 w-4 opacity-70">
-              <path
-                fill-rule="evenodd"
-                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                clip-rule="evenodd" />
-            </svg>
-            <%= f.password_field :password, class: "grow", placeholder: "password" %>
-          </label>
-          <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>
-          <h6>************** OR *************</h6><br>
-          
-        <% end %>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-</dialog>
-
 <div class="flex flex-col items-center justify-center">
   <button class="btn text-teal-800 bg-white hover:bg-teal-200" onclick="my_modal_7.showModal()">使い方</button> 
   <dialog id="my_modal_7" class="modal modal-bottom sm:modal-middle font-handwriting">
@@ -163,12 +101,70 @@
     </div>
   </div>
 </div>
-<div class="flex flex-col items-center justify-center">
-  <h6>Progress</h6>
-  <div class="radial-progress" style="--value:<%= @progress_rate[:in_progress] %>;" role="progressbar">
-    <%= @progress_rate[:in_progress] %>%
+
+</div>
+  <div class="flex flex-col items-center justify-center">
+    <br>
+    <div class="skeleton h-60 w-180 flex flex-col items-center justify-center" style="background-color: #CCE0AC;">
+      <h3>まずはLINEお友達登録!!</h3>
+      <h3>ShibattへLINEでメッセージを送信→メモを作成</h3>
+      <img src="https://qr-official.line.me/sid/L/023jcczr.png" alt="LINE QRコード" width="80">
+      <a href="https://line.me/R/ti/p/%40023jcczr" class="btn btn-outline btn-accent">
+        Shibatt公式LINE 友達追加URL
+      </a>
+    </div>
+    <br>
+    <div class="divider divider"></div>
+    <h6 class="text-center text-xl mb-6">ログイン</h6>
+    <div class="flex items-center justify-center">
+      <%= link_to oauth_path(provider: :line) do %>
+        <%= image_tag "line_login.png", class: "h-15 w-40 opacity-70" %>
+      <% end %>
+    </div>
+    <div class="divider divider" style="border-left: none;">OR</div>
+    <div class="flex items-center justify-center ">
+      <div class="w-full max-w-xs">
+        
+        <%= form_with(url: login_path, local: true) do |f| %>
+          </label>
+          <label class="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70">
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <%= f.text_field :username, class: "grow", placeholder: "username" %>
+          </label>
+              
+          <label class="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="h-4 w-4 opacity-70">
+              <path
+                fill-rule="evenodd"
+                d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                clip-rule="evenodd" />
+            </svg>
+            <%= f.password_field :password, class: "grow", placeholder: "password" %>
+          </label>
+          <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>      
+        <% end %>
+      </div>
+    </div>
+
   </div>
 </div>
+
+</dialog>
+
+
+
+
 <br>
 <div class="flex w-full items-center justify-center flex-col lg:flex-row">
   <div class="card rounded-box grid h-auto flex-grow place-items-center">
@@ -192,6 +188,12 @@
             </div>
           </div>
         </dialog>
+        <div class="flex flex-col items-center justify-center">
+          <h6>Progress</h6>
+          <div class="radial-progress" style="--value:<%= @progress_rate[:in_progress] %>;" role="progressbar">
+            <%= @progress_rate[:in_progress] %>%
+          </div>
+        </div>
         <div class="flex space-x-4">
           <%= link_to "【memo】", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
           <%= link_to "【ref_memo】", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>

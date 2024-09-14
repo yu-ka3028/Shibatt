@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get 'privacy_policy', to: 'static_pages#privacy_policy', as: 'privacy_policy'
   get 'terms_of_service', to: 'static_pages#terms_of_service'
+  get 'contact_form', to: 'static_pages#contact_form'
   
   get "sign_up", to: "users#new"
   get 'login', to: 'user_sessions#new'
@@ -41,4 +42,5 @@ Rails.application.routes.draw do
   
   post '/' => 'linebot#callback'
   post '/webhook', to: 'linebot#callback'
+
 end
