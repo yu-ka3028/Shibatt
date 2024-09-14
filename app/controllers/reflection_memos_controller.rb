@@ -22,6 +22,7 @@ class ReflectionMemosController < ApplicationController
   end
 
   def create
+    Rails.logger.debug("Received memo_ids: #{params[:memo_ids]}")
     @reflection_memo = current_user.reflection_memos.build(reflection_memo_params)
     @reflection_memo.progress = true
     start_date = Date.today.beginning_of_week - 1.week
@@ -35,6 +36,7 @@ class ReflectionMemosController < ApplicationController
         memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
         @reflection_memo.memos = memos # メモを紐付け
       end
+      
   
       begin
         ref_memo_FB = @reflection_memo.content
@@ -71,20 +73,22 @@ class ReflectionMemosController < ApplicationController
   end
 
   def update
+    logger.debug "Received memo_ids: #{params[:memo_ids]}"
     @reflection_memo = current_user.reflection_memos.find(params[:id])
-    @memo = Memo.find(params[:memo_id]) # memo_idパラメータを使用してメモを見つけます
-    # 一度、すべての紐付けを解除
-    @reflection_memo.memos.clear
-    # 提案されたコードを使用して、新たにメモを紐付けます
-    @reflection_memo.memos << @memo
-    # 再度、選択されたメモのみを再度紐付ける
-    if params[:memo_ids].present?
-      memo_ids = params[:memo_ids].map(&:to_i) # IDを整数に変換
-      memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
-      @reflection_memo.memos = memos # メモを紐付け
-    end
   
     if @reflection_memo.update(reflection_memo_params)
+      memo_ids = params[:memo_ids].presence&.map(&:to_i) || [] # IDを整数に変換 memo_id -> memo_ids
+      memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
+      pp memo_ids
+  
+      # 新たに選択されたメモを追加
+      new_memos = memos - @reflection_memo.memos
+      @reflection_memo.memos << new_memos
+  
+      # チェックを外したメモを削除
+      removed_memos = @reflection_memo.memos - memos
+      @reflection_memo.memos.delete(removed_memos)
+  
       redirect_to reflection_memo_path, notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
@@ -92,7 +96,7 @@ class ReflectionMemosController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
     @reflection_memo = current_user.reflection_memos.find(params[:id])
     @reflection_memo.reflection_memo_memos.destroy_all

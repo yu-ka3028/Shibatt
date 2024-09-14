@@ -45,26 +45,26 @@
         <% end %>
         <%= f.text_area :content, class: "mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", placeholder: "content" %>
       </div>
-    <% end %>
-    <div style="display: flex; align-items: center;">
-      <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="40px" viewBox="0 0 20 20" width="40px" fill="#e8eaed">
-        <g><rect fill="none" height="20" width="20" x="0"/></g>
-        <g><path d="M12.5,13.5v0.99l-5-2.71V9.24L9.83,6.5H13V2H8.5v3.75L6.16,8.5H3V13h3.6l5.9,3.2V18H17v-4.5H12.5z M10,3.5h1.5V5H10V3.5z M6,11.5H4.5V10H6V11.5z M15.5,16.5H14V15h1.5V16.5z"/></g>
-      </svg>
-      <p>振り返りメモ</p>
-    </div>
-    <%= hidden_field_tag 'reflection_memo_ids[]', nil %>
-    <% if @ref_memo.reflection_memo_memos.exists? %>
-      <% @ref_memo.reflection_memo_memos.each do |reflection_memo_memo| %>
-        <% memo = reflection_memo_memo.memo %>
-        <div class="flex items-center">
-          <%= check_box_tag 'memo_ids[]', memo.id, true, id: "memo_#{memo.id}" %>
-          <%= label_tag "memo_#{memo.id}", memo.content %>
-        </div>
-        <p>Created at: <%= memo.created_at %></p>
+      <div style="display: flex; align-items: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="40px" viewBox="0 0 20 20" width="40px" fill="#e8eaed">
+          <g><rect fill="none" height="20" width="20" x="0"/></g>
+          <g><path d="M12.5,13.5v0.99l-5-2.71V9.24L9.83,6.5H13V2H8.5v3.75L6.16,8.5H3V13h3.6l5.9,3.2V18H17v-4.5H12.5z M10,3.5h1.5V5H10V3.5z M6,11.5H4.5V10H6V11.5z M15.5,16.5H14V15h1.5V16.5z"/></g>
+        </svg>
+        <p>振り返りメモ</p>
+      </div>
+      <%= f.hidden_field :memo_ids, value: [] %>
+      <% if @ref_memo.reflection_memo_memos.exists? %>
+        <% @ref_memo.reflection_memo_memos.each do |reflection_memo_memo| %>
+          <% memo = reflection_memo_memo.memo %>
+          <div class="flex items-center">
+            <%= check_box_tag 'memo_ids[]', memo.id, @reflection_memo.memo_ids.include?(memo.id), id: "memo_#{memo.id}" %>
+            <%= label_tag "memo_#{memo.id}", memo.content %>
+          </div>
+          <p>Created at: <%= memo.created_at %></p>
+        <% end %>
+      <% else %>
+        <p>関連する振り返りメモがありません。</p>
       <% end %>
-    <% else %>
-      <p>関連する振り返りメモがありません。</p>
     <% end %>
   </div>
 </div>        
