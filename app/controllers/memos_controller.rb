@@ -97,7 +97,8 @@ class MemosController < ApplicationController
   
     if @memo.tags << tag
       if @memo.save
-        render json: { success: true }
+        flash[:notice] = 'タグを更新しました'
+        redirect_to user_memos_path(@user)
       else
         render json: { success: false, errors: @memo.errors.full_messages }
       end

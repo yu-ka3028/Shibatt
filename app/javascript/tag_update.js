@@ -1,41 +1,27 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-  let userId = document.body.dataset.userId; // ユーザーIDを適切に設定
-  fetch(`/users/${userId}/memos`)
-    .then(response => response.json())
-    .then(memos => {
-      for(let i = 0; i < memos.length; i++) {
-        let memoId = memos[i].id;
-        let selectElement = document.getElementById(`tag_select_${memoId}`);
+  document.querySelectorAll('select.tag-selector').forEach((select) => {
+    console.log('Tag selection changed');
+    select.addEventListener('change', (event) => {
+      let selectedTag = select.value;
+      let memoId = select.dataset.memoId; // セレクトボックスにdata-memo-id属性を追加しておく
 
-        if(selectElement) {
-          // ページが読み込まれたときに現在のタグを選択状態にする
-          let currentTag = document.getElementById(`tag_display_${memoId}`).textContent;
-          selectElement.value = currentTag;
-
-          selectElement.addEventListener('change', (event) => {
-            let selectedTag = event.target.value;
-
-            // Ajax通信を行う
-            fetch(`/memos/${memoId}/update_tag`, {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-              },
-              body: JSON.stringify({ tag: selectedTag })
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success) {
-                // タグの更新が成功した場合、ページ上のタグ表示を更新する
-                document.getElementById(`tag_display_${memoId}`).textContent = selectedTag;
-              } else {
-                // タグの更新が失敗した場合、エラーメッセージを表示する
-                alert('タグの更新に失敗しました: ' + data.errors.join(', '));
-              }
-            });
-          });
+      fetch(`/users/${userId}/memos/${memoId}/update_tag`, { // userIdは適切な値に置き換えてください
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ tag: selectedTag })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // 画面の更新処理をここに書く
+          location.reload(); // 例えば、ページ全体をリロードする場合
+        } else {
+          console.error('Error:', data.errors);
         }
-      }
+      });
     });
+  });
 });
