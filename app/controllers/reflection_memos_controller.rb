@@ -22,21 +22,22 @@ class ReflectionMemosController < ApplicationController
   end
 
   def create
+    Rails.logger.debug("Received memo_ids: #{params[:memo_ids]}")
     @reflection_memo = current_user.reflection_memos.build(reflection_memo_params)
     @reflection_memo.progress = true
     start_date = Date.today.beginning_of_week - 1.week
     end_date = start_date.end_of_week
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
-    # 一度、すべての紐付けを解除
-    @reflection_memo.memos.clear
-    Rails.logger.debug("params[:memo_ids]: #{params[:memo_ids]}")
-    # 再度、選択されたメモのみを再度紐付ける
-    memo_ids = params[:'memo_ids[]'] || []
-    memo_ids.each do |memo_id|
-      @reflection_memo.memos << Memo.find(memo_id)
-    end
-
+  
     if @reflection_memo.save
+      # メモの紐付けは@reflection_memoが保存された後に行う
+      if params[:memo_ids].present?
+        memo_ids = params[:memo_ids].map(&:to_i) # IDを整数に変換
+        memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
+        @reflection_memo.memos = memos # メモを紐付け
+      end
+      
+  
       begin
         ref_memo_FB = @reflection_memo.content
         chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
@@ -72,17 +73,22 @@ class ReflectionMemosController < ApplicationController
   end
 
   def update
+    logger.debug "Received memo_ids: #{params[:memo_ids]}"
     @reflection_memo = current_user.reflection_memos.find(params[:id])
-    # 一度、すべての紐付けを解除
-    @reflection_memo.memos.clear
-    # 再度、選択されたメモのみを再度紐付ける
-    if params[:memo_ids]
-      params[:memo_ids].each do |memo_id|
-        @reflection_memo.memos << Memo.find(memo_id)
-      end
-    end
   
     if @reflection_memo.update(reflection_memo_params)
+      memo_ids = params[:memo_ids].presence&.map(&:to_i) || [] # IDを整数に変換 memo_id -> memo_ids
+      memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
+      pp memo_ids
+  
+      # 新たに選択されたメモを追加
+      new_memos = memos - @reflection_memo.memos
+      @reflection_memo.memos << new_memos
+  
+      # チェックを外したメモを削除
+      removed_memos = @reflection_memo.memos - memos
+      @reflection_memo.memos.delete(removed_memos)
+  
       redirect_to reflection_memo_path, notice: 'Reflection memo was successfully updated.'
     else
       @memos = current_user.memos
@@ -90,10 +96,10 @@ class ReflectionMemosController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
     @reflection_memo = current_user.reflection_memos.find(params[:id])
-    @reflection_memo.memos.clear
+    @reflection_memo.reflection_memo_memos.destroy_all
     @reflection_memo.destroy!
     redirect_to reflection_memos_path, notice: 'Reflection memo was successfully'
   end
