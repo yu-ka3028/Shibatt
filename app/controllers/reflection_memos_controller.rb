@@ -27,16 +27,15 @@ class ReflectionMemosController < ApplicationController
     start_date = Date.today.beginning_of_week - 1.week
     end_date = start_date.end_of_week
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
-    # 一度、すべての紐付けを解除
-    @reflection_memo.memos.clear
-    Rails.logger.debug("params[:memo_ids]: #{params[:memo_ids]}")
-    # 再度、選択されたメモのみを再度紐付ける
-    memo_ids = params[:'memo_ids[]'] || []
-    memo_ids.each do |memo_id|
-      @reflection_memo.memos << Memo.find(memo_id)
-    end
-
+  
     if @reflection_memo.save
+      # メモの紐付けは@reflection_memoが保存された後に行う
+      if params[:memo_ids].present?
+        memo_ids = params[:memo_ids].map(&:to_i) # IDを整数に変換
+        memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
+        @reflection_memo.memos = memos # メモを紐付け
+      end
+  
       begin
         ref_memo_FB = @reflection_memo.content
         chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
@@ -73,13 +72,16 @@ class ReflectionMemosController < ApplicationController
 
   def update
     @reflection_memo = current_user.reflection_memos.find(params[:id])
+    @memo = Memo.find(params[:memo_id]) # memo_idパラメータを使用してメモを見つけます
     # 一度、すべての紐付けを解除
     @reflection_memo.memos.clear
+    # 提案されたコードを使用して、新たにメモを紐付けます
+    @reflection_memo.memos << @memo
     # 再度、選択されたメモのみを再度紐付ける
-    if params[:memo_ids]
-      params[:memo_ids].each do |memo_id|
-        @reflection_memo.memos << Memo.find(memo_id)
-      end
+    if params[:memo_ids].present?
+      memo_ids = params[:memo_ids].map(&:to_i) # IDを整数に変換
+      memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
+      @reflection_memo.memos = memos # メモを紐付け
     end
   
     if @reflection_memo.update(reflection_memo_params)
@@ -93,7 +95,7 @@ class ReflectionMemosController < ApplicationController
 
   def destroy
     @reflection_memo = current_user.reflection_memos.find(params[:id])
-    @reflection_memo.memos.clear
+    @reflection_memo.reflection_memo_memos.destroy_all
     @reflection_memo.destroy!
     redirect_to reflection_memos_path, notice: 'Reflection memo was successfully'
   end
