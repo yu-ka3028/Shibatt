@@ -51,12 +51,11 @@
       </svg>
       <p>振り返りメモ</p>
     </div>
-    <%= hidden_field_tag 'reflection_memo_ids[]', nil %>
+    
     <% if @memo.reflection_memo_memos.exists? %>
       <% @memo.reflection_memo_memos.each do |reflection_memo_memo| %>
         <% reflection_memo = reflection_memo_memo.reflection_memo %>
           <div class="flex items-center">
-            <%= check_box_tag 'reflection_memo_ids[]', reflection_memo.id, true, id: "reflection_memo_#{reflection_memo.id}" %>
             <%= label_tag "reflection_memo_#{reflection_memo.id}", reflection_memo.content %>
           </div>
         <p>Created at: <%= reflection_memo.created_at %></p>
