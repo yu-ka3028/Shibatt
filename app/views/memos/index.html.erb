@@ -4,7 +4,7 @@
     <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
     <%= f.search_field :content_cont, class: "input input-bordered w-full max-w-xs", placeholder: "content" %>
     <div class="flex flex-row sm:flex-row items-center gap-2">
-      <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
+      <%= f.select :tags_name_eq, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
       <%= f.select :progress_eq, options_for_select([['in progress', false], ['completed', true], ['ALL', nil]], selected: @q.progress_eq.nil? ? nil : @q.progress_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
       <%= f.submit "検索", class: "btn-search sm:order-3" do %>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class: "h-4 w-4 opacity-70">
@@ -53,7 +53,7 @@
                     <% form_id = "tag_form_#{memo.id}" %>
                     <% select_id = "tag_select_#{memo.id}" %>
                     <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
-                      <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
+                      <%= f.select :tag, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-md m-1 h-auto" %>
                       <%= f.submit '[Update]'%>
                     <% end %>
                   </div>
@@ -70,9 +70,9 @@
                 <% form_id = "tag_form_#{memo.id}" %>
                 <% select_id = "tag_select_#{memo.id}" %>
                 <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
-                  <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
+                  <%= f.select :tag, options_for_select([['', ''], ['白', '白'], ['黒', '黒'], ['赤', '赤'], ['橙', '橙'], ['黄', '黄'], ['黄緑', '黄緑'], ['緑', '緑'], ['水色', '水色'], ['青', '青']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-md m-1 h-auto" %>
                   <%= f.submit '[Update]'%>
-                <% end %>
+                  <% end %>
               </div>
             </td>
             <td class="hidden sm:table-cell text-xs">
