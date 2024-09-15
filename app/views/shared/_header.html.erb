@@ -3,7 +3,11 @@
     
   </div>
 
-  <a href="https://www.memo-shibatt.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+  <div class="twitter">
+    <%= link_to "https://twitter.com/share?url=#{root_path}&text=【2Seeds】%0a%0a#{"#RUNTEQ祭 #Shibatt"}", target: '_blank', data: { toggle: "tooltip", placement: "bottom" }, title: "Xでシェア" do %>
+      <i class="fab fa-twitter"></i>
+    <% end %> 
+  </div>
   
   <div class="flex-none">
     <div class="dropdown dropdown-bottom dropdown-end">
