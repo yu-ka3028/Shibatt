@@ -24,6 +24,7 @@ class LinebotController < ApplicationController
             }
           elsif event.message['text'] == '困ったとき'
             # "困ったとき"の応答を取得するAPIを呼び出す
+            keyword = URI.encode('困ったとき')
             response = Net::HTTP.get(URI('http://example.com/api/v1/responses?keyword=困ったとき'))
             response_data = JSON.parse(response)
           
