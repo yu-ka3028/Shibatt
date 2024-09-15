@@ -24,7 +24,7 @@ class LinebotController < ApplicationController
             }
 
           elsif event.message['text'] == '困ったとき'
-            help_message = FlexMessage::HelpMessage.new(user.memos)
+            help_message = FlexMessage::HelpMessage.new
 
             message = {
               type: 'flex',
