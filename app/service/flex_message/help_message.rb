@@ -1,6 +1,6 @@
 module FlexMessage
   class HelpMessage
-    def content
+    def contents
       {
         "type": "carousel",
         "contents": [
