@@ -24,11 +24,11 @@ class LinebotController < ApplicationController
             }
           elsif event.message['text'] == '困ったとき'
             # "困ったとき"の応答を取得するAPIを呼び出す
-            keyword = URI.encode('困ったとき')
-            response = Net::HTTP.get(URI('https://liff.line.me/2006024454-QgjEWevp/api/v2/responses?keyword=困ったとき'))
-
-            response_data = JSON.parse(response)
+            keyword = URI.encode_www_form_component('困ったとき')
+            response = Net::HTTP.get(URI("https://liff.line.me/2006024454-QgjEWevp/api/v2/responses?keyword=#{困ったとき}"))
           
+            response_data = JSON.parse(response)
+            
             # 取得した応答をリッチメッセージとして送信
             message = {
               type: 'flex',
