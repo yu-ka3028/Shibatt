@@ -22,6 +22,17 @@ class LinebotController < ApplicationController
               # インスタンスからcontentsメソッドを呼び出す
               contents: progress_message.contents
             }
+          elsif event.message['text'] == '困ったとき'
+            # "困ったとき"の応答を取得するAPIを呼び出す
+            response = Net::HTTP.get(URI('http://example.com/api/v1/responses?keyword=困ったとき'))
+            response_data = JSON.parse(response)
+          
+            # 取得した応答をリッチメッセージとして送信
+            message = {
+              type: 'flex',
+              altText: '困ったときの対処法',
+              contents: response_data['contents']
+            }
           elsif user
             memo = user.memos.build(content: event.message['text'])
             tag = Tag.find_or_create_by(name: 'from_LINE')
