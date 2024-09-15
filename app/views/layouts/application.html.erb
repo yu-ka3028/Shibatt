@@ -23,14 +23,19 @@
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
   <!-- liff_set script -->
-  <%= javascript_include_tag 'liff_set' %>
+  <%= javascript_include_tag "liff_set" %>
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@yuka3028" />
-  <meta property="og:url" content="https://www.memo-shibatt.com" />
+  <meta name="twitter:domain" content="memo-shibatt.com" />
   <meta name="twitter:title" content="Shibatt" />
   <meta name="twitter:description" content="素早いメモと、書きっぱなしにしないメモ機能" />
   <meta name="twitter:image" content="<%= asset_url "OGP_Shibatt.png" %>" />
+
+  <meta property="og:url" content="https://bandmemo-app.com" />
+  <meta property="og:title" content="bandmemo" />
+  <meta property="twitter:description" content="バンド練習の決定事項、メモしてシェアしよう。" />
+  <meta property="og:image" content="<%= image_url "ogp_image.png" %>" />
 
   </head>
 
