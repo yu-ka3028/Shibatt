@@ -82,8 +82,7 @@
                 <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
               </td>
               <td div class="form-control">
-                <label class="cursor-pointer label">
-                  <span class="label-text">Remember me</span>
+                <label class="cursor-pointer label" style="display: flex; align-items: center;">
                   <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}", class: "checkbox checkbox-error", style: "background-color: #C96868; border-color: #800000;" %>
                 </label>
               </td>
