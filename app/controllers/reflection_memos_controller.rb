@@ -48,7 +48,7 @@ class ReflectionMemosController < ApplicationController
         chatgpt_message = "振り返りメモの記載お疲れ様です！"
         @reflection_memo.update(feedback_given: chatgpt_message)
       end
-      redirect_to reflection_memos_path, notice: 'Reflection memo was successfully created.'
+      redirect_to reflection_memos_path, notice: '振り返りメモを作成しました'
     else
       @memos = current_user.memos.where(id: reflection_memo_params[:memo_ids])
       flash.now[:alert] = 'Failed to create reflection memo.'
@@ -90,7 +90,7 @@ class ReflectionMemosController < ApplicationController
       removed_memos = @reflection_memo.memos - memos
       @reflection_memo.memos.delete(removed_memos)
   
-      redirect_to reflection_memo_path, notice: 'Reflection memo was successfully updated.'
+      redirect_to reflection_memo_path, notice: '振り返りメモを更新しました'
     else
       @memos = current_user.memos
       flash[:alert] = @reflection_memo.errors.full_messages
@@ -102,7 +102,7 @@ class ReflectionMemosController < ApplicationController
     @reflection_memo = current_user.reflection_memos.find(params[:id])
     @reflection_memo.reflection_memo_memos.destroy_all
     @reflection_memo.destroy!
-    redirect_to reflection_memos_path, notice: 'Reflection memo was successfully'
+    redirect_to reflection_memos_path, notice: '振り返りメモを削除しました'
   end
 
   private

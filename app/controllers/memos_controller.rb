@@ -66,7 +66,7 @@ class MemosController < ApplicationController
     @memo = current_user.memos.find(params[:id])
     @memo.reflection_memos.clear
     @memo.destroy!
-    redirect_to user_memos_path(current_user), notice: 'Memo was successfully'
+    redirect_to user_memos_path(current_user), notice: "メモを削除しました"
   end
 
   def tag_search

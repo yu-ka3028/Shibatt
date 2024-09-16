@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auto_login(@user)
-      redirect_to root_path, notice: 'User was successfully created.'
+      redirect_to root_path, notice: 'ユーザーを作成しました'
     else
       flash.now[:alert] = 'User could not be created.'
 
