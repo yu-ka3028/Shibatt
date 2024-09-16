@@ -53,9 +53,9 @@ module FlexMessage
                 {
                   "type": "button",
                   "action": {
-                    "type": "uri",
+                    "type": "message",
                     "label": "説明を見る",
-                    "uri": "http://linecorp.com/"
+                    "text": "使い方"
                   },
                   "margin": "sm",
                   "style": "primary"

@@ -32,6 +32,15 @@ class LinebotController < ApplicationController
               contents: help_message.contents
             }
 
+          elsif event.message['text'] == '使い方'
+            how_to_use_message = FlexMessage::HowToUseMessage.new
+
+            message = {
+              type: 'flex',
+              altText: '使い方',
+              contents: how_to_use_message.contents
+            }
+            
           elsif user
             memo = user.memos.build(content: event.message['text'])
             tag = Tag.find_or_create_by(name: 'from_LINE')
