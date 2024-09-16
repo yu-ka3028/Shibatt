@@ -26,11 +26,6 @@ class MemosController < ApplicationController
     @memo_tags = current_user.memos.includes(:tags).flat_map(&:tags).uniq
   end
   
-  def index_js
-    @memos = Memo.all
-    render json: @memos
-  end
-  
   def show
     @user = User.find(params[:user_id])
     @memo = @user.memos.includes(:tags).find_by(id: params[:id])

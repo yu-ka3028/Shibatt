@@ -1,70 +1,74 @@
-<h3>振り返りメモ一覧</h3>
+<div class="relative">
+  <div class="absolute inset-0 bg-[url('https://i.gyazo.com/bd0b724008552f3e21d69e7239527382.jpg')] bg-center bg-cover opacity-35"></div>
+  <div class="relative ">
+    <h3>振り返りメモ一覧</h3>
 
-<%= search_form_for @q, url: reflection_memos_path, html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
-  <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
-  <%= f.search_field :content_cont, class: "grow", placeholder: "Search" %>
-  <%= f.submit 'Search', class: "sr-only" %>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
-    <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-  </svg>
-<% end %>
-
-<% @reflection_memos.each_with_index do |ref_memo, index| %>
-  <details class="collapse bg-base-200 mx-auto my-2">
-    <summary class="collapse-title text-xl font-medium w-full m-1">
-    <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
-      <div class="collapse-title bg-primary text-primary-content w-full h-full flex justify-center items-center max-w-screen-xl">
-        <div class="flex flex-row w-full justify-between">
-          <div class="w-4/5">
-            <p style="font-size: 50%;"><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
-          </div>
-          <div class="flex flex-col justify-end">
-            <%= link_to reflection_memo_path(ref_memo), class: 'btn btn-primary' do %>
-              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#e8eaed">
-                <path d="M0 0h24v24H0V0z" fill="none"/>
-                <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-              </svg>
-            <% end %>
-            <button class="btn bg-transparent border-none transition-colors duration-200 hover:bg-[#CDC2A5] hover:border-[#CDC2A5]" onclick="my_modal_<%= index %>.showModal()">
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#e8eaed">
-                <path d="M0 0h24v24H0V0z" fill="none"/>
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
-              </svg>
-            </button>
+    <%= search_form_for @q, url: reflection_memos_path, html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
+      <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
+      <%= f.search_field :content_cont, class: "grow", placeholder: "Search" %>
+      <%= f.submit 'Search', class: "sr-only" %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+        <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+      </svg>
+    <% end %>
+    
+    <% @reflection_memos.each_with_index do |ref_memo, index| %>
+      <details class="collapse bg-base-200 mx-auto my-2 flex justify-center" style="background-color: transparent;">
+        <summary class="collapse-title text-xl font-medium w-full m-0.5 self-center">
+        <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
+          <div class="collapse-title bg-primary text-primary-content w-full h-full flex justify-center items-center max-w-screen-xl" style="background-color: #F6EACB; border: 2px solid #CDC2A5; color: black; border-radius: 16px;">
+            <div class="flex flex-row w-full justify-between">
+              <div class="w-4/5">
+                <p style="font-size: 50%;"><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
+              </div>
+              <div class="flex flex-col justify-end space-y-4">
+                <%= link_to reflection_memo_path(ref_memo), class: 'btn btn-primary p-2' do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#e8eaed">
+                    <path d="M0 0h24v24H0V0z" fill="none"/>
+                    <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+                <% end %>
+                <button class="btn bg-transparent border-none transition-colors duration-200" style="border: 2px solid #C96868;" onclick="my_modal_0.showModal()">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#C96868">
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <dialog id="my_modal_<%= index %>" class="modal modal-bottom sm:modal-middle" style="color: black;">
+              <div class="modal-box" style="background-image: url('https://i.gyazo.com/3a7df6cc8691bc76b26ad27e9db05e51.jpg'); background-size: 100px 100px; background-repeat: no-repeat; height: 400px;">
+                <h3 class="text-lg font-bold" style="text-align: center;">ShibaからのFB</h3>
+                <p class="py-4">
+                  <nav class="navbar navbar-light bg-light" style="height: 75%;">
+                    <span class="navbar-text" style="position: relative; z-index: 9999;">
+                      <%= ref_memo.feedback_given %>
+                    </span>
+                  </nav>
+                </p>
+                <div class="modal-action">
+                  <form method="dialog">
+                    <button class="btn" style="background-color: #e8eaed;">Close</button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
           </div>
         </div>
-        <!-- Open the modal using ID.showModal() method -->
-        <dialog id="my_modal_<%= index %>" class="modal modal-bottom sm:modal-middle" style="color: black;">
-          <div class="modal-box">
-            <h3 class="text-lg font-bold">Hello!</h3>
-            <p class="py-4">
-              <nav class="navbar navbar-light bg-light">
-                <span class="navbar-text">
-                  <%= ref_memo.feedback_given %>
-                </span>
-              </nav>
-            </p>
-            <div class="modal-action">
-              <form method="dialog">
-                <!-- if there is a button in form, it will close the modal -->
-                <button class="btn">Close</button>
-              </form>
-            </div>
+          <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+            <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
           </div>
-        </dialog>
-      </div>
-    </div>
-      <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
-        <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
-      </div>
-    </summary>
-    <div class="collapse-content">
-      <h6>《紐付けメモ》</h6>
-      <% ref_memo.memos.each do |each_memo|%>
-        <p><%= each_memo.content %></p>
-      <% end %>
-    </div>
-  </details>
-<% end %>
-
-<%= paginate @reflection_memos %> 
+        </summary>
+        <div class="collapse-content w-4/5 self-center items-center text-center mx-auto">
+          <h6>《紐付けメモ》</h6>
+          <% ref_memo.memos.each do |each_memo|%>
+            <p><%= each_memo.content %></p>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+          
+    <%= paginate @reflection_memos %> 
+  </div>
+</div>
