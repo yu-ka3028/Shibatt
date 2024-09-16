@@ -26,7 +26,7 @@
           <% if current_user %>
             <li><%= "【#{current_user.username}】"%></li>
             <li><%= button_to 'profile再取得', refresh_username_user_path(current_user), method: :post %></li>
-            <li><%= link_to 'Logout', logout_path, data: { turbo_method: :delete } %></li>
+            <li><%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete } %></li>
             <li>
               <a href="https://line.me/R/ti/p/%40023jcczr">
                 Shibatt公式LINE
@@ -34,13 +34,13 @@
             </li>
             <li>--------------------------</li>
             <li>【メニュー】</li>
-            <li><%= link_to "memo", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
-            <li><%= link_to "ref_memo", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
-            <li><%= link_to 'Top', root_path, class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
+            <li><%= link_to "メモ一覧", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
+            <li><%= link_to "振り返りメモ一覧", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
+            <li><%= link_to 'トップ', root_path, class: "bg-white text-green-800 px-4 py-2 rounded" %></li>
           <% else %>
             <li>ゲスト</li>
-            <li><%= link_to 'Login', login_path %></li>
-            <li><%= link_to "Sign_up", sign_up_path %></li>
+            <li><%= link_to 'ログイン', login_path %></li>
+            <li><%= link_to "新規登録", sign_up_path %></li>
           <% end %>
           <h>--------------------------</h>
           <h>【開発者Profile】</h>

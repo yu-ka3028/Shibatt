@@ -61,4 +61,13 @@ module.exports = {
     ]
   },
   darkMode: 'media',
+  theme: {
+    extend: {
+      fontFamily: {
+        'sans': ['Noto Sans JP', ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
+  variants: {},
+  plugins: [],
 }
