@@ -30,13 +30,9 @@ class LinebotController < ApplicationController
             tag = Tag.find_or_create_by(name: 'from_LINE')
             memo.tags << tag
             if memo.save
-              # AIからのレスポンスを取得
-              ai_response = get_ai_response(event.message['text'])
-              # AIからのレスポンスをfeedback_givenに設定し、更新を保存
-              memo.update(feedback_given: ai_response)
               message = {
                 type: 'text',
-                text: "メモを保存しました: #{event.message['text']}\nAIからのフィードバック: #{ai_response}"
+                text: "メモを保存しました: #{event.message['text']}"
               }
             else
               message = {
