@@ -64,7 +64,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Noto Sans JP', ...defaultTheme.fontFamily.sans],
+        'sans': ['Noto Sans JP', 'sans-serif'],
       },
     },
   },
