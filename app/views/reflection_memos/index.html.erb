@@ -1,5 +1,5 @@
 <div class="relative">
-  <div class="absolute inset-0 bg-[url('https://i.gyazo.com/bd0b724008552f3e21d69e7239527382.jpg')] bg-center bg-cover opacity-35" style="background-size: 50%;"></div>
+  <div class="absolute inset-0 bg-[url('https://i.gyazo.com/bd0b724008552f3e21d69e7239527382.jpg')] bg-center bg-cover opacity-25" style="background-size: 50%;"></div>
   <div class="relative ">
     <h3>振り返りメモ一覧</h3>
 
@@ -60,7 +60,7 @@
             <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
           </div>
         </summary>
-        <div class="collapse-content w-4/5 self-center items-center text-center mx-auto">
+        <div class="collapse-content w-4/5 self-center items-center text-left text-sm mx-auto">
           <h6>《紐付けメモ》</h6>
           <% ref_memo.memos.each do |each_memo|%>
             <p><%= each_memo.content %></p>
