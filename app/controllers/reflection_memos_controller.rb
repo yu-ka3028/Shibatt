@@ -41,6 +41,7 @@ class ReflectionMemosController < ApplicationController
       begin
         ref_memo_FB = @reflection_memo.content
         chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
+        chatgpt_message = "振り返りメモの記載お疲れ様です！" if chatgpt_message.blank?
         @reflection_memo.update(feedback_given: chatgpt_message)
         @reflection_memo.FB_to_line(chatgpt_message)
       rescue Net::ReadTimeout

@@ -2,14 +2,13 @@ class ChatgptService
   include HTTParty
 
   attr_reader :api_url, :options, :model, :message
-  # モデルは予め設定しておく　ここでは3.5-turboを使う
   def initialize(message, model = 'gpt-3.5-turbo')
     # 機密ファイルを呼び出している
     api_key = Rails.application.credentials.chatgpt_api_key
     @options = {
       headers: {
         'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{api_key}" # ここで 'api_key' を使用
+        'Authorization' => "Bearer #{api_key}"
       }
     }
     @api_url = 'https://api.openai.com/v1/chat/completions'
