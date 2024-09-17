@@ -43,7 +43,7 @@ class MemosController < ApplicationController
   def update
     @memo = current_user.memos.find(params[:id])
     @memo.assign_attributes(memo_params.except(:memo_tags))
-    @memo.progress = params[:memo][:progress].blank? || params[:memo][:progress] == "0" ? false : true
+    @memo.progress = params.dig(:memo, :progress) != "0"
   
     if @memo.save
       if params[:reflection_memo_ids]
