@@ -20,7 +20,7 @@
           <h3 class="text-lg font-bold">削除確認</h3>
           <p class="py-4">本当に削除しますか？</p>
           <div class="modal-action">
-            <%= form_with(model: @memo, url: user_memo_path(@user, @memo), local: true) do |f| %>
+            <%= form_with(model: @memo, url: user_memo_path(@user, @memo), method: :delete, local: true) do |f| %>
               <button type="submit" class="btn">削除する</button>
             <% end %>
             <form method="dialog">

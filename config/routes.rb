@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :users do
     post 'refresh_username', on: :member
-    resources :memos, only: [:index, :create, :show, :update] do
+    resources :memos, only: [:index, :create, :show, :update, :destroy] do
       patch 'update_tag', on: :member
     end
   end
