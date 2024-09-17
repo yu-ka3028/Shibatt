@@ -1,6 +1,12 @@
 <div class="flex items-center justify-center ">
   <div class="w-full max-w-xs">
     <h1 class="text-center text-2xl mb-6">新規登録</h1>
+    <div class="flex justify-center">
+      <%= link_to oauth_path(provider: :line) do %>
+        <%= image_tag "line_login.png", class: "h-15 w-32 opacity-70" %>
+      <% end %>
+    </div>
+    <div class="divider divider" style="border-left: none;">OR</div>
     <%= form_with(model: @user, local: true) do |f| %>
       </label>
       <label class="input input-bordered flex items-center gap-2">
@@ -40,16 +46,10 @@
             d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
             clip-rule="evenodd" />
         </svg>
-        <%= f.password_field :password_confirmation, class: "grow", value: "password" %>
+        <%= f.password_field :password_confirmation, class: "grow", placeholder: "password"  %>
       </label>
           
       <div class="text-right"><%= f.submit "登録", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>
-      <h6>********************  OR  ********************</h6><br>
-      <div class="flex justify-end">
-        <%= link_to oauth_path(provider: :line) do %>
-          <%= image_tag "line_login.png", class: "h-15 w-32 opacity-70" %>
-        <% end %>
-      </div>
     <% end %> 
   </div>
 </div>
