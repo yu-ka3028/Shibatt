@@ -2,10 +2,11 @@
   <div class="relative">
       <div class="flex flex-col items-center justify-center">
         <br>
-          <h6 class="text-center">Shibattは、LINEから素早く</h6>
-          <h6 class="text-center">メモを作成できるサービスです。</h6>
-          <h6 class="text-center">メモは書きっぱなしにせず受動的に振り返ることで、</h6>
-          <h6 class="text-center">自身の思考を整理し、行動に活かすことができます。</h6>
+          <%= image_tag("OGP_Shibatt.png", alt: "Shibatt image", width: "500", height: "300") %>
+          <h6 class="text-center text-sm">Shibattは、LINEから素早く</h6>
+          <h6 class="text-center text-sm">メモを作成できるサービスです。</h6>
+          <h6 class="text-center text-sm">メモは書きっぱなしにせず受動的に振り返ることで、</h6>
+          <h6 class="text-center text-sm">自身の思考を整理し、行動に活かすことができます。</h6>
         <br>
       </div>
 
@@ -13,7 +14,7 @@
         <button class="btn bg-yellow-300 hover:bg-white" onclick="my_modal_6.showModal()">どんなサービス？</button>
         <dialog id="my_modal_6" class="modal modal-bottom sm:modal-middle font-handwriting">
           <div class="modal-box">
-            <h3 class="font-handwriting text-lg">サービスについて</h3>
+            <h3 class="font-handwriting text-md">サービスについて</h3>
             <p class="py-4">
             <h3>思いつきで書いたメモ、散らかってませんか？</h3>
             <br>
@@ -35,6 +36,8 @@
           </div>
         </dialog>
       </div>
+
+      <div class="divider divider"></div>
 
       <div class="flex flex-col items-center justify-center">
         <button class="btn bg-white hover:bg-black-800" style="color: #E9B824;" onclick="my_modal_7.showModal()">使い方</button>
