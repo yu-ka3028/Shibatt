@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
+  after_create :add_default_data
 
   has_many :memos, counter_cache: true
   has_many :reflection_memos
@@ -46,3 +47,51 @@ class User < ApplicationRecord
     { in_progress: in_progress_rate, completed: completed_rate }
   end
 end
+
+  private
+
+  def add_default_data
+    memo_data = [
+    ]
+
+    # メモの作成
+    memos = memo_data.map do |data|
+      Memo.create!(
+        user_id: self.id,
+        content: data[:content],
+        created_at: data[:created_at],
+        progress: false
+      )
+    end
+
+    reflection_memo_data = [
+    ]
+
+    # リフレクションメモの作成とメモへの紐付け
+    reflection_memos = reflection_memo_data.map do |data|
+      reflection_memo = ReflectionMemo.create!(
+        user_id: self.id,
+        content: data[:content],
+        created_at: data[:created_at],
+        progress: false
+      )
+
+      # メモの作成と紐付け
+      data[:memos].each do |memo_data|
+        memo = Memo.create!(
+          user_id: self.id,
+          content: memo_data[:content],
+          created_at: memo_data[:created_at],
+          progress: false
+        )
+
+        # ReflectionMemoとMemoの関連付け
+        ReflectionMemoMemo.create!(
+          reflection_memo_id: reflection_memo.id,
+          memo_id: memo.id
+        )
+      end
+
+      reflection_memo
+    end
+  end
