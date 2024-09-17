@@ -41,6 +41,9 @@ class UsersController < ApplicationController
     @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)
   
     if @user.save
+      # ここで認証情報を作成または更新します
+      @user.authentications.find_or_create_by!(provider: 'line', uid: line_user_id)
+  
       auto_login(@user)
       render json: { status: 'ok' }
     else
