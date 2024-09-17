@@ -20,9 +20,10 @@ class UsersController < ApplicationController
   def create_from_line
     username = params[:username]
     profile_image_url = params[:profile_image_url]
+    line_user_id = params[:line_user_id] # LINEのuser_idをパラメータから取得
   
-    # ユーザー名が存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(username: username) || User.new(username: username, profile_image_url: profile_image_url)
+    # LINEのuser_idが存在するか確認し、存在しない場合は新しいユーザーを作成
+    @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)
   
     if @user.save
       auto_login(@user)
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
       render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
     end
   end
-  
+
   def create_from_liff
     username = params[:username]
     profile_image_url = params[:profile_image_url]
