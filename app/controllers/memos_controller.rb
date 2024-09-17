@@ -105,6 +105,6 @@ class MemosController < ApplicationController
   private
 
   def memo_params
-    params.require(:memo).permit(:content, :progress, reflection_memo_ids: [], memo_tags: [])
+    params.fetch(:memo, {}).permit(:content, :progress, reflection_memo_ids: [], memo_tags: [])
   end
 end
