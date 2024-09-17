@@ -1,6 +1,13 @@
 <div class="flex items-center justify-center ">
   <div class="w-full max-w-xs">
     <h1 class="text-center text-2xl mb-6">ログイン</h1>
+    <div class="flex justify-center">
+      <%= link_to oauth_path(provider: :line) do %>
+        <%= image_tag "line_login.png", class: "h-15 w-32 opacity-70" %>
+      <% end %>
+    </div>
+    <div class="divider divider" style="border-left: none;">OR</div>
+
     <%= form_with(url: login_path, local: true) do |f| %>
       </label>
       <label class="input input-bordered flex items-center gap-2">
@@ -29,12 +36,6 @@
         <%= f.password_field :password, class: "grow",placeholder: "password" %>
       </label>
       <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>
-      <h6>******************** OR ********************</h6><br>
-      <div class="flex justify-end">
-        <%= link_to oauth_path(provider: :line) do %>
-          <%= image_tag "line_login.png", class: "h-15 w-32 opacity-70" %>
-        <% end %>
-      </div>
     <% end %>
   </div>
 </div>
