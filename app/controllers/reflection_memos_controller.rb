@@ -29,6 +29,17 @@ class ReflectionMemosController < ApplicationController
     end_date = start_date.end_of_week
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
   
+    # フィードバックを生成し、それを@reflection_memoに保存する処理を@reflection_memo.saveの前に移動
+    begin
+      ref_memo_FB = @reflection_memo.content
+      chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
+      chatgpt_message = "振り返りメモの記載お疲れ様です！" if chatgpt_message.blank?
+      @reflection_memo.feedback_given = chatgpt_message
+    rescue Net::ReadTimeout
+      chatgpt_message = "振り返りメモの記載お疲れ様です！"
+      @reflection_memo.feedback_given = chatgpt_message
+    end
+  
     if @reflection_memo.save
       # メモの紐付けは@reflection_memoが保存された後に行う
       if params[:memo_ids].present?
@@ -36,18 +47,8 @@ class ReflectionMemosController < ApplicationController
         memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
         @reflection_memo.memos = memos # メモを紐付け
       end
-      
   
-      begin
-        ref_memo_FB = @reflection_memo.content
-        chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
-        chatgpt_message = "振り返りメモの記載お疲れ様です！" if chatgpt_message.blank?
-        @reflection_memo.update(feedback_given: chatgpt_message)
-        @reflection_memo.FB_to_line(chatgpt_message)
-      rescue Net::ReadTimeout
-        chatgpt_message = "振り返りメモの記載お疲れ様です！"
-        @reflection_memo.update(feedback_given: chatgpt_message)
-      end
+      @reflection_memo.FB_to_line(chatgpt_message)
       redirect_to reflection_memos_path, notice: '振り返りメモを作成しました'
     else
       @memos = current_user.memos.where(id: reflection_memo_params[:memo_ids])
