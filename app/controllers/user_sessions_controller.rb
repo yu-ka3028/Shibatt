@@ -19,7 +19,10 @@ class UserSessionsController < ApplicationController
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
-        @user = User.find_by(line_user_id: @user.authentications.find_by(provider: provider).uid) || create_from(provider)
+        if @user
+          @user = User.find_by(line_user_id: @user.authentications.find_by(provider: provider).uid)
+        end
+        @user ||= create_from(provider)
         puts "Created user from #{provider}: #{@user.inspect}"
         # LINEから取得したuserIdをローカルでline_user_idに保存
         @user.update(line_user_id: @user.authentications.find_by(provider: provider).uid)
@@ -27,7 +30,7 @@ class UserSessionsController < ApplicationController
   
         reset_session
         auto_login(@user)
-    
+  
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         puts "Failed to login from #{provider}: #{e.message}"
