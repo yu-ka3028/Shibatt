@@ -43,6 +43,7 @@ class UsersController < ApplicationController
   
     if @user.save
       # ここで認証情報を作成または更新します
+      @user.authentications ||= @user.build_authentications
       @user.authentications.find_or_create_by!(provider: 'line', uid: line_user_id)
   
       auto_login(@user)
