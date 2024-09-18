@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class UserSessionsController < ApplicationController
   skip_before_action :require_login, only: [:new, :create, :create_from_liff]
 
@@ -44,18 +46,10 @@ class UserSessionsController < ApplicationController
     line_user_id = params[:user_session][:line_user_id]
     Rails.logger.info "Creating user with username: #{username}, line_user_id: #{line_user_id}"
     profile_image_url = params[:user_session][:profileImageUrl]
-  
+
     # line_user_idが存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(line_user_id: line_user_id)
-    unless @user
-      @user = User.new(username: username, line_user_id: line_user_id)
-      unless @user.save
-        Rails.logger.error @user.errors.full_messages.join(", ")
-        render json: { status: 'error', message: 'User creation failed: ' + @user.errors.full_messages.join(", ") }, status: :unauthorized
-        return
-      end
-    end
-  
+    @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
+
     if @user.persisted?
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
