@@ -46,7 +46,15 @@ class UserSessionsController < ApplicationController
     profile_image_url = params[:user_session][:profileImageUrl]
   
     # line_user_idが存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id)
+    @user = User.find_by(line_user_id: line_user_id)
+    unless @user
+      @user = User.new(username: username, line_user_id: line_user_id)
+      unless @user.save
+        Rails.logger.error @user.errors.full_messages.join(", ")
+        render json: { status: 'error', message: 'User creation failed: ' + @user.errors.full_messages.join(", ") }, status: :unauthorized
+        return
+      end
+    end
   
     if @user.persisted?
       session[:username] = username
