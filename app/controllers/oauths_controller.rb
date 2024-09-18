@@ -13,29 +13,34 @@ class OauthsController < ApplicationController
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
-        @user = User.find_by(line_user_id: @user.authentications.find_by(provider: provider).uid) || create_from(provider)
-        puts "Created user from #{provider}: #{@user.inspect}"
-        # LINEから取得したuserIdをローカルでline_user_idに保存
-        @user.update(line_user_id: @user.authentications.find_by(provider: provider).uid)
-        puts @user.line_user_id
+        uid = @user&.authentications&.find_by(provider: provider)&.uid
+        @user = User.find_by(line_user_id: uid) || create_from(provider)
+        if @user
+          puts "Created user from #{provider}: #{@user.inspect}"
+          # LINEから取得したuserIdをローカルでline_user_idに保存
+          @user.update(line_user_id: uid)
+          puts @user.line_user_id
   
-        reset_session
-        auto_login(@user)
-    
-        # 新規ユーザーが作成されたときに友達登録を促すメッセージを送信
-        if provider == 'line'
-          client = Line::Bot::Client.new { |config|
-            config.channel_secret = Rails.application.credentials.dig(:linebot, :channel_secret)
-            config.channel_token = Rails.application.credentials.dig(:linebot, :channel_token)
-          }
-          message = {
-            type: 'text',
-            text: "ようこそ！このbotを友達登録することで、素早くアプリへメモを作成する機能などを利用できます。"
-          }
-          response = client.push_message(@user.line_user_id, message)
+          reset_session
+          auto_login(@user)
+  
+          # 新規ユーザーが作成されたときに友達登録を促すメッセージを送信
+          if provider == 'line'
+            client = Line::Bot::Client.new { |config|
+              config.channel_secret = Rails.application.credentials.dig(:linebot, :channel_secret)
+              config.channel_token = Rails.application.credentials.dig(:linebot, :channel_token)
+            }
+            message = {
+              type: 'text',
+              text: "ようこそ！このbotを友達登録することで、素早くアプリへメモを作成する機能などを利用できます。"
+            }
+            response = client.push_message(@user.line_user_id, message)
+          end
+  
+          redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
+        else
+          raise "Failed to create user from #{provider}"
         end
-    
-        redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         puts "Failed to login from #{provider}: #{e.message}"
         redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
