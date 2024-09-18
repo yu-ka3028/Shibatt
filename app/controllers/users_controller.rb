@@ -48,6 +48,8 @@ class UsersController < ApplicationController
       auto_login(@user)
       render json: { status: 'ok' }
     else
+      # ユーザーの保存に失敗した場合の処理を追加
+      Rails.logger.error("Failed to save user: #{@user.errors.full_messages.join(", ")}")
       render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
     end
   end
