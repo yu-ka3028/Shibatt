@@ -40,24 +40,7 @@
       <div class="divider divider"></div>
 
       <div class="flex flex-col items-center justify-center">
-        <button class="btn bg-white hover:bg-black-800" style="color: #E9B824;" onclick="my_modal_7.showModal()">使い方</button>
-        <dialog id="my_modal_7" class="modal modal-bottom sm:modal-middle font-handwriting">
-          <div class="modal-box">
-            <h3 class="font-handwriting text-lg">使い方</h3>
-            <p class="py-4">
-            <h3>1. LINEでメッセージを送信/アプリでメモ作成ボタン</h3>
-            <h3>2. メモを作成</h3>
-            <h3>3. メモ一覧のチェックボックスで紐づけるメモを選択</h3>
-            <h3>4. メモ一覧の振り返りメモ作成ボタンをクリック</h3>
-            <h3>5. 振り返りメモを作成</h3>
-            </p>
-            <div class="modal-action">
-              <form method="dialog">
-                <button class="btn">Close</button>
-              </form>
-            </div>
-          </div>
-        </dialog>
+        <h3 class="font-handwriting text-lg">使い方</h3>
         <h>スクロールで１〜５までの使い方を確認できます</h>
       </div>
 
@@ -175,13 +158,13 @@
               </dialog>
               <div class="flex flex-col items-center justify-center">
                 <h6>Progress</h6>
-                <div class="radial-progress" style="--value:<%= @progress_rate[:in_progress] %>;" role="progressbar">
-                  <%= @progress_rate[:in_progress] %>%
+                <div class="radial-progress" style="--value:<%= @progress_rate[:in_progress] || 0 %>;" role="progressbar">
+                  <%= @progress_rate[:in_progress] || 0 %>%
                 </div>
               </div>
               <div class="flex space-x-4 bg-transparent">
-                <%= link_to "【memo】", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
-                <%= link_to "【ref_memo】", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
+                <%= link_to "メモ一覧", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
+                <%= link_to "振り返りメモ一覧", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
               </div>
             <% end %>
             <br>
