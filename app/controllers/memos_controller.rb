@@ -85,20 +85,26 @@ class MemosController < ApplicationController
   def update_tag
     @user = User.find(params[:user_id])
     @memo = @user.memos.find(params[:id])
-    tag = Tag.find_or_create_by(name: params[:tag])
   
-    # 既存のタグを削除
-    @memo.tags.clear
+    if params[:tag].blank?
+      flash[:alert] = 'タグが選択されていません'
+      redirect_to user_memos_path(@user)
+    else
+      tag = Tag.find_or_create_by(name: params[:tag])
   
-    if @memo.tags << tag
-      if @memo.save
-        flash[:notice] = 'タグを更新しました'
-        redirect_to user_memos_path(@user)
+      # 既存のタグを削除
+      @memo.tags.clear
+  
+      if @memo.tags << tag
+        if @memo.save
+          flash[:notice] = 'タグを更新しました'
+          redirect_to user_memos_path(@user)
+        else
+          render json: { success: false, errors: @memo.errors.full_messages }
+        end
       else
         render json: { success: false, errors: @memo.errors.full_messages }
       end
-    else
-      render json: { success: false, errors: @memo.errors.full_messages }
     end
   end
 
