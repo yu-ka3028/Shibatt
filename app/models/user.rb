@@ -9,7 +9,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :authentications
 
   with_options unless: :using_oauth? do
-    validates :username, presence: true, length: { minimum: 1 }
+    validates :username, presence: true, length: { minimum: 1 }, uniqueness: true
     validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:crypted_password] }
     validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
     validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
