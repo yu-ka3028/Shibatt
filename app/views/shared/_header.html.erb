@@ -1,5 +1,5 @@
 <div class="mt-20">
-  <div class="navbar bg-base-100 fixed top-0 w-full">
+  <div class="navbar bg-base-100 fixed top-0 w-full z-50">
     <div class="navbar flex justify-between">
       <div class="carousel-item justify-left", style="width: 120px; height: 50px;" />
         <img
@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[100] w-52 p-2 shadow">
           <% if current_user %>
             <li><%= "【#{current_user.username}】"%></li>
             <li><%= button_to 'profile再取得', refresh_username_user_path(current_user), method: :post %></li>
