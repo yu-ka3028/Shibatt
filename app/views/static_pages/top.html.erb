@@ -125,6 +125,8 @@
                 <%= f.password_field :password, class: "grow", placeholder: "password" %>
               </label>
               <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>      
+              <br>
+              <br>
             <% end %>
           </div>
                     
@@ -162,7 +164,7 @@
                   <%= @progress_rate[:in_progress] || 0 %>%
                 </div>
               </div>
-              <div class="flex space-x-4 bg-transparent">
+              <div class="flex space-x-4 bg-transparent mb-[80px]">
                 <%= link_to "メモ一覧", user_memos_path(current_user), class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
                 <%= link_to "振り返りメモ一覧", reflection_memos_path, class: "bg-white text-green-800 px-4 py-2 rounded" if current_user %>
               </div>
