@@ -3,7 +3,6 @@ class ChatgptService
 
   attr_reader :api_url, :options, :model, :message
   def initialize(message, model = 'gpt-3.5-turbo')
-    # 機密ファイルを呼び出している
     api_key = Rails.application.credentials.chatgpt_api_key
     @options = {
       headers: {
@@ -17,14 +16,12 @@ class ChatgptService
   end
 
   def call
-	# userからのメッセージに対し一つ回答を与える
     body = {
       model: model,
       messages: [{ role: 'user', content: message }]
     }
     response = HTTParty.post(api_url, body: body.to_json, headers: options[:headers], timeout: 100)
     raise response['error']['message'] unless response.code == 200
-	# レスポンスはjson形式のため、下記の形で返答本文"content"のみを抽出する
     response['choices'][0]['message']['content']
   end
 

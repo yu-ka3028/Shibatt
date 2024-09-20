@@ -21,6 +21,8 @@ class UsersController < ApplicationController
     username = params[:username]
     profile_image_url = params[:profile_image_url]
     line_user_id = params[:line_user_id] # LINEのuser_idをパラメータから取得
+    puts "create_from_line called"
+    binding.pry
   
     # LINEのuser_idが存在するか確認し、存在しない場合は新しいユーザーを作成
     @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)

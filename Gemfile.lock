@@ -354,6 +354,7 @@ DEPENDENCIES
   omniauth-auth0
   omniauth-line
   omniauth-rails_csrf_protection
+  pry
   pry-byebug
   pry-rails
   puma (>= 5.0)
