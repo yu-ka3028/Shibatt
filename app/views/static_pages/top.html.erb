@@ -124,9 +124,7 @@
                 </svg>
                 <%= f.password_field :password, class: "grow", placeholder: "password" %>
               </label>
-              <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" %></div>      
-              <br>
-              <br>
+                <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg md-1" %></div>
             <% end %>
           </div>
                     
@@ -141,21 +139,21 @@
             <% if @user %>
               <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
                 <div class="modal-box">
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="btn">✖️</button>
+                    </form>
+                  </div>
                   <h3 class="text-lg font-bold">メモ作成</h3>
+                
                   <%= form_with model: @memo, url: user_memos_path(@user), local: true do |f| %>
-                    <div class="form-group">
-                      <%= f.text_area :content, class: "form-control", placeholder: "メモ内容", rows: 5 %>
+                    <div class="form-group w-full">
+                      <%= f.text_area :content, class: "form-control w-full", placeholder: "メモ内容", rows: 5 %>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-right">
                       <%= f.submit "作成", class: "btn" %>
                     </div>
                   <% end %>
-                  <div class="modal-action">
-                    <form method="dialog">
-                      <!-- if there is a button in form, it will close the modal -->
-                      <button class="btn">Close</button>
-                    </form>
-                  </div>
                 </div>
               </dialog>
               <div class="flex flex-col items-center justify-center">
