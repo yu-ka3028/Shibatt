@@ -32,7 +32,7 @@ class MemosController < ApplicationController
     if @memo
       @memo_tags = @memo.tags.pluck(:name).join(',')
     else
-      flash[:alert] = "Memo not found"
+      flash[:alert] = "メモが見つかりません"
       redirect_to user_memos_path(@user)
     end
   end
@@ -47,9 +47,9 @@ class MemosController < ApplicationController
   
     if @memo.save
       if params[:reflection_memo_ids]
-        #一度、すべての紐付けを解除
+        
         @memo.reflection_memos.clear
-        # 再度、選択されたメモのみを再度紐付ける
+        
         params[:reflection_memo_ids].reject(&:blank?).each do |reflection_memo_id|
           @memo.reflection_memos << ReflectionMemo.find(reflection_memo_id)
         end
