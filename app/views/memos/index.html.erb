@@ -58,7 +58,7 @@
                       <% select_id = "tag_select_#{memo.id}" %>
                       <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
                         <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-md m-1 h-auto" %>
-                        <%= f.submit '[タグ更新]'%>
+                        <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
                       <% end %>
                     </div>
                     <div class="date w-full">
@@ -75,17 +75,15 @@
                   <% select_id = "tag_select_#{memo.id}" %>
                   <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
                     <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-full m-1 h-12 text-xs" %>
-                    <%= f.submit '[タグ更新]'%>
+                    <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
                     <% end %>
                 </div>
               </td>
               <td class="hidden sm:table-cell text-xs">
                 <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
               </td>
-              <td div class="form-control">
-                <label class="cursor-pointer label" style="display: flex; align-items: center;">
-                  <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}", class: "checkbox checkbox-error", style: "background-color: #C96868; border-color: #800000;" %>
-                </label>
+              <td class="flex items-center justify-center h-[150px]">
+                <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}", class: "checkbox checkbox-error", style: "background-color: #fffff; border-color: #800000;" %>
               </td>
             </tr>
           <% end %>
