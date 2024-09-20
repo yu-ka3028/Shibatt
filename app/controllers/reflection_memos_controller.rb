@@ -13,11 +13,8 @@ class ReflectionMemosController < ApplicationController
     start_date = Date.today.beginning_of_week - 1.week
     end_date = start_date.end_of_week
 
-    # 達成（completed）のメモを取得
     @completed_memos = current_user.memos.where(created_at: start_date..end_date, progress: true)
-    # 未達成（in progress）のメモを取得
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
-    pp @inprogress_memos
 
   end
 
@@ -29,7 +26,6 @@ class ReflectionMemosController < ApplicationController
     end_date = start_date.end_of_week
     @inprogress_memos = current_user.memos.where(created_at: start_date..end_date, progress: false)
   
-    # フィードバックを生成し、それを@reflection_memoに保存する処理を@reflection_memo.saveの前に移動
     begin
       ref_memo_FB = @reflection_memo.content
       chatgpt_message = ChatgptService.call("あなたはご主人の作成したメモにフィードバックを送る柴犬です。言葉尻はユーモアを交え、ご主人に忠実で論理的、ポジティブなキャラクターとして、ご主人が作成したメモである#{ref_memo_FB} の内容についてフィードバックを125文字以内であげてください。")
@@ -43,16 +39,16 @@ class ReflectionMemosController < ApplicationController
     if @reflection_memo.save
       # メモの紐付けは@reflection_memoが保存された後に行う
       if params[:memo_ids].present?
-        memo_ids = params[:memo_ids].map(&:to_i) # IDを整数に変換
-        memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
-        @reflection_memo.memos = memos # メモを紐付け
+        memo_ids = params[:memo_ids].map(&:to_i)
+        memos = Memo.where(id: memo_ids)
+        @reflection_memo.memos = memos
       end
   
       @reflection_memo.FB_to_line(chatgpt_message)
       redirect_to reflection_memos_path, notice: '振り返りメモを作成しました'
     else
       @memos = current_user.memos.where(id: reflection_memo_params[:memo_ids])
-      flash.now[:alert] = 'Failed to create reflection memo.'
+      flash.now[:alert] = '振り返りメモの作成に失敗しました'
       render :new, status: :unprocessable_entity
     end
   end
@@ -61,8 +57,8 @@ class ReflectionMemosController < ApplicationController
     @reflection_memos = current_user.reflection_memos
     @q = current_user.reflection_memos.ransack(params[:q])
     @reflection_memos = @q.result.order(created_at: :desc).page(params[:page]).per(3)
-    @reflection_memo = @reflection_memos.first # 最新のメモを取得
-    @chatgpt = @reflection_memo.feedback_given if @reflection_memo # メモが存在する場合のみ@chatgptを設定
+    @reflection_memo = @reflection_memos.first
+    @chatgpt = @reflection_memo.feedback_given if @reflection_memo
   end
 
   def show
@@ -75,19 +71,15 @@ class ReflectionMemosController < ApplicationController
   end
 
   def update
-    logger.debug "Received memo_ids: #{params[:memo_ids]}"
     @reflection_memo = current_user.reflection_memos.find(params[:id])
   
     if @reflection_memo.update(reflection_memo_params)
-      memo_ids = params[:memo_ids].presence&.map(&:to_i) || [] # IDを整数に変換 memo_id -> memo_ids
-      memos = Memo.where(id: memo_ids) # 一度にすべてのメモを取得
-      pp memo_ids
+      memo_ids = params[:memo_ids].presence&.map(&:to_i) || []
+      memos = Memo.where(id: memo_ids)
   
-      # 新たに選択されたメモを追加
       new_memos = memos - @reflection_memo.memos
       @reflection_memo.memos << new_memos
   
-      # チェックを外したメモを削除
       removed_memos = @reflection_memo.memos - memos
       @reflection_memo.memos.delete(removed_memos)
   

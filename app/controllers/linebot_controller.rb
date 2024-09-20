@@ -13,13 +13,11 @@ class LinebotController < ApplicationController
           line_user_id = event['source']['userId']
           user = User.find_by(line_user_id: line_user_id)
           if event.message['text'] == '達成率'
-            # ProgressMessageクラスのインスタンスを作成
             progress_message = FlexMessage::ProgressMessage.new(user.memos)
 
             message = {
               type: 'flex',
               altText: '達成率',
-              # インスタンスからcontentsメソッドを呼び出す
               contents: progress_message.contents
             }
 
@@ -57,7 +55,6 @@ class LinebotController < ApplicationController
               }
             end
           else
-            # ユーザーが未登録の場合、新規登録を促すメッセージを送信
             message = {
               type: 'text',
               text: "あなたはまだ登録されていません。以下のURLから新規登録してください。\n#{new_user_url}"

@@ -29,20 +29,19 @@ class UsersController < ApplicationController
       auto_login(@user)
       render json: { status: 'ok' }
     else
-      render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+      render json: { status: 'error', message: '新規ユーザーの作成に失敗しました。' }, status: :unprocessable_entity
     end
   end
 
   def create_from_liff
     username = params[:username]
     profile_image_url = params[:profile_image_url]
-    line_user_id = params[:line_user_id] # LINEのuser_idをパラメータから取得
+    line_user_id = params[:line_user_id]
   
     # LINEのuser_idが存在するか確認し、存在しない場合は新しいユーザーを作成
     @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)
   
     if @user.save
-      # ここで認証情報を作成または更新します
       @user.authentications ||= @user.build_authentications
       @user.authentications.find_or_create_by!(provider: 'line', uid: line_user_id)
   
@@ -51,7 +50,7 @@ class UsersController < ApplicationController
     else
       # ユーザーの保存に失敗した場合の処理を追加
       Rails.logger.error("Failed to save user: #{@user.errors.full_messages.join(", ")}")
-      render json: { status: 'error', message: 'User could not be created.' }, status: :unprocessable_entity
+      render json: { status: 'error', message: '新規ユーザーの作成に失敗しました。' }, status: :unprocessable_entity
     end
   end
   

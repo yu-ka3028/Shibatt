@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
     if @user
       redirect_back_or_to root_path, notice: 'Login successful'
     else
-      flash.now[:alert] = 'Login failed'
+      flash.now[:alert] = 'ログインに失敗しました'
       render :new, status: :unauthorized
     end
   end
@@ -25,10 +25,8 @@ class UserSessionsController < ApplicationController
           @user = User.find_by(line_user_id: @user.authentications.find_by(provider: provider).uid)
         end
         @user ||= create_from(provider)
-        puts "Created user from #{provider}: #{@user.inspect}"
-        # LINEから取得したuserIdをローカルでline_user_idに保存
+        
         @user.update(line_user_id: @user.authentications.find_by(provider: provider).uid)
-        puts @user.line_user_id
   
         reset_session
         auto_login(@user)
@@ -47,16 +45,15 @@ class UserSessionsController < ApplicationController
     Rails.logger.info "Creating user with username: #{username}, line_user_id: #{line_user_id}"
     profile_image_url = params[:user_session][:profileImageUrl]
 
-    # line_user_idが存在するか確認し、存在しない場合は新しいユーザーを作成
     @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
 
     if @user.persisted?
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
       auto_login(@user)
-      render json: { status: 'success', message: 'Login successful' }
+      render json: { status: 'success', message: 'ログインしました' }
     else
-      render json: { status: 'error', message: 'Login failed' }, status: :unauthorized
+      render json: { status: 'error', message: 'ログインに失敗しました' }, status: :unauthorized
     end
   end
 
