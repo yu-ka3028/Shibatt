@@ -14,7 +14,7 @@ class UserSessionsController < ApplicationController
     end
   end
 
-  def create_from_web
+  def create_from_line
     provider = params[:provider]
     if @user = login_from(provider)
       puts "Logged in from #{provider}"
