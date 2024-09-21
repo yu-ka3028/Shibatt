@@ -22,6 +22,9 @@ class User < ApplicationRecord
   # OAuth認証で取得したユーザ情報をもとにローカルへユーザを作成
   def self.create_from(provider)
     user_hash = sorcery_fetch_user_hash(provider)
+    Rails.logger.info "sorcery_fetch_user_hash: #{user_hash.inspect}"
+    Rails.logger.info "user_hash: #{user_hash.inspect}"
+    
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
     user = User.new(
