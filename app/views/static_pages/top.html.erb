@@ -124,7 +124,7 @@
                 </svg>
                 <%= f.password_field :password, class: "grow", placeholder: "password" %>
               </label>
-                <div class="text-right"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg md-1" %></div>
+                <div class="text-right mb-10"><%= f.submit "ログイン", class: "btn btn-xs sm:btn-sm md:btn-md lg:btn-lg md-1" %></div>
             <% end %>
           </div>
                     
@@ -175,6 +175,11 @@
       <% if @user %>
         <div class="toast toast-end mb-[80px]">
           <button class="btn bg-teal-800 text-white hover:bg-teal-900" onclick="my_modal_5.showModal()">【メモ作成】</button>
+          <%= link_to '先週の振り返り', new_lastweek_reflection_memos_path, class: "btn text-teal-800 bg-white hover:bg-teal-200" %>
+        </div>
+      <% else %>
+        <div class="toast toast-end mb-[80px]">
+          <%= link_to 'ログインしてメモ作成', login_path, class: "btn bg-teal-800 text-white hover:bg-teal-900" %>
           <%= link_to '先週の振り返り', new_lastweek_reflection_memos_path, class: "btn text-teal-800 bg-white hover:bg-teal-200" %>
         </div>
       <% end %>

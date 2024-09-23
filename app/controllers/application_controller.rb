@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   private
-
+  
   def not_authenticated
     redirect_to login_path
   end
@@ -17,4 +17,6 @@ class ApplicationController < ActionController::Base
     @current_user.profile_image_url = session[:profileImageUrl] if @current_user
     @current_user
   end
+
+  
 end

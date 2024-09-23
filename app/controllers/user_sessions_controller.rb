@@ -1,5 +1,3 @@
-require 'securerandom'
-
 class UserSessionsController < ApplicationController
   skip_before_action :require_login, only: [:new, :create, :create_from_liff]
 
@@ -61,4 +59,14 @@ class UserSessionsController < ApplicationController
     logout
     redirect_to root_path, notice: "ログアウトしました"
   end
+
+  private
+
+  def require_login
+    unless logged_in?
+      redirect_to login_path, alert: 'ログインしてください'
+    end
+  end
+
+
 end
