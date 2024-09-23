@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
 
-  # sorceryを使用してのログイン
+  # sorceryを使用しての新規作成
   with_options unless: :using_oauth? do
     validates :username, presence: true, length: { minimum: 1 }, uniqueness: true
     validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:crypted_password] }
@@ -19,11 +19,9 @@ class User < ApplicationRecord
     authentications.present?
   end
 
-  # OAuth認証で取得したユーザ情報をもとにローカルへユーザを作成
+  # OAuth認証で取得したユーザ情報をもとにローカルへユーザを新規作成
   def self.create_from(provider)
     user_hash = sorcery_fetch_user_hash(provider)
-    Rails.logger.info "sorcery_fetch_user_hash: #{user_hash.inspect}"
-    Rails.logger.info "user_hash: #{user_hash.inspect}"
     
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
@@ -31,13 +29,12 @@ class User < ApplicationRecord
       username: username,
       password: SecureRandom.hex(16)
     )
-  
     if user.save
       user.authentications.create(provider: provider, uid: user_hash[:userId])
     else
-      Rails.logger.error("Failed to save user: #{user.errors.full_messages.join(", ")}")
+      Rails.logger.error("ユーザー作成に失敗: #{user.errors.full_messages.join(", ")}")
     end
-    user || raise("Failed to create user from #{provider}")
+    user || raise("ユーザー作成に失敗 from #{provider}")
   end
 
   def progress_rate
@@ -58,7 +55,7 @@ end
     memo_data = [
     ]
 
-    # メモの作成
+    # seedでデフォルトメモの作成
     memos = memo_data.map do |data|
       Memo.create!(
         user_id: self.id,
@@ -71,7 +68,7 @@ end
     reflection_memo_data = [
     ]
 
-    # リフレクションメモの作成とメモへの紐付け
+    # 振り返りメモの作成とメモへの紐付け
     reflection_memos = reflection_memo_data.map do |data|
       reflection_memo = ReflectionMemo.create!(
         user_id: self.id,
