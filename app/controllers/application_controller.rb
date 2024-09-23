@@ -3,6 +3,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   private
+
+  def require_login
+    unless logged_in?
+      not_authenticated
+    end
+  end
   
   def not_authenticated
     redirect_to login_path
