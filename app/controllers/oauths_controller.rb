@@ -9,17 +9,15 @@ class OauthsController < ApplicationController
   def callback
     provider = params[:provider]
     if @user = login_from(provider)
-      puts "Logged in from #{provider}"
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
-        uid = @user&.authentications&.find_by(provider: provider)&.uid
-        @user = User.find_by(line_user_id: uid) || create_from(provider)
-        if @user
-          puts "Created user from #{provider}: #{@user.inspect}"
+        uid = auth_params[:uid]
+        @user = User.find_by(line_user_id: uid)
+        if @user.nil?
+          @user = create_from(provider)
           # LINEから取得したuserIdをローカルでline_user_idに保存
           @user.update(line_user_id: uid)
-          puts @user.line_user_id
   
           reset_session
           auto_login(@user)
