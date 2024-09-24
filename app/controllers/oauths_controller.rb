@@ -32,7 +32,7 @@ class OauthsController < ApplicationController
         if @user.nil?
           @user = create_from(provider)
           # LINEから取得したuserIdをローカルでline_user_idに保存
-          @user.update(line_user_id: uid)
+          @user.update(line_user_id: line_user_id)
   
           reset_session
           auto_login(@user)
