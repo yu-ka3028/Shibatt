@@ -1,6 +1,6 @@
-<div class="flex flex-col items-center justify-center relative">
-  <div class="absolute inset-0 z-0" style="background-image: url('https://i.gyazo.com/bd0b724008552f3e21d69e7239527382.jpg'); background-position: center; background-size: cover; opacity: 0.25;"></div>
-  <div class="z-10 text-left">
+<div class="relative pb-24" style="background-color: #E9EFEC; min-height: 100vh;">
+  <div class="z-10 text-left w-3/4 mx-auto">
+    <br>
     <%= form_with model: @reflection_memo, url: reflection_memos_path do |form| %>  
       <%= link_to reflection_memos_path, class: "inline-flex items-center justify-center h-12 w-14 bg-white border-2 border-black hover:bg-gray-300 p-0 transition-colors duration-200 rounded" do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="#343131">
@@ -10,7 +10,7 @@
       <% end %>
       <h3>先週の振り返りメモ作成</h3>
       <div class="form-group">
-        <%= form.text_area :content, class: "form-control w-full", placeholder: "内容", rows: 5 %>
+        <%= form.text_area :content, class: "form-control w-full border border-blue-900", placeholder: "内容", rows: 5 %>
       </div>
     
       <% if @inprogress_memos&.any? %>
