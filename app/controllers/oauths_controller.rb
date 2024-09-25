@@ -12,22 +12,32 @@ class OauthsController < ApplicationController
 
   def callback
     provider = params[:provider]
-    if @user = login_from(provider)
+    if @user = login_from(provider, auth_params)
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
         code = auth_params[:code]
         response = request_access_token_from_line(code)
+        if response.nil? || response['access_token'].nil?
+          raise "Failed to get access token"
+        end
+  
         access_token = response['access_token'] # アクセストークンを取得
         user_info = get_user_info(access_token) # アクセストークンを使用してユーザー情報を取得
+        if user_info.nil? || user_info['userId'].nil?
+          raise "Failed to get user info"
+        end
+  
         line_user_id = user_info['userId'] # ユーザー情報からline_user_idを取得
-
+  
         puts "---auth_params---"
         pp auth_params
         puts "---line_user_id---"
         pp line_user_id
-
+  
         @user = User.find_by(line_user_id: line_user_id)
+        puts "---user---"
+        pp @user
         
         if @user.nil?
           @user = create_from(provider)
@@ -70,6 +80,8 @@ class OauthsController < ApplicationController
     }
     user_info = JSON.parse(res.body)
     line_user_id = user_info['userId']
+    puts "User info: #{user_info}"
+    puts "Line user id: #{line_user_id}"
   end
 
   def request_access_token_from_line(code)
@@ -82,7 +94,8 @@ class OauthsController < ApplicationController
       'client_id' => Rails.application.credentials.dig(:line, :channel_id),
       'client_secret' => Rails.application.credentials.dig(:line, :channel_secret)
     })
-  
+    puts "Access token request: #{req.set_form_data}"
+
     req_options = {
       use_ssl: uri.scheme == 'https'
     }
