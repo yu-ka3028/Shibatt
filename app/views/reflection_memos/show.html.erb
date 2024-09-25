@@ -1,5 +1,5 @@
-<div class="flex justify-center" style="background-image: url('https://i.gyazo.com/bd0b724008552f3e21d69e7239527382.jpg'); background-size: cover; position: relative;">
-  <div class="w-full" style="background-color: rgba(255, 255, 255, 0.7); position: relative; z-index: 1;">
+<div class="relative pb-24" style="background-color: #E9EFEC; min-height: 100vh;">
+  <div class="w-full">
     <div class="w-3/4 mx-auto">
       <br>
       <h1>振り返りメモ編集</h1>
@@ -39,7 +39,7 @@
               <span class="ml-2">Edit Content</span>
             </div>
           <% end %>
-          <%= f.text_area :content, class: "mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", placeholder: "content" %>
+          <%= f.text_area :content, class: "mt-1 block w-full rounded-md shadow-sm border-blue-900 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50", placeholder: "content" %>
           <div class="flex justify-end">
             <%= f.submit "更新", class: "btn inline-flex items-center h-12 w-14 bg-rose-200 p-0 transition-colors duration-200 rounded border-2 border-rose-700" do %>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="#e8eaed">
@@ -49,7 +49,7 @@
             <% end %>
           </div>
         </div>
-        <div class="divider bg-black h-0.5"></div>
+        <div class="divider"></div>
         <div style="display: flex; align-items: center;">
           <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="40px" viewBox="0 0 20 20" width="40px" fill="#343131">
             <g><rect fill="none" height="20" width="20" x="0"/></g>
