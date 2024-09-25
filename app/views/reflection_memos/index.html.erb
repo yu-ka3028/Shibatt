@@ -1,87 +1,88 @@
-<div class="relative">
-  <div class="absolute inset-0 bg-[url('https://i.gyazo.com/bd0b724008552f3e21d69e7239527382.jpg')] bg-center bg-cover opacity-25" style="background-size: 50%;"></div>
-  <div class="relative ">
-    <br>
-    <h3>振り返りメモ一覧</h3>
+<div class="relative pb-24">
+  <div class="relative" style="background-color: #E9EFEC;">
+    <div class="relative ">
+      <br>
+      <h3>振り返りメモ一覧</h3>
 
-    <%= search_form_for @q, url: reflection_memos_path, html: { class: "input input-bordered flex items-center gap-2" } do |f| %>
-      <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
-      <%= f.search_field :content_cont, class: "grow", placeholder: "検索" %>
-      <%= f.submit 'Search', class: "sr-only" %>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
-        <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-      </svg>
-    <% end %>
-    
-    <% @reflection_memos.each_with_index do |ref_memo, index| %>
-      <details class="collapse bg-base-200 mx-auto my-2 flex justify-center" style="background-color: transparent;">
-        <summary class="collapse-title text-xl font-medium w-full m-0.5 self-center">
-        <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
-          <div class="collapse-title bg-primary text-primary-content w-full h-full flex justify-center items-center max-w-screen-xl" style="background-color: #F6EACB; border: 2px solid #CDC2A5; color: black; border-radius: 16px;">
-            <div class="flex flex-row w-full justify-between">
-              <div class="w-4/5">
-                <p style="font-size: 50%;"><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
-              </div>
-              <div class="flex flex-col justify-end space-y-4">
-                <%= link_to reflection_memo_path(ref_memo), class: 'btn btn-primary p-2' do %>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#e8eaed">
-                    <path d="M0 0h24v24H0V0z" fill="none"/>
-                    <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                  </svg>
-                <% end %>
-                <button class="btn bg-transparent border-none transition-colors duration-200" style="border: 2px solid #C96868;" onclick="my_modal_0.showModal()">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#C96868">
-                    <path d="M0 0h24v24H0V0z" fill="none"></path>
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            
-            <dialog id="my_modal_<%= index %>" class="modal modal-bottom sm:modal-middle" style="color: black; z-index: 9999;">
-              <div class="modal-box" style="background-image: url('https://i.gyazo.com/3a7df6cc8691bc76b26ad27e9db05e51.jpg'); background-size: 100px 100px; background-repeat: no-repeat; height: 420px;">
-                <h3 class="text-lg font-bold" style="text-align: center;">ShibaからのFB</h3>
-                <p class="py-4">
-                  <nav class="navbar navbar-light bg-light" style="height: 68%;">
-                    <span class="navbar-text text-black;">
-                      <%= ref_memo.feedback_given %>
-                    </span>
-                  </nav>
-                </p>
-                <div class="flex flex-none bg-white text-black items-center">
-                  <a href="https://twitter.com/intent/tweet?text=[Shibatt]%0a%0a%23RUNTEQ祭%20%23Shibatt%0a%0a&url=https://www.memo-shibatt.com" target="_blank" class="text-black flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 50 50">
-                      <path d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"></path>
+      <%= search_form_for @q, url: reflection_memos_path, html: { class: "input input-bordered flex items-center gap-2 mx-auto w-25", style: "background-color: #FFFFF; border-color: brown;" } do |f| %>
+        <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
+        <%= f.search_field :content_cont, class: "grow", placeholder: "検索", style: "border-color: brown;" %>
+        <%= f.submit 'Search', class: "sr-only" %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+          <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+        </svg>
+      <% end %>
+
+      <% @reflection_memos.each_with_index do |ref_memo, index| %>
+        <details class="collapse bg-base-200 mx-auto my-2 flex justify-center" style="background-color: transparent;">
+          <summary class="collapse-title text-xl font-medium w-full m-0.5 self-center">
+          <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
+            <div class="collapse-title bg-primary text-primary-content w-full h-full flex justify-center items-center max-w-screen-xl" style="background-color: #F6EACB; border: 2px solid #CDC2A5; color: black; border-radius: 16px;">
+              <div class="flex flex-row w-full justify-between">
+                <div class="w-4/5">
+                  <p style="font-size: 50%;"><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
+                </div>
+                <div class="flex flex-col justify-end space-y-4">
+                  <%= link_to reflection_memo_path(ref_memo), class: 'btn btn-primary p-2' do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#e8eaed">
+                      <path d="M0 0h24v24H0V0z" fill="none"/>
+                      <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                     </svg>
-                    <span>で共有</span>
-                  </a>
-                </div>
-                <div class="modal-action">
-                  <form method="dialog">
-                    <button class="btn" style="background-color: #e8eaed;">Close</button>
-                  </form>
+                  <% end %>
+                  <button class="btn bg-transparent border-none transition-colors duration-200" style="border: 2px solid #C96868;" onclick="my_modal_0.showModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="#C96868">
+                      <path d="M0 0h24v24H0V0z" fill="none"></path>
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
+                    </svg>
+                  </button>
                 </div>
               </div>
-            </dialog>
+                  
+              <dialog id="my_modal_<%= index %>" class="modal modal-bottom sm:modal-middle" style="color: black; z-index: 9999;">
+                <div class="modal-box" style="background-image: url('https://i.gyazo.com/3a7df6cc8691bc76b26ad27e9db05e51.jpg'); background-size: 100px 100px; background-repeat: no-repeat; height: 420px;">
+                  <h3 class="text-lg font-bold" style="text-align: center;">ShibaからのFB</h3>
+                  <p class="py-4">
+                    <nav class="navbar navbar-light bg-light" style="height: 68%;">
+                      <span class="navbar-text text-black;">
+                        <%= ref_memo.feedback_given %>
+                      </span>
+                    </nav>
+                  </p>
+                  <div class="flex flex-none bg-white text-black items-center">
+                    <a href="https://twitter.com/intent/tweet?text=[Shibatt]%0a%0a%23RUNTEQ祭%20%23Shibatt%0a%0a&url=https://www.memo-shibatt.com" target="_blank" class="text-black flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 50 50">
+                        <path d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"></path>
+                      </svg>
+                      <span>で共有</span>
+                    </a>
+                  </div>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="btn" style="background-color: #e8eaed;">Close</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </div>
           </div>
-        </div>
-          <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
-            <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
+            <div class="collapse-content bg-primary text-primary-content peer-checked:bg-secondary peer-checked:text-secondary-content">
+              <p>Status: <%= ref_memo.progress ? "Completed" : "In progress" %></p>
+            </div>
+          </summary>
+          <div class="collapse-content w-4/5 self-center items-center text-left text-sm mx-auto">
+            <h6>《紐付けメモ》</h6>
+            <% ref_memo.memos.each do |each_memo|%>
+              <p><%= each_memo.content %></p>
+            <% end %>
           </div>
-        </summary>
-        <div class="collapse-content w-4/5 self-center items-center text-left text-sm mx-auto">
-          <h6>《紐付けメモ》</h6>
-          <% ref_memo.memos.each do |each_memo|%>
-            <p><%= each_memo.content %></p>
-          <% end %>
-        </div>
-      </details>
-    <% end %>
-    
-    <div class="flex justify-center mb-10">
-      <%= paginate @reflection_memos %>
+        </details>
+      <% end %>
+            
+      <div class="flex justify-center mb-10">
+        <%= paginate @reflection_memos %>
+      </div>
+      <br>
+      <br>
     </div>
-    <br>
-    <br>
   </div>
 </div>

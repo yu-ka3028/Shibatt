@@ -1,101 +1,101 @@
-<div class="relative pb-24">
-  <div class="absolute inset-0 bg-center bg-cover bg-fixed opacity-35" style="background-image: url('https://i.gyazo.com/eb43c19a6e494f485aa8f249a8ff5b59.jpg');"></div>
-  <div class="relative ">
-  <br>
-  <h3>メモ一覧</h3>
-  <div class="join flex justify-center">
-    <%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "flex flex-col sm:flex-row items-center gap-2" } do |f| %>
-      <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
-      <%= f.search_field :content_cont, class: "input input-bordered w-full max-w-xs", placeholder: "内容" %>
-      <div class="flex flex-row sm:flex-row items-center gap-2">
-      <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
-        <%= f.select :progress_eq, options_for_select([['未達成', false], ['達成', true], ['全て', nil]], selected: @q.progress_eq.nil? ? nil : @q.progress_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
-        <%= f.submit "検索", class: "btn-search sm:order-3" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class: "h-4 w-4 opacity-70">
-            <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75 .75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-          </svg>
-        <% end %>
+<div class="relative pb-24" style="background-color: #E9EFEC; min-height: 100vh;">
+  <div class="relative">
+    <br>
+    <h3>メモ一覧</h3>
+    <div class="join flex justify-center">
+      <%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "flex flex-col sm:flex-row items-center gap-2" } do |f| %>
+        <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
+        <%= f.search_field :content_cont, class: "input input-bordered w-full max-w-xs", placeholder: "内容" %>
+        <div class="flex flex-row sm:flex-row items-center gap-2">
+        <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent laceholder: "タグ" %>
+          <%= f.select :progress_eq, options_for_select([['未達成', false], ['達成', true], ['全て', nil]], selected: @q.progress_eq.nil? ? nil : @q.progress_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
+          <%= f.submit "検索", class: "btn-search sm:order-3" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class: "h-4 w-4 opacity-70">
+              <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75 .75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+            </svg>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <br>
+    <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="table-cell">詳細</th>
+              <th class="sm:hidden">内容/タグ、作成日時</th> <!-- スマホサイズの時に表示 -->
+              <th class="hidden sm:table-cell">内容</th> <!-- スマホサイズ以上の時に表示 -->
+              <th class="hidden sm:table-cell">タグ</th> <!-- スマホサイズ以上の時に表示 -->
+              <th class="hidden sm:table-cell">作成日時</th> <!-- スマホサイズ以上の時に表示 -->
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            <% @memos.each do |memo| %>
+              <tr>
+                <th class="table-cell w-1/8">
+                  <%= link_to user_memo_path(@user, memo), class: 'inline-flex items-center px-1 py-1 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-200 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ' do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" fill="#776B5D">
+                      <path d="M0 0h24v24H0V0z" fill="none"/>
+                      <path d="M3,5h9v1.5H3V5z M3,11.25h6v1.5H3V11.25z M3,8.12h9v1.5H3V8.12z M16.78,11.99l0.65-0.65c0.29-0.29,0.29-0.77,0-1.06 l-0.71-0.71c-0.29-0.29-0.77-0.29-1.06,0l-0.65,0.65L16.78,11.99z M16.19,12.58L11.77,17H10v-1.77l4.42-4.42L16.19,12.58z"/>
+                    </svg>
+                  <% end %>
+                </th>
+                <!-- スマホサイズの時に表示 -->
+                <td class="table-cell sm:w-4/5 sm:table-cell flex sm:flex-row">
+                  <div class="content overflow-auto flex-grow">
+                    <div class="mask w-full h-auto">
+                      <%= memo.content %>
+                    </div>
+                  </div>
+                  <td class="sm:hidden w-1/6 sm:w-auto">
+                    <div class="flex flex-col mt-2 sm:ml-4">
+                      <div class="tag w-full">
+                        <% form_id = "tag_form_#{memo.id}" %>
+                        <% select_id = "tag_select_#{memo.id}" %>
+                        <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
+                          <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-md m-1 h-auto" %>
+                          <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
+                        <% end %>
+                      </div>
+                      <div class="date w-full">
+                        <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+                      </div>
+                    </div>
+                  </td>
+                </td>
+
+                <!-- スマホサイズ以上の時に表示 -->
+                <td class="hidden sm:table-cell w-full sm:w-auto">
+                  <div class="tag w-full text-left">
+                    <% form_id = "tag_form_#{memo.id}" %>
+                    <% select_id = "tag_select_#{memo.id}" %>
+                    <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
+                      <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-full m-1 h-12 text-xs" %>
+                      <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
+                      <% end %>
+                  </div>
+                </td>
+                <td class="hidden sm:table-cell text-xs">
+                  <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
+                </td>
+                <td class="flex items-center justify-center h-[150px]">
+                  <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}", class: "checkbox checkbox-error", style: "background-color: #fffff; border-color: #800000;" %>
+                </td>
+              </tr>
+            <% end %>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="toast toast-end">
+        <div style="text-align: right;">
+          <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2 toast toast-end fixed bottom-20 right-4", id: "submit-button", style: 'background-color: #C96868; border-color: #800000;' %>
+        </div>
       </div>
     <% end %>
   </div>
-
-  <br>
-  <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
-    <div class="overflow-x-auto">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="table-cell">詳細</th>
-            <th class="sm:hidden">内容/タグ、作成日時</th> <!-- スマホサイズの時に表示 -->
-            <th class="hidden sm:table-cell">内容</th> <!-- スマホサイズ以上の時に表示 -->
-            <th class="hidden sm:table-cell">タグ</th> <!-- スマホサイズ以上の時に表示 -->
-            <th class="hidden sm:table-cell">作成日時</th> <!-- スマホサイズ以上の時に表示 -->
-          </tr>
-        </thead>
-        <tbody>
-          <!-- row 1 -->
-          <% @memos.each do |memo| %>
-            <tr>
-              <th class="table-cell w-1/8">
-                <%= link_to user_memo_path(@user, memo), class: 'inline-flex items-center px-1 py-1 border border-transparent text-sm font-medium rounded-md text-black bg-yellow-200 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 ' do %>
-                  <svg xmlns="http://www.w3.org/2000/svg" height="30px" width="30px" fill="#776B5D">
-                    <path d="M0 0h24v24H0V0z" fill="none"/>
-                    <path d="M3,5h9v1.5H3V5z M3,11.25h6v1.5H3V11.25z M3,8.12h9v1.5H3V8.12z M16.78,11.99l0.65-0.65c0.29-0.29,0.29-0.77,0-1.06 l-0.71-0.71c-0.29-0.29-0.77-0.29-1.06,0l-0.65,0.65L16.78,11.99z M16.19,12.58L11.77,17H10v-1.77l4.42-4.42L16.19,12.58z"/>
-                  </svg>
-                <% end %>
-              </th>
-              <!-- スマホサイズの時に表示 -->
-              <td class="table-cell sm:w-4/5 sm:table-cell flex sm:flex-row">
-                <div class="content overflow-auto flex-grow">
-                  <div class="mask w-full h-auto">
-                    <%= memo.content %>
-                  </div>
-                </div>
-                <td class="sm:hidden w-1/6 sm:w-auto">
-                  <div class="flex flex-col mt-2 sm:ml-4">
-                    <div class="tag w-full">
-                      <% form_id = "tag_form_#{memo.id}" %>
-                      <% select_id = "tag_select_#{memo.id}" %>
-                      <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
-                        <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-md m-1 h-auto" %>
-                        <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
-                      <% end %>
-                    </div>
-                    <div class="date w-full">
-                      <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
-                    </div>
-                  </div>
-                </td>
-              </td>
-
-              <!-- スマホサイズ以上の時に表示 -->
-              <td class="hidden sm:table-cell w-full sm:w-auto">
-                <div class="tag w-full text-left">
-                  <% form_id = "tag_form_#{memo.id}" %>
-                  <% select_id = "tag_select_#{memo.id}" %>
-                  <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
-                    <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-full m-1 h-12 text-xs" %>
-                    <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
-                    <% end %>
-                </div>
-              </td>
-              <td class="hidden sm:table-cell text-xs">
-                <%= memo.created_at.strftime('%Y/%m/%d %H:%M') %>
-              </td>
-              <td class="flex items-center justify-center h-[150px]">
-                <%= check_box_tag 'memo_ids[]', memo.id, false, id: "memo_#{memo.id}", class: "checkbox checkbox-error", style: "background-color: #fffff; border-color: #800000;" %>
-              </td>
-            </tr>
-          <% end %>
-
-        </tbody>
-      </table>
-    </div>
-    <div class="toast toast-end">
-      <div style="text-align: right;">
-        <%= submit_tag '振り返りメモを作成する', class: "btn btn-info p-2 toast toast-end fixed bottom-20 right-4", id: "submit-button", style: 'background-color: #C96868; border-color: #800000;' %>
-      </div>
-    </div>
-  <% end %>
 </div>
 
