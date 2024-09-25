@@ -2,14 +2,14 @@
   <div class="relative">
     <br>
     <h3>メモ一覧</h3>
-    <div class="join flex justify-center">
-      <%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "flex flex-col sm:flex-row items-center gap-2" } do |f| %>
+    <div class="join flex justify-center w-full">
+      <%= search_form_for @q, url: user_memos_path(user_id: @user.id), html: { class: "flex flex-col sm:flex-row items-center gap-2 sm:gap-0 w-full sm:justify-center" } do |f| %>
         <%= f.label :content_cont, 'Search by content', class: "sr-only" %>
-        <%= f.search_field :content_cont, class: "input input-bordered w-full max-w-xs", placeholder: "内容" %>
-        <div class="flex flex-row sm:flex-row items-center gap-2">
-        <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), {}, class: "select select-bordered sm:order-2 bg-transparent laceholder: "タグ" %>
-          <%= f.select :progress_eq, options_for_select([['未達成', false], ['達成', true], ['全て', nil]], selected: @q.progress_eq.nil? ? nil : @q.progress_eq), {}, class: "select select-bordered sm:order-2 bg-transparent" %>
-          <%= f.submit "検索", class: "btn-search sm:order-3" do %>
+        <%= f.search_field :content_cont, class: "input input-bordered w-full sm:flex-grow", placeholder: "内容" %>
+        <div class="flex flex-row sm:flex-row items-center gap-0 sm:gap-0 w-full sm:justify-start justify-end sm:justify-start">
+          <%= f.select :tags_name_eq, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: @q.tags_name_eq), { prompt: "タグ" }, class: "select select-bordered sm:order-2 bg-transparent w-auto" %>
+          <%= f.select :progress_eq, options_for_select([['未達成', false], ['達成', true], ['全て', nil]], selected: @q.progress_eq.nil? ? nil : @q.progress_eq), {}, class: "select select-bordered sm:order-2 bg-transparent w-auto" %>
+          <%= f.submit "検索", class: "btn btn-outline bg-yellow-700 text-white btn-search sm:order-3" do %>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class: "h-4 w-4 opacity-70">
               <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75 .75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
             </svg>
@@ -17,7 +17,7 @@
         </div>
       <% end %>
     </div>
-
+  </div>
     <br>
     <%= form_with url: new_reflection_memo_path, method: :get, id: 'reflection_form' do %>
       <div class="overflow-x-auto">
@@ -52,11 +52,11 @@
                   </div>
                   <td class="sm:hidden w-1/6 sm:w-auto">
                     <div class="flex flex-col mt-2 sm:ml-4">
-                      <div class="tag w-full">
+                      <div class="tag w-full text-left">
                         <% form_id = "tag_form_#{memo.id}" %>
                         <% select_id = "tag_select_#{memo.id}" %>
                         <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
-                          <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-md m-1 h-auto" %>
+                          <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select w-full max-w-full m-1 h-12 text-xs border border-gray-300 bg-transparent" %>
                           <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
                         <% end %>
                       </div>
@@ -73,9 +73,9 @@
                     <% form_id = "tag_form_#{memo.id}" %>
                     <% select_id = "tag_select_#{memo.id}" %>
                     <%= form_with url: update_tag_user_memo_path(@user, memo), method: :patch, html: { id: form_id }, local: true do |f| %>
-                      <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select select-ghost w-full max-w-full m-1 h-12 text-xs" %>
+                      <%= f.select :tag, options_for_select([['', ''], ['A', 'A'], ['B', 'B'], ['C', 'C'], ['D', 'D'], ['E', 'E'], ['F', 'F'], ['G', 'G'], ['H', 'H'], ['I', 'I']], selected: memo.tags.first&.name), { id: select_id }, class: "select w-full max-w-full m-1 h-12 text-xs border border-gray-300 bg-transparent" %>
                       <%= f.submit 'タグ更新', class: "bg-white bg-opacity-50 border border-black rounded" %>
-                      <% end %>
+                    <% end %>
                   </div>
                 </td>
                 <td class="hidden sm:table-cell text-xs">
