@@ -12,7 +12,8 @@ class OauthsController < ApplicationController
 
   def callback
     provider = params[:provider]
-    if @user = login_from(provider, auth_params)
+    auth = Authentication.find_by(provider: provider, uid: params[:uid])
+    if @user = login_from(provider, auth)
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
@@ -90,7 +91,7 @@ class OauthsController < ApplicationController
     req.set_form_data({
       'grant_type' => 'authorization_code',
       'code' => code,
-      'redirect_uri' => "http://localhost:3000/oauth/callback?provider=line",
+      'redirect_uri' => "https://www.memo-shibatt.com/oauth/callback?provider=line",
       'client_id' => Rails.application.credentials.dig(:line, :channel_id),
       'client_secret' => Rails.application.credentials.dig(:line, :channel_secret)
     })
