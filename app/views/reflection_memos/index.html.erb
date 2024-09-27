@@ -1,6 +1,6 @@
-<div class="relative pb-24">
-  <div class="relative" style="background-color: #E9EFEC;">
-    <div class="relative ">
+<div class="relative pb-24" style="width: 100%; height: 100vh; background-color: #E9EFEC;">
+  <div class="relative" style="background-color: #E9EFEC; width: 100%;">
+    <div class="relative " style="width: 100%;">
       <br>
       <h3>振り返りメモ一覧</h3>
 
@@ -15,10 +15,10 @@
 
       <% @reflection_memos.each_with_index do |ref_memo, index| %>
         <details class="collapse bg-base-200 mx-auto my-2 flex justify-center" style="background-color: transparent;">
-          <summary class="collapse-title text-xl font-medium w-full m-0.5 self-center">
-          <div class="bg-base-200 collapse" style="background-color: #FFEFD5;">
+          <summary class="collapse-title text-xl font-medium w-full m-0.5 self-center" style="display: flex; justify-content: center;">
+          
             <div class="collapse-title bg-primary text-primary-content w-full h-full flex justify-center items-center max-w-screen-xl" style="background-color: #F6EACB; border: 2px solid #CDC2A5; color: black; border-radius: 16px;">
-              <div class="flex flex-row w-full justify-between">
+              <div class="flex flex-row w-full justify-center">
                 <div class="w-4/5">
                   <p style="font-size: 50%;"><%= ref_memo.created_at.strftime("%Y/%m/%d %H:%M") %> <br> <%= ref_memo.content %></p>
                 </div>
