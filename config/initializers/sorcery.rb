@@ -12,5 +12,5 @@ Rails.application.config.sorcery.configure do |config|
   config.line.secret = Rails.application.credentials.dig(:line, :channel_secret) 
   config.line.callback_url = Rails.application.credentials.dig(Rails.env, :line, :callback_url)
   config.line.scope = 'profile'
-  config.line.user_info_mapping = { username: 'displayName' email: 'userId' }
+  config.line.user_info_mapping = { username: 'displayName', email: 'userId' }
 end
