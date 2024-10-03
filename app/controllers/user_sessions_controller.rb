@@ -39,16 +39,16 @@ class UserSessionsController < ApplicationController
     username = params[:user_session][:username]
     line_user_id = params[:user_session][:line_user_id]
     profile_image_url = params[:user_session][:profileImageUrl]
-  
-    @user = User.find_by(username: username)
-  
+    
+    @user = User.find_by(line_user_id: line_user_id)
+    
     if @user
       @user.authentications.find_or_create_by(line_user_id: line_user_id, provider: 'line')
     else
-      @user = User.create(username: username)
+      @user = User.create!(username: username, line_user_id: line_user_id)
       @user.authentications.create(line_user_id: line_user_id, provider: 'line') if @user.persisted?
     end
-  
+    
     if @user.persisted?
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
