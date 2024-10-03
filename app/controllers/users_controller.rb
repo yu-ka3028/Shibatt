@@ -29,7 +29,6 @@ class UsersController < ApplicationController
       auto_login(@user)
       render json: { status: 'ok' }
     else
-      Rails.logger.error("Failed to create user: #{@user.errors.full_messages}")
       render json: { status: 'error', message: '新規ユーザーの作成に失敗しました。' }, status: :unprocessable_entity
     end
   end
@@ -58,8 +57,13 @@ class UsersController < ApplicationController
   def refresh_username
     @user = User.find(params[:id])
     update_username, update_profile_image_url = get_update_username_and_profile_image_url_from_line_api(@user.line_user_id)
-    @user.update(username: update_username, profile_image_url: update_profile_image_url)
-    redirect_to @user, notice: 'ユーザー名とプロフィール画像が更新されました'
+  
+    if update_username.nil? || update_profile_image_url.nil?
+      redirect_to @user, alert: 'ユーザー名またはプロフィール画像の更新に失敗しました'
+    else
+      @user.update(username: update_username, profile_image_url: update_profile_image_url)
+      redirect_to @user, notice: 'ユーザー名とプロフィール画像が更新されました'
+    end
   end
 
   private
