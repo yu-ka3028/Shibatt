@@ -69,7 +69,7 @@ class UsersController < ApplicationController
   private
     
     def user_params
-      params.require(:user).permit(:username, :password, :password_confirmation)
+      params.require(:user).permit(:username, :password, :password_confirmation, :line_user_id)
     end
     
     def get_update_username_and_profile_image_url_from_line_api(line_user_id)
