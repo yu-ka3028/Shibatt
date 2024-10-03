@@ -32,10 +32,17 @@ class User < ApplicationRecord
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
   
-    user = User.find_or_create_by(username: username)
+    auth = Authentication.find_or_initialize_by(provider: provider, line_user_id: user_hash[:userId])
+    if auth.new_record?
+      user = User.create!(username: username)
+      auth.user = user
+      auth.save!
+    else
+      user = auth.user
+    end
   
     if user.persisted?
-      user.authentications.find_or_create_by(provider: provider, line_user_id: user_hash[:userId])
+      Rails.logger.info("ユーザー作成に成功: #{user.username}")
     else
       Rails.logger.error("ユーザー作成に失敗: #{user.errors.full_messages.join(", ")}")
     end
