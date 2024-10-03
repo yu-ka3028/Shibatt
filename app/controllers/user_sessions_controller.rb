@@ -45,11 +45,14 @@ class UserSessionsController < ApplicationController
     if @user
       @user.authentications.find_or_create_by(line_user_id: line_user_id, provider: 'line')
     else
+      if User.exists?(line_user_id: line_user_id)
+        render json: { status: 'error', message: 'LINEユーザーIDが既に存在します' }, status: :unprocessable_entity
+        return
+      end
       @user = User.new(username: username, line_user_id: line_user_id)
       @user.save(validate: false)
       @user.authentications.create(line_user_id: line_user_id, provider: 'line') if @user.persisted?
     end
-    
     if @user.persisted?
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
