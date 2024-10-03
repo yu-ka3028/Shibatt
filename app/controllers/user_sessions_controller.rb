@@ -43,10 +43,10 @@ class UserSessionsController < ApplicationController
     @user = User.find_by(username: username)
   
     if @user
-      @user.authentications.find_or_create_by(line_user_id: line_user_id)
+      @user.authentications.find_or_create_by(line_user_id: line_user_id, provider: 'line')
     else
       @user = User.create(username: username)
-      @user.authentications.create(line_user_id: line_user_id) if @user.persisted?
+      @user.authentications.create(line_user_id: line_user_id, provider: 'line') if @user.persisted?
     end
   
     if @user.persisted?
@@ -55,6 +55,7 @@ class UserSessionsController < ApplicationController
       auto_login(@user)
       render json: { status: 'success', message: 'ログインしました' }
     else
+      puts @user.errors.full_messages
       render json: { status: 'error', message: 'ログインに失敗しました' }, status: :unauthorized
     end
   end
