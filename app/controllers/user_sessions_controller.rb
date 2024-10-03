@@ -20,15 +20,13 @@ class UserSessionsController < ApplicationController
     else
       begin
         if @user
-          @user = User.find_by(line_user_id: @user.authentications.find_by(provider: provider).line_user_id)
+          @user = User.joins(:authentications).find_by(authentications: { line_user_id: @user.authentications.find_by(provider: provider).line_user_id })
         end
         @user ||= create_from(provider)
-        
-        @user.update(line_user_id: @user.authentications.find_by(provider: provider).line_user_id)
-  
+    
         reset_session
         auto_login(@user)
-  
+    
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         puts "Failed to login from #{provider}: #{e.message}"
@@ -43,10 +41,10 @@ class UserSessionsController < ApplicationController
     Rails.logger.info "Creating user with username: #{username}, line_user_id: #{line_user_id}"
     profile_image_url = params[:user_session][:profileImageUrl]
   
-    @user = User.find_by(line_user_id: line_user_id)
+    @user = User.find_by(username: username)
   
     unless @user
-      @user = User.create(username: username, line_user_id: line_user_id, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
+      @user = User.create(username: username, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
       @user.authentications.create(line_user_id: line_user_id) if @user.persisted?
     end
   
