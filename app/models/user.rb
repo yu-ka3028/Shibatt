@@ -26,12 +26,11 @@ class User < ApplicationRecord
     
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
-    user = User.new(
-      username: username,
-      password: SecureRandom.hex(16)
-    )
-    if user.save
-      user.authentications.create(provider: provider, uid: user_hash[:userId])
+    
+    user = User.find_or_create_by(username: username)
+    
+    if user.persisted?
+      user.authentications.find_or_create_by(provider: provider, uid: user_hash[:userId])
     else
       Rails.logger.error("ユーザー作成に失敗: #{user.errors.full_messages.join(", ")}")
     end
