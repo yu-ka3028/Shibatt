@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   
     if @user.save
       @user.authentications ||= @user.build_authentications
-      @user.authentications.find_or_create_by!(provider: 'line', uid: line_user_id)
+      @user.authentications.find_or_create_by!(provider: 'line', line_user_id: line_user_id)
   
       auto_login(@user)
       render json: { status: 'ok' }

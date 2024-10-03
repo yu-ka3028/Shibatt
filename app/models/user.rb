@@ -23,14 +23,14 @@ class User < ApplicationRecord
   # OAuth認証で取得したユーザ情報をもとにローカルへユーザを新規作成
   def self.create_from(provider)
     user_hash = sorcery_fetch_user_hash(provider)
-    
+
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
-    
+
     user = User.find_or_create_by(username: username)
-    
+
     if user.persisted?
-      user.authentications.find_or_create_by(provider: provider, uid: user_hash[:userId])
+      user.authentications.find_or_create_by(provider: provider, line_user_id: user_hash[:userId])
     else
       Rails.logger.error("ユーザー作成に失敗: #{user.errors.full_messages.join(", ")}")
     end
