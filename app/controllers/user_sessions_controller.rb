@@ -14,22 +14,22 @@ class UserSessionsController < ApplicationController
 
   def create_from_line
     provider = params[:provider]
-    if @user = login_from(provider)
-      puts "Logged in from #{provider}"
+    line_user_id = params[:line_user_id]
+  
+    @user = User.joins(:authentications).find_by(authentications: { line_user_id: line_user_id })
+  
+    if @user
+      reset_session
+      auto_login(@user)
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
-      begin
-        if @user
-          @user = User.joins(:authentications).find_by(authentications: { line_user_id: @user.authentications.find_by(provider: provider).line_user_id })
-        end
-        @user ||= create_from(provider)
-    
+      @user = create_from(provider)
+      if @user
         reset_session
         auto_login(@user)
-    
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
-      rescue => e
-        puts "Failed to login from #{provider}: #{e.message}"
+      else
+        puts "Failed to login from #{provider}"
         redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
       end
     end
