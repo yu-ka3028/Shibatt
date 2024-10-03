@@ -38,13 +38,14 @@ class UserSessionsController < ApplicationController
   def create_from_liff
     username = params[:user_session][:username]
     line_user_id = params[:user_session][:line_user_id]
-    Rails.logger.info "Creating user with username: #{username}, line_user_id: #{line_user_id}"
     profile_image_url = params[:user_session][:profileImageUrl]
   
     @user = User.find_by(username: username)
   
-    unless @user
-      @user = User.create(username: username, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
+    if @user
+      @user.authentications.find_or_create_by(line_user_id: line_user_id)
+    else
+      @user = User.create(username: username)
       @user.authentications.create(line_user_id: line_user_id) if @user.persisted?
     end
   
