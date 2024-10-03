@@ -45,7 +45,8 @@ class UserSessionsController < ApplicationController
     if @user
       @user.authentications.find_or_create_by(line_user_id: line_user_id, provider: 'line')
     else
-      @user = User.create!(username: username, line_user_id: line_user_id)
+      @user = User.new(username: username, line_user_id: line_user_id)
+      @user.save(validate: false)
       @user.authentications.create(line_user_id: line_user_id, provider: 'line') if @user.persisted?
     end
     
