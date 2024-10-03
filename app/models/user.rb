@@ -11,13 +11,18 @@ class User < ApplicationRecord
   # sorceryを使用しての新規作成
   with_options unless: :using_oauth? do
     validates :username, presence: true, length: { minimum: 1 }, uniqueness: true
-    validates :password, length: { minimum: 4 }, if: -> { new_record? || changes[:crypted_password] }
-    validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
-    validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
+    validates :password, length: { minimum: 4 }, if: :password_required?
+    validates :password, confirmation: true, if: :password_required?
+    validates :password_confirmation, presence: true, if: :password_required?
     validates :email, uniqueness: true, allow_blank: true, unless: :using_oauth?
   end
+
   def using_oauth?
     authentications.present?
+  end
+
+  def password_required?
+    new_record? || changes[:crypted_password]
   end
 
   # OAuth認証で取得したユーザ情報をもとにローカルへユーザを新規作成
