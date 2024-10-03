@@ -42,9 +42,14 @@ class UserSessionsController < ApplicationController
     line_user_id = params[:user_session][:line_user_id]
     Rails.logger.info "Creating user with username: #{username}, line_user_id: #{line_user_id}"
     profile_image_url = params[:user_session][:profileImageUrl]
-
-    @user = User.find_by(line_user_id: line_user_id) || User.create(username: username, line_user_id: line_user_id, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
-
+  
+    @user = User.find_by(line_user_id: line_user_id)
+  
+    unless @user
+      @user = User.create(username: username, line_user_id: line_user_id, password: SecureRandom.hex, password_confirmation: SecureRandom.hex)
+      @user.authentications.create(line_user_id: line_user_id) if @user.persisted?
+    end
+  
     if @user.persisted?
       session[:username] = username
       session[:profileImageUrl] = profile_image_url
