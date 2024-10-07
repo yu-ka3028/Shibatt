@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_03_045915) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_07_060636) do
   create_table "authentications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "provider", null: false
@@ -20,12 +20,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_03_045915) do
     t.string "line_user_id"
     t.index ["line_user_id"], name: "index_authentications_on_line_user_id", unique: true
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"
-  end
-
-  create_table "genres", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "memo_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
