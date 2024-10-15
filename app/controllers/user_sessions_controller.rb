@@ -12,21 +12,21 @@ class UserSessionsController < ApplicationController
     end
   end
 
-  # def create_from_line
-  #   provider = params[:provider]
-  #   user_hash = fetch_user_hash_from_provider(provider)
+  def create_from_line
+    provider = params[:provider]
+    user_hash = fetch_user_hash_from_provider(provider)
   
-  #   @user = User.create!(username: user_hash[:displayName], line_user_id: user_hash[:userId])
+    @user = User.create!(username: user_hash[:displayName], line_user_id: user_hash[:userId])
   
-  #   if @user.persisted?
-  #     reset_session
-  #     auto_login(@user)
-  #     redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
-  #   else
-  #     puts "Failed to login from #{provider}"
-  #     redirect_to root_path, alert: "#{provider.titleize}からのログインに成功しました!!"
-  #   end
-  # end
+    if @user.persisted?
+      reset_session
+      auto_login(@user)
+      redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
+    else
+      puts "Failed to login from #{provider}"
+      redirect_to root_path, alert: "#{provider.titleize}からのログインに成功しました!!"
+    end
+  end
 
   def create_from_liff
     username = params[:user_session][:username]
