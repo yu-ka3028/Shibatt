@@ -28,13 +28,19 @@ class User < ApplicationRecord
   # OAuth認証で取得したユーザ情報をもとにローカルへユーザを新規作成
   def self.create_from(provider)
     user_hash = sorcery_fetch_user_hash(provider)
+    puts "----user_hash----"
+    pp user_hash
   
     return nil if user_hash.nil?
     username = user_hash[:displayName] || "user_#{SecureRandom.hex(4)}"
+    line_user_id = user_hash[:userId]
+    puts "----line_user_id----"
+    pp line_user_id = user_hash[:userId]
   
-    auth = Authentication.find_or_initialize_by(provider: provider, line_user_id: user_hash[:userId])
+    auth = Authentication.find_or_initialize_by(provider: provider, uid: line_user_id)
+
     if auth.new_record?
-      user = User.create!(username: username)
+      user = User.create!(username: username, email: user_hash[:userId], line_user_id: line_user_id)
       auth.user = user
       auth.save!
     else
@@ -60,51 +66,3 @@ class User < ApplicationRecord
     { in_progress: in_progress_rate, completed: completed_rate }
   end
 end
-
-  private
-
-  def add_default_data
-    memo_data = [
-    ]
-
-    # seedでデフォルトメモの作成
-    memos = memo_data.map do |data|
-      Memo.create!(
-        user_id: self.id,
-        content: data[:content],
-        created_at: data[:created_at],
-        progress: false
-      )
-    end
-
-    reflection_memo_data = [
-    ]
-
-    # 振り返りメモの作成とメモへの紐付け
-    reflection_memos = reflection_memo_data.map do |data|
-      reflection_memo = ReflectionMemo.create!(
-        user_id: self.id,
-        content: data[:content],
-        created_at: data[:created_at],
-        progress: false
-      )
-
-      # メモの作成と紐付け
-      data[:memos].each do |memo_data|
-        memo = Memo.create!(
-          user_id: self.id,
-          content: memo_data[:content],
-          created_at: memo_data[:created_at],
-          progress: false
-        )
-
-        # ReflectionMemoとMemoの関連付け
-        ReflectionMemoMemo.create!(
-          reflection_memo_id: reflection_memo.id,
-          memo_id: memo.id
-        )
-      end
-
-      reflection_memo
-    end
-  end
