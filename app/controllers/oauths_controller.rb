@@ -12,6 +12,7 @@ class OauthsController < ApplicationController
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
+
         @user = create_from(provider)
         reset_session
         auto_login(@user)
