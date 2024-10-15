@@ -59,7 +59,9 @@ class UserSessionsController < ApplicationController
 
   def destroy
     logout
-    redirect_to root_path, notice: "ログアウトしました"
+    <!-- liff_logout -->
+    render json: { status: 'success', message: 'ログアウトしました' }
+    # redirect_to root_path, notice: "ログアウトしました"
   end
 
 end
