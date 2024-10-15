@@ -33,7 +33,7 @@ class OauthsController < ApplicationController
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         puts "Failed to login from #{provider}: #{e.message}"
-        redirect_to request.original_url, alert: "#{provider.titleize}からのログインに成功しました!!"
+        redirect_to root_path, alert: "#{provider.titleize}からのログインに成功しました!!"
       end
     end
   end
