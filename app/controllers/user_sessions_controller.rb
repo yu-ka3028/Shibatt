@@ -14,24 +14,17 @@ class UserSessionsController < ApplicationController
 
   def create_from_line
     provider = params[:provider]
-    line_user_id = params[:line_user_id]
+    user_hash = fetch_user_hash_from_provider(provider)
   
-    @user = User.joins(:authentications).find_by(authentications: { line_user_id: line_user_id })
+    @user = User.create!(username: user_hash[:displayName], line_user_id: user_hash[:userId])
   
-    if @user
+    if @user.persisted?
       reset_session
       auto_login(@user)
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
-      @user = create_from(provider)
-      if @user
-        reset_session
-        auto_login(@user)
-        redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
-      else
-        puts "Failed to login from #{provider}"
-        redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
-      end
+      puts "Failed to login from #{provider}"
+      redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
     end
   end
 
@@ -69,4 +62,18 @@ class UserSessionsController < ApplicationController
     redirect_to root_path, notice: "ログアウトしました"
   end
 
+end
+
+private
+
+def fetch_user_hash_from_provider(provider)
+  auth_hash = request.env['omniauth.auth']
+  user_hash = {
+    displayName: auth_hash['info']['name'],
+    userId: auth_hash['uid']
+  }
+
+  Rails.logger.info("取得したユーザー情報: #{user_hash}")
+
+  user_hash
 end
