@@ -56,8 +56,12 @@ https://www.memo-shibatt.com/
   | --- | --- | --- |
   | [![Image from Gyazo](https://i.gyazo.com/82999d93b7a0883cd8d034727306e108.gif)](https://gyazo.com/82999d93b7a0883cd8d034727306e108) | [![Image from Gyazo](https://i.gyazo.com/434af3dec52cead3f3e0871e55819352.gif)](https://gyazo.com/434af3dec52cead3f3e0871e55819352) | [![Image from Gyazo](https://i.gyazo.com/5e13cebc1e92dabac11c72d7f6bd44b9.gif)](https://gyazo.com/5e13cebc1e92dabac11c72d7f6bd44b9) |
 
+<br>
+
 - **振り返りをサポート**<br>
-  あとでまとめよう、日曜日にまとめてやろう...と言ってそのままにしないようサポートします。
+あとでまとめよう、日曜日にまとめてやろう...と言ってそのままにしないようサポートします。
+
+  [![Image from Gyazo](https://i.gyazo.com/363e695c3f8ca9fdf252de1ed862f644.png)](https://gyazo.com/363e695c3f8ca9fdf252de1ed862f644)
   
   **「先週のメモを振り返る」**<br>
   先週作成したメモのうち、アウトプットしていないものをまとめて紐付けます。
