@@ -56,9 +56,19 @@ https://www.memo-shibatt.com/
   | --- | --- | --- |
   | [![Image from Gyazo](https://i.gyazo.com/82999d93b7a0883cd8d034727306e108.gif)](https://gyazo.com/82999d93b7a0883cd8d034727306e108) | [![Image from Gyazo](https://i.gyazo.com/434af3dec52cead3f3e0871e55819352.gif)](https://gyazo.com/434af3dec52cead3f3e0871e55819352) | [![Image from Gyazo](https://i.gyazo.com/5e13cebc1e92dabac11c72d7f6bd44b9.gif)](https://gyazo.com/5e13cebc1e92dabac11c72d7f6bd44b9) |
 
-- **問いかけ形式の通知により受動的に振り返りが可能**<br>
-  メモのステータスと作成日時、ジャンル・タグの情報を取得し、未完了・一定期間以上経過したメモをAI要約・問いかけ形式のテキストで返して通知する機能が差別化ポイント
+- **振り返りをサポート**<br>
+  あとでまとめよう、日曜日にまとめてやろう...と言ってそのままにしないようサポートします。
+  **「先週のメモを振り返る」**<br>
+  先週作成したメモのうち、アウトプットしていないものをまとめて紐付けます。
 
+  **「Shibaから応援」**<br>
+  振り返りメモを作成し、アウトプットが終わるとShibaからフィードバックがLINEへ届きます。
+
+### 今後の展望
+- アウトプットをもっと自然に
+  - 作成したメモが一定数溜まったらLINEへ通知
+- PCからの利用
+  - メモ内容はマークダウンを採用し、見やすいメモ作成をサポート
 ### 技術スタック
 
 | category | 技術 |
