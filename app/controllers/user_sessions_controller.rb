@@ -53,7 +53,7 @@ class UserSessionsController < ApplicationController
       render json: { status: 'success', message: 'ログインしました' }
     else
       puts @user.errors.full_messages
-      render json: { status: 'error', message: 'ログインに失敗しました' }, status: :unauthorized
+      render json: { status: 'error', message: 'ログインしました！' }, status: :unauthorized
     end
   end
 
