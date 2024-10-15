@@ -24,7 +24,7 @@ class UserSessionsController < ApplicationController
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       puts "Failed to login from #{provider}"
-      redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
+      redirect_to root_path, alert: "#{provider.titleize}からのログインに成功しました!!"
     end
   end
 
