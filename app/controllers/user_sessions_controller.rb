@@ -37,7 +37,7 @@ class UserSessionsController < ApplicationController
 
   def create_from_liff
     username = params[:user_session][:username]
-    line_user_id = params[:user_session][:line_user_id]
+    line_user_id = params[:user_session][:userId]
     profile_image_url = params[:user_session][:profileImageUrl]
 
     @user = User.find_by(line_user_id: line_user_id)
