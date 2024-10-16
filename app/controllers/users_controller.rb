@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create, :create_from_line, :create_from_liff]
+  skip_before_action :require_login, only: [:new, :create]
 
   def new
     @user = User.new
@@ -12,45 +12,7 @@ class UsersController < ApplicationController
       redirect_to root_path, notice: 'ユーザーを作成しました'
     else
       flash.now[:alert] = 'User could not be created.'
-
       render :new, status: :unprocessable_entity
-    end
-  end
-
-  def create_from_line
-    username = params[:username]
-    profile_image_url = params[:profile_image_url]
-    line_user_id = params[:line_user_id] # LINEのuser_idをパラメータから取得
-  
-    # LINEのuser_idが存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)
-  
-    if @user.save
-      auto_login(@user)
-      render json: { status: 'ok' }
-    else
-      render json: { status: 'error', message: '新規ユーザーの作成に失敗しました。' }, status: :unprocessable_entity
-    end
-  end
-
-  def create_from_liff
-    username = params[:user_session][:username]
-    profile_image_url = params[:user_session][:profile_image_url]
-    line_user_id = params[:user_session][:line_user_id]
-  
-    # LINEのuser_idが存在するか確認し、存在しない場合は新しいユーザーを作成
-    @user = User.find_by(line_user_id: line_user_id) || User.new(username: username, profile_image_url: profile_image_url, line_user_id: line_user_id)
-  
-    if @user.save
-      @user.authentications ||= @user.build_authentications
-      @user.authentications.find_or_create_by!(provider: 'line', line_user_id: line_user_id)
-  
-      auto_login(@user)
-      render json: { status: 'ok' }
-    else
-      # ユーザーの保存に失敗した場合の処理を追加
-      Rails.logger.error("Failed to save user: #{@user.errors.full_messages.join(", ")}")
-      render json: { status: 'error', message: '新規ユーザーの作成に失敗しました。' }, status: :unprocessable_entity
     end
   end
   
@@ -69,11 +31,11 @@ class UsersController < ApplicationController
   private
     
     def user_params
-      params.require(:user).permit(:username, :password, :password_confirmation, :line_user_id)
+      params.require(:user).permit(:username, :password, :password_confirmation)
     end
     
-    def get_update_username_and_profile_image_url_from_line_api(line_user_id)
-      uri = URI.parse("https://api.line.me/v2/bot/profile/#{line_user_id}")
+    def get_update_username_and_profile_image_url_from_line_api(uid)
+      uri = URI.parse("https://api.line.me/v2/bot/profile/#{uid}")
       request = Net::HTTP::Get.new(uri)
       request["Authorization"] = "Bearer #{Rails.application.credentials.dig(:linebot, :channel_token)}"
     

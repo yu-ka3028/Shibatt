@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_07_060636) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_16_010359) do
   create_table "authentications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "provider", null: false
     t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "line_user_id"
-    t.index ["line_user_id"], name: "index_authentications_on_line_user_id", unique: true
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid"
   end
 
@@ -69,10 +67,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_060636) do
     t.string "salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "line_user_id"
     t.string "profile_image_url"
     t.string "email"
-    t.index ["line_user_id"], name: "index_users_on_line_user_id"
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
