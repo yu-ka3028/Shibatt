@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   get 'contact_form', to: 'static_pages#contact_form'
   
   get "sign_up", to: "users#new"
+  get '/login', to: 'user_sessions#create_from_liff', as: :login_from_liff
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
@@ -42,5 +43,6 @@ Rails.application.routes.draw do
   
   post '/' => 'linebot#callback'
   post '/webhook', to: 'linebot#callback'
+  
 
 end
