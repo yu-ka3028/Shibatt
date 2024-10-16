@@ -12,7 +12,6 @@ class OauthsController < ApplicationController
       redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
     else
       begin
-
         @user = create_from(provider)
         reset_session
         auto_login(@user)
@@ -29,15 +28,14 @@ class OauthsController < ApplicationController
           }
           response = client.push_message(@user.line_user_id, message)
         end
-  
+
         redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
       rescue => e
         puts "Failed to login from #{provider}: #{e.message}"
-        redirect_to root_path, alert: "#{provider.titleize}からのログインに成功しました!!"
+        redirect_to root_path, alert: "#{provider.titleize}からのログインに失敗しました!"
       end
     end
   end
-  
 
   private
 
