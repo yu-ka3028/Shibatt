@@ -88,3 +88,9 @@ group :development, :test do
 end
 
 gem 'httparty'
+
+gem 'simplecov', require: false, group: :test
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+end

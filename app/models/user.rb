@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
 
+
   has_many :memos, dependent: :destroy
   has_many :reflection_memos
 
