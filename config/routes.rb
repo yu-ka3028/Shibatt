@@ -2,26 +2,14 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :users do
-    post 'refresh_username', on: :member
     resources :memos, only: [:index, :create, :show, :update, :destroy] do
-      patch 'update_tag', on: :member
     end
-  end
-
-  resources :memos, only: [:update] do
-    patch 'update_tag', on: :member
-    get 'index_js', on: :collection
   end
 
   resources :reflection_memos do
     get 'new_lastweek', on: :collection
   end
 
-  resources :user_sessions do
-    collection do
-      post :create_from_liff
-    end
-  end
 
   get 'privacy_policy', to: 'static_pages#privacy_policy', as: 'privacy_policy'
   get 'terms_of_service', to: 'static_pages#terms_of_service'
