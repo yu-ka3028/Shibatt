@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
-  after_create :add_default_data
 
   has_many :memos, dependent: :destroy
   has_many :reflection_memos
