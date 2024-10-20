@@ -1,11 +1,11 @@
-window.onload = function (e) {
+document.addEventListener('DOMContentLoaded', function (e) {
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('liff')) {
     liff.init(function (data) {
       initializeApp(data);
     });
   }
-};
+});
 
 function initializeApp(data) {
   if (!liff.isLoggedIn()) {
