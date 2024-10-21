@@ -21,7 +21,7 @@ class ReflectionMemo < ApplicationRecord
     self.update(feedback_given: chatgpt_message)
 
     # LINEにメッセージを送信
-    LinebotController.new.client.push_message(self.user.line_user_id, message)
+    LinebotController.new.client.push_message(self.user.uid, message)
   end
 
   private
