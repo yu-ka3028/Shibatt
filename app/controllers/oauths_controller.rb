@@ -39,7 +39,7 @@ class OauthsController < ApplicationController
       type: 'text',
       text: "ようこそ！このbotを友達登録することで、素早くアプリへメモを作成する機能などを利用できます。"
     }
-    client.push_message(@user.line_user_id, message)
+    client.push_message(@user.uid, message)
   end
 
   def auth_params

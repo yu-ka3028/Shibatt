@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
         user_session: {
           username: profile.displayName,
           profileImageUrl: profile.pictureUrl,
-          line_user_id: profile.userId
+          uid: profile.userId
         }
       })
     });

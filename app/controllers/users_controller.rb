@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   
   def refresh_username
     @user = User.find(params[:id])
-    update_username, update_profile_image_url = get_update_username_and_profile_image_url_from_line_api(@user.line_user_id)
+    update_username, update_profile_image_url = get_update_username_and_profile_image_url_from_line_api(@user.uid)
   
     if update_username.nil? || update_profile_image_url.nil?
       redirect_to @user, alert: 'ユーザー名またはプロフィール画像の更新に失敗しました'

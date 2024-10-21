@@ -10,8 +10,8 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          line_user_id = event['source']['userId']
-          user = User.find_by(line_user_id: line_user_id)
+          uid = event['source']['userId']
+          user = User.joins(:authentications).find_by(authentications: { uid: uid })
           if event.message['text'] == '達成率'
             progress_message = FlexMessage::ProgressMessage.new(user.memos)
 
