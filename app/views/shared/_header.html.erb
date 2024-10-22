@@ -1,11 +1,11 @@
 <div class="mt-20">
   <div class="navbar bg-base-100 fixed top-0 w-full z-50">
     <div class="navbar flex justify-between">
-    <div class="carousel-item justify-left" style="width: 120px; height: 50px;">
-      <%= link_to root_path do %>
-        <img src="https://i.gyazo.com/6e8d3737ce0708ff42174d1808f79df7.png" class="carousel-item" style="width: 90px; height: 50px;" />
-      <% end %>
-    </div>
+      <div class="carousel-item justify-left" style="width: 120px; height: 50px;">
+        <%= link_to root_path do %>
+          <img src="https://i.gyazo.com/6e8d3737ce0708ff42174d1808f79df7.png" class="carousel-item" style="width: 90px; height: 50px;" />
+        <% end %>
+      </div>
       <div class="dropdown dropdown-bottom dropdown-end">
         <div tabindex="0" role="button" class="btn m-1 mr-0">
           <div class="w-10 rounded-full">
@@ -25,6 +25,8 @@
           <% if current_user %>
             <li><%= "【#{current_user.username}】"%></li>
             <li><%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete } %></li>
+            <li><%= link_to 'ログアウト', logout_path, method: :delete, data: { turbo: false } %></li>
+
             <li>
               <a href="https://line.me/R/ti/p/%40023jcczr">
                 Shibatt公式LINE
