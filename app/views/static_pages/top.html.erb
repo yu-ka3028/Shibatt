@@ -9,8 +9,9 @@
           <h6 class="text-center text-sm">自身の思考を整理し、行動に活かすことができます。</h6>
         <br>
       </div>
-      <h1>アクセスいただきありがとうございます！現在新規ログインエラーが発生しており、全力対応中です...!!</h1>
-      <h1>アプリの紹介をGitHub READMEへ掲載しておりますので、<a href="https://github.com/yu-ka3028/Shibatt">こちら</a>からご覧いただけますと幸いです。</h1>
+
+      <%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete } %>
+      <%= link_to 'ログアウト', logout_path, method: :delete, data: { turbo: false } %>
 
       <div class="flex flex-col items-center justify-center">
         <button class="btn bg-yellow-300 hover:bg-white" onclick="my_modal_6.showModal()">どんなサービス？</button>
