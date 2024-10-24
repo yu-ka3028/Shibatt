@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   get 'oauths/oauth', to: 'oauths#oauth'
   get 'oauth/callback', to: 'oauths#callback'
-  get 'oauth/:provider', to: 'oauths#oauth', as: 'oauth'
+  get 'oauth/:provider', to: 'oauths#oauth', as: 'auth_at_provider'
   post "oauth/callback", to: "oauths#callback"
   # get 'oauth/:provider/callback', to: 'oauths#callback', as: 'oauth_callback'
   
