@@ -93,7 +93,7 @@
           <div class="divider divider"></div>
           <h6 class="text-center text-xl mb-6">ログイン</h6>
           <div class="flex items-center justify-center">
-            <%= link_to oauth_path(provider: :line) do %>
+            <%= link_to auth_at_provider_path(provider: :line) do %>
               <%= image_tag "line_login.png", class: "h-15 w-40 opacity-70" %>
             <% end %>
           </div>

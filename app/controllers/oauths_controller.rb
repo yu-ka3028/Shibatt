@@ -1,17 +1,25 @@
 class OauthsController < ApplicationController
-  include Sorcery::Controller
-  skip_before_action :require_login
+  skip_before_action :require_login, raise: false
 
   def oauth
-    login_path(auth_params[:provider])
+    login_at(params[:provider])
   end
 
   def callback
     provider = params[:provider]
     if @user = login_from(provider)
-      redirect_to root_path, notice: "#{provider.titleize}からログインしました!"
+      redirect_to root_path, :notice => "Logged in from #{provider.titleize}!"
     else
-      process_callback_for(provider)
+      begin
+        @user = create_from(provider)
+        # NOTE: this is the place to add '@user.activate!' if you are using user_activation submodule
+
+        reset_session # protect from session fixation attack
+        auto_login(@user)
+        redirect_to root_path, :notice => "Logged in from #{provider.titleize}!"
+      rescue
+        redirect_to root_path, :alert => "Failed to login from #{provider.titleize}!"
+      end
     end
   end
 
