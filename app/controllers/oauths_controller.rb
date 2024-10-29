@@ -2,11 +2,18 @@ class OauthsController < ApplicationController
   skip_before_action :require_login, raise: false
 
   def oauth
+    puts "oauth/params"
+    pp params
     login_at(params[:provider])
   end
 
   def callback
+    puts "callback/params"
+    pp params
+
     provider = params[:provider]
+    puts "callback/provider"
+    pp params
     if @user = login_from(provider)
       redirect_to root_path, :notice => "Logged in from #{provider.titleize}!"
     else

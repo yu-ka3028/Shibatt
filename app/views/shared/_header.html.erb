@@ -7,7 +7,7 @@
         <% end %>
       </div>
       <div>
-        <h1>アクセスいただきありがとうございます！<br>現在新規ログインエラーが発生しており、全力対応中です...!!<br>大変恐れ入りますが、アプリの紹介をGitHub READMEへ掲載しております。<br><a href="https://github.com/yu-ka3028/Shibatt">【こちら】</a>からご覧いただけますと幸いです。</h1>
+        <h1>アクセスいただきありがとうございます！<br>現在新規ログインエラーが発生しており、<a href="https://github.com/yu-ka3028/TIL/tree/main/Rails"><u>全力対応中です...!!</u></a><br>大変恐れ入りますが、アプリの紹介をGitHub READMEへ掲載しております。<br><a href="https://github.com/yu-ka3028/Shibatt"><u>【こちら】</u></a>からご覧いただけますと幸いです。</h1>
       </div>
       <div class="dropdown dropdown-bottom dropdown-end">
         <div tabindex="0" role="button" class="btn m-1 mr-0">
@@ -29,10 +29,6 @@
             <li><%= "【#{current_user.username}】"%></li>
             <li><%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete } %></li>
             <li><%= link_to 'ログアウト', logout_path, method: :delete, data: { turbo: false } %></li>
-            <li><%= link_to 'ログアウト', logout_path, method: :delete, data: { turbo_method: :delete } %></li>
-            
-
-
             <li>
               <a href="https://line.me/R/ti/p/%40023jcczr">
                 Shibatt公式LINE
