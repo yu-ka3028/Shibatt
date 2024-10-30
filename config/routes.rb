@@ -19,15 +19,10 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy', as: 'logout'
 
   get "memos/tag_search", to: "memos#tag_search", as: "tag_search"
-
+  
+  post 'oauth/callback', to: 'oauths#callback'
+  get 'oauth/callback', to: 'oauths#callback'
   get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
-  get 'oauth/:callback', to: 'oauths#callback'
-  post 'oauth/:callback', to: 'oauths#callback'
-
-  # Rails.application.routes.draw do
-  #   get 'oauth/:provider/callback', to: 'oauths#callback', as: :auth_callback
-  #   get 'oauth/:provider', to: 'oauths#oauth', as: :auth_at_provider
-  # end
 
   post '/', to: 'linebot#callback'
   post '/webhook', to: 'linebot#callback'

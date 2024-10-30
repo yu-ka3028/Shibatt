@@ -8,13 +8,10 @@ class OauthsController < ApplicationController
   end
 
   def callback
-    puts "callback/params"
-    pp params
-
     provider = params[:provider]
-    puts "callback/provider"
-    pp params
+    binding.pry
     if @user = login_from(provider)
+    
       redirect_to root_path, :notice => "Logged in from #{provider.titleize}!"
     else
       begin
