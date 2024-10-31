@@ -4,6 +4,7 @@ Rails.application.config.sorcery.configure do |config|
   config.line.key = Rails.application.credentials.dig(:line, :channel_id)
   config.line.secret = Rails.application.credentials.dig(:line, :channel_secret) 
   config.line.callback_url = Rails.application.credentials.dig(Rails.env, :line, :callback_url)
+
   config.line.scope = 'profile'
   config.line.user_info_mapping = { username: 'displayName'}
 
@@ -12,4 +13,6 @@ Rails.application.config.sorcery.configure do |config|
     # デフォルトであるemailを使わず、usernameを使用
     user.username_attribute_names = [:username]
   end
+
+  
 end  
