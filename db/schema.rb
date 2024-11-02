@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_16_010359) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_02_073252) do
   create_table "authentications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "provider", null: false
@@ -69,6 +69,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_16_010359) do
     t.datetime "updated_at", null: false
     t.string "profile_image_url"
     t.string "email"
+    t.string "provider"
+    t.string "uid"
+    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
