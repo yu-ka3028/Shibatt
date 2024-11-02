@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   get "sign_up", to: "users#new"
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
-  delete 'logout', to: 'user_sessions#destroy', as: 'logout'
+  # delete 'logout', to: 'user_sessions#destroy', as: 'logout'
+  get 'logout', to: 'user_sessions#destroy', as: 'logout'
 
   get "memos/tag_search", to: "memos#tag_search", as: "tag_search"
   

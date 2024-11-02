@@ -4,7 +4,6 @@ class User < ApplicationRecord
   has_many :authentications, dependent: :destroy
   accepts_nested_attributes_for :authentications
 
-
   has_many :memos, dependent: :destroy
   has_many :reflection_memos
 
@@ -15,6 +14,12 @@ class User < ApplicationRecord
     validates :password, confirmation: true, if: :password_required?
     validates :password_confirmation, presence: true, if: :password_required?
     validates :email, uniqueness: true, allow_blank: true, unless: :using_oauth?
+  end
+
+  # OAuth用のバリデーション
+  with_options if: :using_oauth? do
+    validates :username, presence: true
+    validates :uid, uniqueness: { scope: :provider }, allow_nil: true
   end
 
   def using_oauth?

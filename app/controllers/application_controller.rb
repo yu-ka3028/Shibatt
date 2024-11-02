@@ -19,9 +19,15 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
-    @current_user.profile_image_url = session[:profileImageUrl] if @current_user
+    @current_user ||= begin
+      if session[:user_id]
+        if session[:provider] == 'line'
+          User.find_by(provider: 'line', uid: session[:uid])
+        else
+          User.find_by(id: session[:user_id])
+        end
+      end
+    end
   end
-
   
 end

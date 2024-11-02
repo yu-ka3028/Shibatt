@@ -13,8 +13,5 @@ Rails.application.config.sorcery.configure do |config|
     user.authentications_class = Authentication
     # デフォルトであるemailを使わず、usernameを使用
     user.username_attribute_names = [:username]
-    user.password_attribute_name = :password
-    user.crypted_password_attribute_name = :crypted_password
-    user.salt_attribute_name = :salt
   end
 end  
