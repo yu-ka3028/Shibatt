@@ -14,4 +14,4 @@ Rails.application.config.sorcery.configure do |config|
     # デフォルトであるemailを使わず、usernameを使用
     user.username_attribute_names = [:username]
   end
-end  
+end

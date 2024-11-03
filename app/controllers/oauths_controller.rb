@@ -17,6 +17,7 @@ class OauthsController < ApplicationController
       @user = create_from(provider)
       @user.provider = provider
       @user.uid = @user.authentications.first.uid
+      binding.pry
 
       if @user.save
         reset_session
