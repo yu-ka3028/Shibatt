@@ -13,22 +13,26 @@ class OauthsController < ApplicationController
         redirect_to root_path, notice: "#{provider.titleize}でログインしました"
         return
       end
-
+  
       @user = create_from(provider)
-      @user.provider = provider
-      @user.uid = @user.authentications.first.uid
-      binding.pry
+      authentication = @user.authentications.first
 
+      @user.assign_attributes(
+        provider: authentication.provider,
+        uid: authentication.uid
+      )
+  
       if @user.save
+        Rails.logger.info "User saved successfully: #{@user.attributes.inspect}"
         reset_session
         auto_login(@user)
         send_welcome_message if provider == 'line'
         redirect_to root_path, notice: "#{provider.titleize}でアカウントを作成しました"
       else
-        Rails.logger.error "User creation failed: #{@user.errors.full_messages}"
+        Rails.logger.error "User save failed: #{@user.errors.full_messages}"
         redirect_to root_path, alert: "アカウント作成に失敗しました"
       end
-
+  
     rescue => e
       Rails.logger.error "OAuth Error: #{e.class} - #{e.message}"
       Rails.logger.error e.backtrace.join("\n")
