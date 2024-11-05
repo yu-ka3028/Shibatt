@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :users do
-    resources :memos, only: [:index, :create, :show, :update, :destroy]
+    resources :memos, only: [:index, :create, :show, :update, :destroy] do
+      member do
+        patch :update_tag
+      end
+    end
   end
 
   resources :reflection_memos do
